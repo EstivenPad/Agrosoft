@@ -8,7 +8,6 @@
   <ItemGroup>
     <Folder Include="Pages\Consultas\" />
     <Folder Include="Pages\Registros\" />
-    <Folder Include="BLL\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +16,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\Agrosoft.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
