@@ -20,6 +20,7 @@
                             <label>Producto Id</label>
                             <div class="input-group">
                                 <InputNumber @bind-Value="Producto.ProductoId" class="form-control col-4"></InputNumber>
+                                <ValidationMessage For="@(()=>Producto.ProductoId)" />
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
                                         <span class="oi oi-zoom-in"> </span> Buscar
@@ -34,74 +35,72 @@
                 <div class="form-group">
                     <label>Nombre</label>
                     <InputText @bind-Value="Producto.Nombre" class="form-control"></InputText>
+                    <ValidationMessage For="@(()=>Producto.Nombre)" />
                 </div>
 
                 @*Marca*@
                 <div class="form-group">
                     <label>Marca</label>
                     <InputText @bind-Value="Producto.Marca" class="form-control"></InputText>
+                    <ValidationMessage For="@(()=>Producto.Marca)" />
                 </div>
 
                 @*Unidad de medida*@
                 <div class="form-group">
                     <label>Unidad de medida</label>
                     <select @bind="Producto.UnidadMedida" class="form-control">
-                        <option value="0">Saco 25Lbs</option>
-                        <option value="1">Saco 50Lbs</option>
-                        <option value="2">Saco 100Lbs</option>
-                        <option value="3">Saco 125Lbs</option>
-                        <option value="4">Saco 360Lbs</option>
+                        <option value="0" disabled>Seleccione una opcion</option>
+                        <option value="1">Saco 25Lbs</option>
+                        <option value="2">Saco 50Lbs</option>
+                        <option value="3">Saco 100Lbs</option>
+                        <option value="4">Saco 125Lbs</option>
+                        <option value="5">Saco 360Lbs</option>
                     </select>
+                    <ValidationMessage For="@(()=>Producto.UnidadMedida)" />
                 </div>
 
                 @*Cantidad minima*@
                 <div class="form-group">
                     <label>Cantidad minima</label>
                     <InputNumber @bind-Value="Producto.CantidadMinima" class="form-control"></InputNumber>
+                    <ValidationMessage For="@(()=>Producto.CantidadMinima)" />
                 </div>
 
                 @*Cantidad existente*@
                 <div class="form-group">
                     <label>Cantidad existente</label>
                     <InputNumber @bind-Value="Producto.CantidadExistente" class="form-control"></InputNumber>
+                    <ValidationMessage For="@(()=>Producto.CantidadExistente)" />
                 </div>
 
                 @*Precio*@
                 <div class="form-group">
                     <label>Precio</label>
                     <InputNumber @bind-Value="Producto.Precio" class="form-control"></InputNumber>
+                    <ValidationMessage For="@(()=>Producto.Precio)" />
                 </div>
 
                 @*Costo*@
                 <div class="form-group">
                     <label>Costo</label>
                     <InputNumber @bind-Value="Producto.Costo" class="form-control"></InputNumber>
+                    <ValidationMessage For="@(()=>Producto.Costo)" />
                 </div>
             </form>
         </div>
 
         <div class="card-footer">
             <div class="form-group text-center" display: inline-block>
-                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
-                    <span class="oi oi-file"></span> Nuevo
-                </button>
-
-                <button type="submit" class="btn btn-lg btn-success">
-                    <span class="oi oi-cloud"></span> Guardar
-                </button>
-
-                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
-                    <span class="oi oi-trash"></span> Eliminar
-                </button>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
+                <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
             </div>
         </div>
 
     </div>
 </EditForm>
-
 @code {
     private Productos Producto = new Productos();
-    public decimal total;
 
     protected override void OnInitialized()
     {
