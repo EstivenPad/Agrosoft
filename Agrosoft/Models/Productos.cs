@@ -9,7 +9,7 @@ namespace Agrosoft.Models
     public class Productos
     {
         [Key]
-        public int ProductoId { get; set; }
+        public int Productod { get; set; }
         public string Nombre { get; set; }
         public string Marca { get; set; }
         public int UnidadMedida { get; set; }
