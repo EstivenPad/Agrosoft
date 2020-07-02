@@ -17,8 +17,10 @@ namespace Agrosoft.Models
         [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "Es obligatorio seleccionar la unidad de medida")]
         public int UnidadMedida { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir la cantidad minima")]
+        [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "La cantidad minima debe ser mayor a 1")]
         public int CantidadMinima { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir la cantidad existente")]
+        [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "La cantidad existente debe ser mayor a 1")]
         public int CantidadExistente { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir el precio")]
         [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "El precio debe ser mayor a 1")]
