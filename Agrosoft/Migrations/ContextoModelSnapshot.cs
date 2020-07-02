@@ -32,9 +32,11 @@ namespace Agrosoft.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Marca")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Precio")

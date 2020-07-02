@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agrosoft.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200702213519_Productos")]
-    partial class Productos
+    [Migration("20200702220417_Migracion_Inicial")]
+    partial class Migracion_Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,9 +34,11 @@ namespace Agrosoft.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Marca")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Precio")
