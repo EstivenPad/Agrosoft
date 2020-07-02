@@ -10,7 +10,7 @@ namespace Agrosoft.DAL
     public class Contexto : DbContext
     {
         public DbSet<Usuarios> Usuarios { get; set; }
-
+        public DbSet<Productos> Productos { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(@"Data Source = DATA\Agrosoft.db");
