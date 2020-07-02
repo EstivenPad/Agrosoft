@@ -5,7 +5,7 @@
 
 @inject IToastService toast
 
-<EditForm Model="Producto" OnInvalidSubmit="Guardar">
+<EditForm Model="Producto" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
     <div class="card">
         <div class="card-header">
@@ -20,7 +20,7 @@
                             <label>Producto Id</label>
                             <div class="input-group">
                                 <InputNumber @bind-Value="Producto.ProductoId" class="form-control col-4"></InputNumber>
-                                <ValidationMessage For="@(()=>Producto.ProductoId)" />
+                                @*<ValidationMessage For="@(()=>Producto.ProductoId)" />*@
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
                                         <span class="oi oi-zoom-in"> </span> Buscar
@@ -134,13 +134,21 @@
         bool paso;
         paso = ProductosBLL.Guardar(Producto);
 
-        if (paso)
+        if (Producto.CantidadExistente < Producto.CantidadMinima)
         {
-            Nuevo();
-            toast.ShowSuccess("¡Guardado con éxito!");
+            toast.ShowError("¡La cantidad en existencia no puede ser menor a la cantidad minima!");
+            return;
         }
         else
-            toast.ShowError("¡No se pudo guardar!");
+        {
+            if (paso)
+            {
+                Nuevo();
+                toast.ShowSuccess("¡Guardado con éxito!");
+            }
+            else
+                toast.ShowError("¡No se pudo guardar!");
+        }
     }
 
     public void Eliminar()
