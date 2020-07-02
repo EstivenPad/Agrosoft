@@ -14,7 +14,7 @@ namespace Agrosoft.Models
         public string Nombre { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir la marca")]
         public string Marca { get; set; }
-        [Required(ErrorMessage = "Es obligatorio seleccionar la unidad de medida")]
+        [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "Es obligatorio seleccionar la unidad de medida")]
         public int UnidadMedida { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir la cantidad minima")]
         public int CantidadMinima { get; set; }

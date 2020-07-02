@@ -6,11 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200702220417_Migracion_Inicial.cs" />
-    <Compile Remove="Migrations\20200702220417_Migracion_Inicial.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Pages\Consultas\" />
   </ItemGroup>
 
