@@ -7,17 +7,68 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-        <li class="nav-item px-3">
+        <li class="nav-item px-1">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </li>
-        <li class="nav-item px-3">
+        <li class="nav-item px-1">
+            <NavLink class="nav-link" @onclick="ToggleRegistrosMenu">
+                <span class="oi oi-file" aria-hidden="true"></span> Registros <span class="icon-arrow_drop_down"></span>
+            </NavLink>
+            @if (collapseRegistrosMenu)
+            {
+                <ul class="children">
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="RegistroUsuarios">
+                            <span class="icon-people_outline" aria-hidden="true"></span> Usuarios
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="RegistroProveedores">
+                            <span class="oi oi-person" aria-hidden="true"></span> Proveedores
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="RegistroClientes">
+                            <span class="icon-person_add" aria-hidden="true"></span> Clientes
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="RegistroCobros">
+                            <span class="icon-people_outline" aria-hidden="true"></span> Cobros
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="RegistroProductos">
+                            <span class="icon-shop_two" aria-hidden="true"></span> Productos
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="RegistroCompraProductos">
+                            <span class="icon-shop_two" aria-hidden="true"></span> Compra productos
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item px-2">
+                        <NavLink class="nav-link" href="RegistroVentaProductos">
+                            <span class="icon-shop_two" aria-hidden="true"></span> Venta productos
+                        </NavLink>
+                    </li>
+                </ul>
+            }
+        </li>
+        <li class="nav-item px-1">
             <NavLink class="nav-link" href="productos">
                 <span class="oi oi-script" aria-hidden="true"></span> Registro Productos
             </NavLink>
         </li>
-        <li class="nav-item px-3">
+        <li class="nav-item px-1">
             <NavLink class="nav-link" href="ConsultaProductos">
                 <span class="oi oi-script" aria-hidden="true"></span> Consulta Productos
             </NavLink>
@@ -27,11 +78,35 @@
 
 @code {
     private bool collapseNavMenu = true;
+    private bool collapseRegistrosMenu = false;
+    private bool collapseConsultasMenu = false;
+    private bool collapseReportesMenu = false;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void ToggleRegistrosMenu()
+    {
+        collapseRegistrosMenu = !collapseRegistrosMenu;
+        collapseConsultasMenu = false;
+        collapseReportesMenu = false;
+    }
+
+    private void ToggleConsultasMenu()
+    {
+        collapseConsultasMenu = !collapseConsultasMenu;
+        collapseRegistrosMenu = false;
+        collapseReportesMenu = false;
+    }
+
+    private void ToggleReportesMenu()
+    {
+        collapseReportesMenu = !collapseReportesMenu;
+        collapseRegistrosMenu = false;
+        collapseConsultasMenu = false;
     }
 }
