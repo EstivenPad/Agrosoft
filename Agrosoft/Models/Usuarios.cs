@@ -10,10 +10,12 @@ namespace Agrosoft.Models
     {
         [Key]
         public int UsuarioId { get; set; }
-        
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
 
-        [Required(ErrorMessage = "Este obligatorio introducir el nombre")]
+        [Required(ErrorMessage = "Es obligatorio introducir el nombre")]
         public string Nombres { get; set; }
         
         [Required(ErrorMessage = "Es obligatorio introducir al apellido")]
