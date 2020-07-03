@@ -59,6 +59,7 @@ namespace Agrosoft.BLL
             try
             {
                 db.Entry(productos).State = EntityState.Modified;
+                paso = db.SaveChanges() > 0;
             }
             catch (Exception)
             {
