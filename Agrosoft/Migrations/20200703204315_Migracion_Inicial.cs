@@ -47,6 +47,11 @@ namespace Agrosoft.Migrations
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.UsuarioId);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Usuarios",
+                columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
+                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 3, 16, 43, 15, 466, DateTimeKind.Local).AddTicks(1703), "admin", "Admin", "0123456789", 1 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
