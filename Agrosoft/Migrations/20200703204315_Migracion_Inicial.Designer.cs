@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agrosoft.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200703201936_Migracion_Inicial")]
+    [Migration("20200703204315_Migracion_Inicial")]
     partial class Migracion_Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,6 +99,22 @@ namespace Agrosoft.Migrations
                     b.HasKey("UsuarioId");
 
                     b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            UsuarioId = 1,
+                            Apellidos = "Admin",
+                            Celular = "0123456789",
+                            ClaveUsuario = "admin",
+                            Direccion = "Admin",
+                            Email = "Admin@hotmail.com",
+                            Fecha = new DateTime(2020, 7, 3, 16, 43, 15, 466, DateTimeKind.Local).AddTicks(1703),
+                            NombreUsuario = "admin",
+                            Nombres = "Admin",
+                            Telefono = "0123456789",
+                            TipoUsuario = 1
+                        });
                 });
 #pragma warning restore 612, 618
         }
