@@ -1,5 +1,5 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Agrosoft</a>
+    <a class="navbar-brand" href="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Agrosoft</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -15,51 +15,52 @@
 
         @*Registros*@
         <li class="nav-item px-1">
-            <NavLink class="nav-link" @onclick="ToggleRegistrosMenu">
+            <NavLink class="nav-link" href="" @onclick="ToggleRegistrosMenu">
                 <span class="oi oi-file" aria-hidden="true"></span> Registros &nbsp; <span class="fa fa-chevron-down"></span>
             </NavLink>
-            @if (collapseRegistrosMenu)
+            @if (expandirRegistrosMenu)
             {
-                <ul class="children">
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="RegistroUsuarios">
-                            <span class="fa fa-users" aria-hidden="true"></span> &nbsp; Usuarios
+                <ul class="nav flex-column">
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="RegistroUsuarios" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-users" aria-hidden="true"></span> &nbsp; Usuarios
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="RegistroProveedores">
-                            <span class="fa fa-user-tie" aria-hidden="true"></span> &nbsp; Proveedores
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="RegistroProveedores" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-user-tie" aria-hidden="true"></span> &nbsp; Proveedores
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="RegistroClientes">
-                            <span class="fa fa-user" aria-hidden="true"></span> &nbsp; Clientes
+                    <li class="nav-item px-1">
+
+                        <NavLink class="nav-link" href="RegistroClientes" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-user" aria-hidden="true"></span> &nbsp; Clientes
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="RegistroCobros">
-                            <span class="fa fa-money-check-alt" aria-hidden="true"></span> &nbsp; Cobros
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="RegistroCobros" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-money-check-alt" aria-hidden="true"></span> &nbsp; Cobros
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="RegistroProductos">
-                            <span class="fa fa-store" aria-hidden="true"></span> &nbsp; Productos
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="RegistroProductos" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-store" aria-hidden="true"></span> &nbsp; Productos
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="RegistroCompraProductos">
-                            <span class="fa fa-cart-plus" aria-hidden="true"></span> &nbsp; Compra productos
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="RegistroCompraProductos" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-cart-plus" aria-hidden="true"></span> &nbsp; Compra productos
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="RegistroVentaProductos">
-                            <span class="fa fa-shopping-bag" aria-hidden="true"></span> &nbsp; Venta productos
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="RegistroVentaProductos" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-shopping-bag" aria-hidden="true"></span> &nbsp; Venta productos
                         </NavLink>
                     </li>
                 </ul>
@@ -68,51 +69,52 @@
 
         @*Consultas*@
         <li class="nav-item px-1">
-            <NavLink class="nav-link" @onclick="ToggleConsultasMenu">
+            <NavLink class="nav-link" href="" @onclick="ToggleConsultasMenu">
                 <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Consultas &nbsp; <span class="fa fa-chevron-down"></span>
             </NavLink>
-            @if (collapseConsultasMenu)
+            @if (expandirConsultasMenu)
             {
-                <ul class="children">
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="ConsultaUsuarios">
-                            <span class="fa fa-users" aria-hidden="true"></span> &nbsp; Usuarios
+                <ul class="nav flex-column">
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="ConsultaUsuarios" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-users" aria-hidden="true"></span> &nbsp; Usuarios
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="ConsultaProveedores">
-                            <span class="fa fa-user-tie" aria-hidden="true"></span> &nbsp; Proveedores
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="ConsultaProveedores" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-user-tie" aria-hidden="true"></span> &nbsp; Proveedores
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="ConsultaClientes">
-                            <span class="fa fa-user" aria-hidden="true"></span> &nbsp; Clientes
+                    <li class="nav-item px-1">
+
+                        <NavLink class="nav-link" href="ConsultaClientes" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-user" aria-hidden="true"></span> &nbsp; Clientes
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="ConsultaCobros">
-                            <span class="fa fa-money-check-alt" aria-hidden="true"></span> &nbsp; Cobros
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="ConsultaCobros" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-money-check-alt" aria-hidden="true"></span> &nbsp; Cobros
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="ConsultaProductos">
-                            <span class="fa fa-store" aria-hidden="true"></span> &nbsp; Productos
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="ConsultaProductos" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-store" aria-hidden="true"></span> &nbsp; Productos
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="ConsultaCompraProductos">
-                            <span class="fa fa-cart-plus" aria-hidden="true"></span> &nbsp; Compra productos
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="ConsultaCompraProductos" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-cart-plus" aria-hidden="true"></span> &nbsp; Compra productos
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
-                        <NavLink class="nav-link" href="ConsultaVentaProductos">
-                            <span class="fa fa-shopping-bag" aria-hidden="true"></span> &nbsp; Venta productos
+                    <li class="nav-item px-1">
+                        <NavLink class="nav-link" href="ConsultaVentaProductos" @onclick="Ocultar">
+                            &nbsp; &nbsp; <span class="fa fa-shopping-bag" aria-hidden="true"></span> &nbsp; Venta productos
                         </NavLink>
                     </li>
                 </ul>
@@ -121,65 +123,65 @@
 
         @*Reportes*@
         <li class="nav-item px-1">
-            <NavLink class="nav-link" @onclick="ToggleReportesMenu">
+            <NavLink class="nav-link" href="" @onclick="ToggleReportesMenu">
                 <span class="oi oi-bar-chart" aria-hidden="true"></span> Reportes &nbsp; <span class="fa fa-chevron-down"></span>
             </NavLink>
-            @if (collapseReportesMenu)
+            @if (expandirReportesMenu)
             {
-                <ul class="children">
-                    <li class="nav-item px-2">
+                <ul class="nav flex-column">
+                    <li class="nav-item px-1">
                         <NavLink class="nav-link" href="ReporteUsuarios">
-                            <span class="fa fa-users" aria-hidden="true"></span> &nbsp; Usuarios
+                            &nbsp; &nbsp; <span class="fa fa-users" aria-hidden="true"></span> &nbsp; Usuarios
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
+                    <li class="nav-item px-1">
                         <NavLink class="nav-link" href="ReporteProveedores">
-                            <span class="fa fa-user-tie" aria-hidden="true"></span> &nbsp; Proveedores
+                            &nbsp; &nbsp; <span class="fa fa-user-tie" aria-hidden="true"></span> &nbsp; Proveedores
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
+                    <li class="nav-item px-1">
+
                         <NavLink class="nav-link" href="ReporteClientes">
-                            <span class="fa fa-user" aria-hidden="true"></span> &nbsp; Clientes
+                            &nbsp; &nbsp; <span class="fa fa-user" aria-hidden="true"></span> &nbsp; Clientes
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
+                    <li class="nav-item px-1">
                         <NavLink class="nav-link" href="ReporteCobros">
-                            <span class="fa fa-money-check-alt" aria-hidden="true"></span> &nbsp; Cobros
+                            &nbsp; &nbsp; <span class="fa fa-money-check-alt" aria-hidden="true"></span> &nbsp; Cobros
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
+                    <li class="nav-item px-1">
                         <NavLink class="nav-link" href="ReporteProductos">
-                            <span class="fa fa-store" aria-hidden="true"></span> &nbsp; Productos
+                            &nbsp; &nbsp; <span class="fa fa-store" aria-hidden="true"></span> &nbsp; Productos
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
+                    <li class="nav-item px-1">
                         <NavLink class="nav-link" href="ReporteCompraProductos">
-                            <span class="fa fa-cart-plus" aria-hidden="true"></span> &nbsp; Compra productos
+                            &nbsp; &nbsp; <span class="fa fa-cart-plus" aria-hidden="true"></span> &nbsp; Compra productos
                         </NavLink>
                     </li>
 
-                    <li class="nav-item px-2">
+                    <li class="nav-item px-1">
                         <NavLink class="nav-link" href="ReporteVentaProductos">
-                            <span class="fa fa-shopping-bag" aria-hidden="true"></span> &nbsp; Venta productos
+                            &nbsp; &nbsp; <span class="fa fa-shopping-bag" aria-hidden="true"></span> &nbsp; Venta productos
                         </NavLink>
                     </li>
                 </ul>
             }
         </li>
-
     </ul>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
-    private bool collapseRegistrosMenu = false;
-    private bool collapseConsultasMenu = false;
-    private bool collapseReportesMenu = false;
+    private bool expandirRegistrosMenu = false;
+    private bool expandirConsultasMenu = false;
+    private bool expandirReportesMenu = false;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -188,24 +190,31 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
+    private void Ocultar()
+    {
+        expandirRegistrosMenu = false;
+        expandirConsultasMenu = false;
+        expandirReportesMenu = false;
+    }
+
     private void ToggleRegistrosMenu()
     {
-        collapseRegistrosMenu = !collapseRegistrosMenu;
-        collapseConsultasMenu = false;
-        collapseReportesMenu = false;
+        expandirRegistrosMenu = !expandirRegistrosMenu;
+        expandirConsultasMenu = false;
+        expandirReportesMenu = false;
     }
 
     private void ToggleConsultasMenu()
     {
-        collapseConsultasMenu = !collapseConsultasMenu;
-        collapseRegistrosMenu = false;
-        collapseReportesMenu = false;
+        expandirConsultasMenu = !expandirConsultasMenu;
+        expandirRegistrosMenu = false;
+        expandirReportesMenu = false;
     }
 
     private void ToggleReportesMenu()
     {
-        collapseReportesMenu = !collapseReportesMenu;
-        collapseRegistrosMenu = false;
-        collapseConsultasMenu = false;
+        expandirReportesMenu = !expandirReportesMenu;
+        expandirRegistrosMenu = false;
+        expandirConsultasMenu = false;
     }
 }
