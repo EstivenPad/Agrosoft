@@ -53,12 +53,7 @@ namespace Agrosoft.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("ClienteId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Clientes");
                 });
@@ -154,21 +149,12 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 5, 13, 12, 49, 520, DateTimeKind.Local).AddTicks(9167),
+                            Fecha = new DateTime(2020, 7, 5, 14, 49, 46, 390, DateTimeKind.Local).AddTicks(7289),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",
                             TipoUsuario = 1
                         });
-                });
-
-            modelBuilder.Entity("Agrosoft.Models.Clientes", b =>
-                {
-                    b.HasOne("Agrosoft.Models.Usuarios", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -13,8 +13,6 @@ namespace Agrosoft.Models
         [Key]
         public int ClienteId { get; set; }
                 
-        public int UsuarioId { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
@@ -45,8 +43,5 @@ namespace Agrosoft.Models
 
         [Required(ErrorMessage = "Es obligatorio introducir la dirección")]
         public string Direccion { get; set; }
-
-        [ForeignKey("UsuarioId")]
-        public virtual Usuarios Usuario { get; set; }
     }
 }

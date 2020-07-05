@@ -1,5 +1,5 @@
 ﻿@page "/RegistroClientes"
-@page "/RegistroClientes/{ClienteId:Id}"
+@page "/RegistroClientes/{ClienteId:int}"
 
 @using BLL
 @using Models
@@ -16,7 +16,75 @@
         <div class="card-body">
             <form>
                 @*Cliente Id*@
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Cliente Id</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="Cliente.ClienteId" class="form-control col-4" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-lg btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                @*Fecha*@
+                <div class="form-group">
+                    <label>Fecha</label>
+                    <InputDate @bind-Value="Cliente.Fecha" class="form-control" />
+                    <ValidationMessage For="@(() => Cliente.Fecha)" />
+                </div>
+
+                @*Nombres*@
+                <div class="form-group">
+                    <label>Nombres</label>
+                    <InputText @bind-Value="Cliente.Nombres" class="form-control" />
+                    <ValidationMessage For="@(() => Cliente.Nombres)" />
+                </div>
+
+                @*Apellidos*@
+                <div class="form-group">
+                    <label>Apellidos</label>
+                    <InputText @bind-Value="Cliente.Apellidos" class="form-control" />
+                    <ValidationMessage For="@(() => Cliente.Apellidos)" />
+                </div>
+
+                @*Cédula*@
+                <div class="form-group">
+                    <label>Cédula</label>
+                    <InputText @bind-Value="Cliente.Cedula" class="form-control" />
+                    <ValidationMessage For="@(() => Cliente.Cedula)" />
+                </div>
+
+                @*Email*@
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" @bind="Cliente.Email" class="form-control" />
+                    <ValidationMessage For="@(() => Cliente.Email)" />
+                </div>
+
+                @*Telélefono*@
+                <div class="form-group">
+                    <label>Telélefono</label>
+                    <InputText @bind-Value="Cliente.Telefono" class="form-control" />
+                    <ValidationMessage For="@(() => Cliente.Telefono)" />
+                </div>
+
+                @*Celular*@
+                <div class="form-group">
+                    <label>Celular</label>
+                    <InputText @bind-Value="Cliente.Celular" class="form-control" />
+                    <ValidationMessage For="@(() => Cliente.Celular)" />
+                </div>
+
+                @*Dirección*@
+                <div class="form-group">
+                    <label>Dirección</label>
+                    <InputText @bind-Value="Cliente.Direccion" class="form-control" />
+                    <ValidationMessage For="@(() => Cliente.Direccion)" />
+                </div>
             </form>
         </div>
 
@@ -34,5 +102,62 @@
     [Parameter]
     public int ClienteId { get; set; }
 
-    public Clientes Cliente { get; set; }
+    private Clientes Cliente { get; set; }
+
+    public RepositorioBase<Clientes> repositorio = new RepositorioBase<Clientes>();
+
+    protected override void OnInitialized()
+    {
+        Nuevo();
+        Buscar();
+    }
+
+    private void Nuevo()
+    {
+        Cliente = new Clientes();
+    }
+
+    private void Buscar()
+    {
+        if (Cliente.ClienteId > 0)
+        {
+            var encontrado = repositorio.Buscar(Cliente.ClienteId);
+
+            if (encontrado != null)
+                this.Cliente = encontrado;
+            else
+                toast.ShowWarning("No encontrado");
+        }
+    }
+
+    public void Guardar()
+    {
+        bool guardo;
+
+        guardo = repositorio.Guardar(Cliente, Cliente.ClienteId);
+
+        if (guardo)
+        {
+            Nuevo();
+            toast.ShowSuccess("Guardado correctamente");
+        }
+        else
+            toast.ShowError("No fue posible guardar");
+    }
+
+    public void Eliminar()
+    {
+        bool elimino;
+
+        elimino = repositorio.Eliminar(Cliente.ClienteId);
+
+        if (elimino)
+        {
+            Nuevo();
+            toast.ShowSuccess("Eliminado correctamente");
+        }
+        else
+            toast.ShowError("No fue posible eliminar");
+    }
 }
+

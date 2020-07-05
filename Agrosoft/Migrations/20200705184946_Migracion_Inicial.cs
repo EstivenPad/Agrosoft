@@ -8,6 +8,26 @@ namespace Agrosoft.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Clientes",
+                columns: table => new
+                {
+                    ClienteId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Fecha = table.Column<DateTime>(nullable: false),
+                    Nombres = table.Column<string>(nullable: false),
+                    Apellidos = table.Column<string>(nullable: false),
+                    Cedula = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Telefono = table.Column<string>(nullable: false),
+                    Celular = table.Column<string>(nullable: false),
+                    Direccion = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clientes", x => x.ClienteId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
@@ -48,42 +68,10 @@ namespace Agrosoft.Migrations
                     table.PrimaryKey("PK_Usuarios", x => x.UsuarioId);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Clientes",
-                columns: table => new
-                {
-                    ClienteId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UsuarioId = table.Column<int>(nullable: false),
-                    Fecha = table.Column<DateTime>(nullable: false),
-                    Nombres = table.Column<string>(nullable: false),
-                    Apellidos = table.Column<string>(nullable: false),
-                    Cedula = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
-                    Telefono = table.Column<string>(nullable: false),
-                    Celular = table.Column<string>(nullable: false),
-                    Direccion = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clientes", x => x.ClienteId);
-                    table.ForeignKey(
-                        name: "FK_Clientes_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "UsuarioId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 5, 13, 12, 49, 520, DateTimeKind.Local).AddTicks(9167), "admin", "Admin", "0123456789", 1 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Clientes_UsuarioId",
-                table: "Clientes",
-                column: "UsuarioId");
+                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 5, 14, 49, 46, 390, DateTimeKind.Local).AddTicks(7289), "admin", "Admin", "0123456789", 1 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
