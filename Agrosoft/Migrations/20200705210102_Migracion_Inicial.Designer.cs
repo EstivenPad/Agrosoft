@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agrosoft.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200705184946_Migracion_Inicial")]
+    [Migration("20200705210102_Migracion_Inicial")]
     partial class Migracion_Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,6 +94,50 @@ namespace Agrosoft.Migrations
                     b.ToTable("Productos");
                 });
 
+            modelBuilder.Entity("Agrosoft.Models.Proveedores", b =>
+                {
+                    b.Property<int>("ProveedorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Apellidos")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Celular")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nombres")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Rnc")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ProveedorId");
+
+                    b.ToTable("Proveedores");
+                });
+
             modelBuilder.Entity("Agrosoft.Models.Usuarios", b =>
                 {
                     b.Property<int>("UsuarioId")
@@ -151,7 +195,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 5, 14, 49, 46, 390, DateTimeKind.Local).AddTicks(7289),
+                            Fecha = new DateTime(2020, 7, 5, 17, 1, 2, 62, DateTimeKind.Local).AddTicks(2778),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",

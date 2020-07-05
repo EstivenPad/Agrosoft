@@ -27,7 +27,7 @@ namespace Agrosoft.Models
         [Required(ErrorMessage = "Es obligatorio introducir la celular")]
         public string Celular { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir el RNC")]
-        [Range(minimum: 9, maximum: 9, ErrorMessage = "Error de formato, el RNC está compuesto de 9 dígitos")]
+        [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "El RNC no puede ser igual a 0")]
         public int Rnc { get; set; }
         [EmailAddress (ErrorMessage ="Introduzca un email válido")]
         [Required(ErrorMessage = "Es obligatorio introducir el email")]

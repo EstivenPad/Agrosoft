@@ -47,6 +47,27 @@ namespace Agrosoft.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Proveedores",
+                columns: table => new
+                {
+                    ProveedorId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UsuarioId = table.Column<int>(nullable: false),
+                    Fecha = table.Column<DateTime>(nullable: false),
+                    Nombres = table.Column<string>(nullable: false),
+                    Apellidos = table.Column<string>(nullable: false),
+                    Telefono = table.Column<string>(nullable: false),
+                    Celular = table.Column<string>(nullable: false),
+                    Rnc = table.Column<int>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Direccion = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proveedores", x => x.ProveedorId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
                 {
@@ -71,7 +92,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 5, 14, 49, 46, 390, DateTimeKind.Local).AddTicks(7289), "admin", "Admin", "0123456789", 1 });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 5, 17, 1, 2, 62, DateTimeKind.Local).AddTicks(2778), "admin", "Admin", "0123456789", 1 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -81,6 +102,9 @@ namespace Agrosoft.Migrations
 
             migrationBuilder.DropTable(
                 name: "Productos");
+
+            migrationBuilder.DropTable(
+                name: "Proveedores");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
