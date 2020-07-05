@@ -16,6 +16,53 @@ namespace Agrosoft.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.5");
 
+            modelBuilder.Entity("Agrosoft.Models.Clientes", b =>
+                {
+                    b.Property<int>("ClienteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Apellidos")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Cedula")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Celular")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nombres")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ClienteId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Clientes");
+                });
+
             modelBuilder.Entity("Agrosoft.Models.Productos", b =>
                 {
                     b.Property<int>("ProductoId")
@@ -107,12 +154,21 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 3, 16, 43, 15, 466, DateTimeKind.Local).AddTicks(1703),
+                            Fecha = new DateTime(2020, 7, 5, 13, 12, 49, 520, DateTimeKind.Local).AddTicks(9167),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",
                             TipoUsuario = 1
                         });
+                });
+
+            modelBuilder.Entity("Agrosoft.Models.Clientes", b =>
+                {
+                    b.HasOne("Agrosoft.Models.Usuarios", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
