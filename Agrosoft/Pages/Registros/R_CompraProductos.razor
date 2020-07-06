@@ -49,8 +49,9 @@
                     <ValidationMessage For="@(()=>Compra.ProveedorId)" />
                 </div>
 
-                @*Detalle*@
+                @*Datos del detalle*@
                 <div class="row">
+                    @*Producto*@
                     <div class="form-group col">
                         <label>Producto</label>
                         <div class="input-group">
@@ -69,27 +70,33 @@
                         </div>
                     </div>
 
+                    @*Marca*@
                     <div class="form-group col">
                         <label>Marca</label>
                         <InputText @bind-Value="marca" class="form-control" readOnly="true" />
                     </div>
 
+                    @*Unidad de medida*@
                     <div class="form-group col">
                         <label>Unidad de medida</label>
-                        <InputNumber @bind-Value="unidadMedida" class="form-control" readOnly="true" />
+                        <InputText @bind-Value="unidadMedida" class="form-control" readOnly="true" />
                     </div>
                 </div>
+
                 <div class="row">
+                    @*Cantidad*@
                     <div class="form-group col">
                         <label>Cantidad</label>
-                        <InputNumber @bind-Value="cantidad" min="0" class="form-control" />
+                        <InputNumber @bind-Value="cantidad" min="0" class="form-control" @onfocusout="CalcularImporte"/>
                     </div>
 
+                    @*Precio*@
                     <div class="form-group col">
                         <label>Precio</label>
-                        <InputNumber @bind-Value="precio" min="0" class="form-control" />
+                        <InputNumber @bind-Value="precio" min="0" class="form-control" readOnly="true"/>
                     </div>
 
+                    @*Importe*@
                     <div class="form-group col">
                         <label>Importe</label>
                         <div class="input-group">
@@ -103,7 +110,7 @@
                     </div>
                 </div>
 
-                @*Tabla*@
+                @*Tabla del detalle*@
                 <table class="table">
                     <thead class="thead-light">
                         <tr>
@@ -142,7 +149,6 @@
                 <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
                 <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
             </div>
-
         </div>
     </div>
 </EditForm>
@@ -153,6 +159,7 @@
     private List<Productos> ListaProductos = new List<Productos>();
     RepositorioBase<Proveedores> metodosProveedor = new RepositorioBase<Proveedores>();
     RepositorioBase<Productos> metodosProducto = new RepositorioBase<Productos>();
+    RepositorioBase<UnidadesMedida> metodosUnidad= new RepositorioBase<UnidadesMedida>();
 
     private int id;
     private int compraId;
@@ -161,7 +168,7 @@
     private decimal precio;
     private decimal importe;
     private string marca;
-    private int unidadMedida;
+    private string unidadMedida;
 
     protected override void OnInitialized()
     {
@@ -185,7 +192,8 @@
 
     public void LlenarUnidadMedida()
     {
-        unidadMedida = metodosProducto.Buscar(productoId).UnidadMedida;
+        int unidad= metodosProducto.Buscar(productoId).UnidadMedida;
+        unidadMedida = metodosUnidad.Buscar(unidad).Descripcion;
     }
 
     public void CargarProveedores()
@@ -207,7 +215,6 @@
         compraId = 0;
         productoId = 0;
         precio = 0;
-        importe = cantidad + precio;
     }
 
     private void Buscar()
@@ -315,5 +322,10 @@
             monto += (item.Cantidad * metodosProducto.Buscar(item.ProductoId).Precio);
         }
         Compra.Total = monto;
+    }
+
+    private void CalcularImporte()
+    {
+        importe = cantidad + precio;
     }
 }

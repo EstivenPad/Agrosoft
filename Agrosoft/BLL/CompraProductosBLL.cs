@@ -69,7 +69,7 @@ namespace Agrosoft.BLL
 
             try
             {
-                db.Database.ExecuteSqlRaw($"Delete FROM CompraProductosDetalle where MoraId = {compra.CompraId}");
+                db.Database.ExecuteSqlRaw($"Delete FROM CompraProductosDetalle where CompraId = {compra.CompraId}");
 
                 foreach (var item in compra.CompraProductosDetalle)
                 {
