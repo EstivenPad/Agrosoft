@@ -58,6 +58,54 @@ namespace Agrosoft.Migrations
                     b.ToTable("Clientes");
                 });
 
+            modelBuilder.Entity("Agrosoft.Models.CompraProductos", b =>
+                {
+                    b.Property<int>("CompraId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProveedorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("CompraId");
+
+                    b.ToTable("CompraProductos");
+                });
+
+            modelBuilder.Entity("Agrosoft.Models.CompraProductosDetalle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CompraId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompraId");
+
+                    b.ToTable("CompraProductosDetalle");
+                });
+
             modelBuilder.Entity("Agrosoft.Models.Productos", b =>
                 {
                     b.Property<int>("ProductoId")
@@ -136,6 +184,47 @@ namespace Agrosoft.Migrations
                     b.ToTable("Proveedores");
                 });
 
+            modelBuilder.Entity("Agrosoft.Models.UnidadesMedida", b =>
+                {
+                    b.Property<int>("UnidadId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UnidadId");
+
+                    b.ToTable("UnidadesMedida");
+
+                    b.HasData(
+                        new
+                        {
+                            UnidadId = 1,
+                            Descripcion = "Saco 25 Lbs"
+                        },
+                        new
+                        {
+                            UnidadId = 2,
+                            Descripcion = "Saco 50 Lbs"
+                        },
+                        new
+                        {
+                            UnidadId = 3,
+                            Descripcion = "Saco 100 Lbs"
+                        },
+                        new
+                        {
+                            UnidadId = 4,
+                            Descripcion = "Saco 125 Lbs"
+                        },
+                        new
+                        {
+                            UnidadId = 5,
+                            Descripcion = "Saco 200 Lbs"
+                        });
+                });
+
             modelBuilder.Entity("Agrosoft.Models.Usuarios", b =>
                 {
                     b.Property<int>("UsuarioId")
@@ -193,12 +282,21 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 5, 17, 1, 2, 62, DateTimeKind.Local).AddTicks(2778),
+                            Fecha = new DateTime(2020, 7, 6, 0, 33, 19, 607, DateTimeKind.Local).AddTicks(5321),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",
                             TipoUsuario = 1
                         });
+                });
+
+            modelBuilder.Entity("Agrosoft.Models.CompraProductosDetalle", b =>
+                {
+                    b.HasOne("Agrosoft.Models.CompraProductos", null)
+                        .WithMany("CompraProductosDetalle")
+                        .HasForeignKey("CompraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

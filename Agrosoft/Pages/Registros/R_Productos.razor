@@ -49,11 +49,10 @@
                     <label>Unidad de medida</label>
                     <select @bind="Producto.UnidadMedida" class="form-control">
                         <option value="0" disabled>Seleccione una opcion</option>
-                        <option value="1">Saco 25Lbs</option>
-                        <option value="2">Saco 50Lbs</option>
-                        <option value="3">Saco 100Lbs</option>
-                        <option value="4">Saco 125Lbs</option>
-                        <option value="5">Saco 360Lbs</option>
+                        @foreach (var item in ListaUnidades)
+                        {
+                            <option value=@item.UnidadId >@item.Descripcion</option>
+                        }
                     </select>
                     <ValidationMessage For="@(()=>Producto.UnidadMedida)" />
                 </div>
@@ -100,16 +99,24 @@
 </EditForm>
 @code {
     private Productos Producto = new Productos();
+    List<UnidadesMedida> ListaUnidades = new List<UnidadesMedida>();
+    RepositorioBase<UnidadesMedida> repositorio = new RepositorioBase<UnidadesMedida>();
 
     protected override void OnInitialized()
     {
         Nuevo();
         Buscar();
+        CargarUnidades();
     }
 
     public void Nuevo()
     {
         Producto = new Productos();
+    }
+
+    private void CargarUnidades()
+    {
+        ListaUnidades = repositorio.GetList(x => true);
     }
 
     private void Buscar()
