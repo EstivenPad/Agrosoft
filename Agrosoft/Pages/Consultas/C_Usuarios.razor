@@ -1,0 +1,145 @@
+﻿@page "/ConsultaUsuarios"
+
+@using BLL
+@using Models 
+
+@inject IToastService toast
+
+<h3>Consulta de Usuarios</h3>
+
+<div class="card">
+    <div class="card-header">
+        @*Filtro*@
+        <div class="form-group">
+            <label>Filtro</label>
+            <select class="browser-default custom-select" @bind="Filtro">
+                <option value="0" disabled>Seleccione una opcion</option>
+                <option value="1">Todos</option>
+                <option value="2">Nombres</option>
+                <option value="3">Apellidos</option>
+                <option value="4">Nombre de usuario</option>
+                <option value="5">Tipo de usuario</option>
+            </select>
+        </div>
+
+        @*Criterio*@
+        <div class="form-group">
+            <label>Criterio</label>
+            <InputText @bind-Value="Criterio" class="form-control"/>
+        </div>
+        <button type="button" class="btn btn-primary" @onclick="Consultar">Consultar</button>
+    </div>
+
+    @*Tabla*@
+    <div class="card-body">
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Direccion</th>
+                <th>Nombre de usuario</th>
+                <th>Tipo de usuario</th>
+            </tr>
+
+            @foreach (var item in Lista)
+            {
+                <tr>
+                    <td>@item.UsuarioId</td>
+                    <td>@item.Nombres</td>
+                    <td>@item.Apellidos</td>
+                    <td>@item.Direccion</td>
+                    <td>@item.NombreUsuario</td>
+                    <td>@(SeleccionarTipoUsuario(item.TipoUsuario))</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div class="card-footer">
+        <div class="form-group">
+            <label>Total de usuarios: @Total</label>
+        </div>
+    </div>
+</div>
+
+@code {
+    public int Total { get; set; }
+    public int Filtro { get; set; }
+    public string Criterio { get; set; }
+
+    private List<Usuarios> Lista = new List<Usuarios>();
+
+    public RepositorioBase<Usuarios> repositorio = new RepositorioBase<Usuarios>();
+
+    public void Consultar()
+    {
+        var listado = new List<Usuarios>();
+
+
+        if (Criterio.Trim().Length > 0)
+        {
+            switch (Filtro)
+            {
+                case 0:
+                    listado = repositorio.GetList(p => true);
+                    break;
+
+                case 1:
+                    listado = repositorio.GetList(p => p.Nombres.Contains(Criterio));
+                    break;
+
+                case 2:
+                    listado = repositorio.GetList(p => p.Apellidos.Contains(Criterio));
+                    break;
+
+                case 3:
+                    listado = repositorio.GetList(p => p.NombreUsuario.Contains(Criterio));
+                    break;
+
+                case 4:
+                    int auxiliar = 0;
+
+                    if (Criterio.Contains("Administrador"))
+                        auxiliar = 1;
+                    else if (Criterio.Contains("Empleado"))
+                        auxiliar = 2;
+                    else if (Criterio.Contains("Invitado"))
+                        auxiliar = 3;
+
+                    listado = repositorio.GetList(p => p.TipoUsuario == auxiliar);
+                    break;
+            }
+        }
+        else
+        {
+            listado = repositorio.GetList(p => true);
+        }
+
+        Lista = null;
+        Lista = listado;
+        CalcularTotal();
+    }
+
+    public string SeleccionarTipoUsuario(int tipoUsuario)
+    {
+        if (tipoUsuario == 1)
+            return "Administrador";
+        else if (tipoUsuario == 2)
+            return "Empleado";
+        else if (tipoUsuario == 3)
+            return "Invitado";
+
+        return "";
+    }
+
+    public void CalcularTotal()
+    {
+        Total = 0;
+
+        foreach (var item in Lista)
+        {
+            Total++;
+        }
+    }
+}
