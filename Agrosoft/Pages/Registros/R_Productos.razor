@@ -100,7 +100,8 @@
 @code {
     private Productos Producto = new Productos();
     List<UnidadesMedida> ListaUnidades = new List<UnidadesMedida>();
-    RepositorioBase<UnidadesMedida> repositorio = new RepositorioBase<UnidadesMedida>();
+    RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
+    RepositorioBase<UnidadesMedida> repositorioUnidades = new RepositorioBase<UnidadesMedida>();
 
     protected override void OnInitialized()
     {
@@ -116,14 +117,14 @@
 
     private void CargarUnidades()
     {
-        ListaUnidades = repositorio.GetList(x => true);
+        ListaUnidades = repositorioUnidades.GetList(x => true);
     }
 
     private void Buscar()
     {
         if (Producto.ProductoId > 0)
         {
-            var encontrado = ProductosBLL.Buscar(Producto.ProductoId);
+            var encontrado = repositorioProductos.Buscar(Producto.ProductoId);
 
             if (encontrado != null)
                 this.Producto = encontrado;
@@ -138,7 +139,7 @@
     public void Guardar()
     {
         bool paso;
-        paso = ProductosBLL.Guardar(Producto);
+        paso = repositorioProductos.Guardar(Producto, Producto.ProductoId);
 
         if (Producto.CantidadExistente < Producto.CantidadMinima)
         {
@@ -161,7 +162,7 @@
     {
         bool elimino;
 
-        elimino = ProductosBLL.Eliminar(Producto.ProductoId);
+        elimino = repositorioProductos.Eliminar(Producto.ProductoId);
 
         if (elimino)
         {

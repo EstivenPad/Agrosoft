@@ -23,23 +23,28 @@ namespace Agrosoft.BLL
             } 
         }
 
-        public static void EliminarCantidad(CompraProductos compra)
+        public static void RestarCantidad(CompraProductos compra)
         {
             RepositorioBase<Productos> Metodos = new RepositorioBase<Productos>();
+            CompraProductos compraAnterior = CompraProductosBLL.Buscar(compra.CompraId);
 
-            foreach (var item in compra.CompraProductosDetalle)
+            foreach (var item in compraAnterior.CompraProductosDetalle)
             {
                 Productos productos = Metodos.Buscar(item.ProductoId);
                 productos.CantidadExistente -= item.Cantidad;
                 Metodos.Modificar(productos);
             }
         }
+
         public static bool Guardar(CompraProductos compra)
         {
             if (!Existe(compra.CompraId))
                 return Insertar(compra);
             else
+            {
+                RestarCantidad(compra);
                 return Modificar(compra);
+            }
         }
 
         public static bool Existe(int id)
@@ -94,7 +99,7 @@ namespace Agrosoft.BLL
 
             try
             {
-                //EliminarCantidad(compra);
+                
                 db.Database.ExecuteSqlRaw($"Delete FROM CompraProductosDetalle where CompraId = {compra.CompraId}");
                 
                 foreach (var item in compra.CompraProductosDetalle)
@@ -103,7 +108,7 @@ namespace Agrosoft.BLL
                 }
                 db.Entry(compra).State = EntityState.Modified;
 
-                //AgregarCantidad(compra);
+                AgregarCantidad(compra);
                 paso = (db.SaveChanges() > 0);
             }
             catch (Exception)
@@ -119,20 +124,21 @@ namespace Agrosoft.BLL
 
         public static bool Eliminar(int id)
         {
+            RepositorioBase<Productos> Metodos = new RepositorioBase<Productos>();
+            CompraProductos compra = CompraProductosBLL.Buscar(id);
+
             bool paso = false;
             Contexto db = new Contexto();
             try
             {
-                var compra = db.CompraProductos.Find(id);
-
                 if (compra != null)
                 {
-                    /*foreach (var item in compra.CompraProductosDetalle)
+                    foreach (var item in compra.CompraProductosDetalle)
                     {
-                        var Producto = db.Productos.Find(item.ProductoId);
-                        if (Producto != null)
-                            Producto.CantidadExistente -= item.Cantidad;
-                    }*/
+                        Productos productos = Metodos.Buscar(item.ProductoId);
+                        productos.CantidadExistente -= item.Cantidad;
+                        Metodos.Modificar(productos);
+                    }
 
                     db.CompraProductos.Remove(compra);
                     paso = db.SaveChanges() > 0;

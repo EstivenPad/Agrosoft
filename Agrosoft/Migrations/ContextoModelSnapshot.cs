@@ -282,7 +282,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 6, 0, 33, 19, 607, DateTimeKind.Local).AddTicks(5321),
+                            Fecha = new DateTime(2020, 7, 7, 12, 35, 2, 552, DateTimeKind.Local).AddTicks(735),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",

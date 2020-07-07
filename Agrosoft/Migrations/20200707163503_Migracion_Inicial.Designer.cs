@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agrosoft.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200706043320_Migracion_Inicial")]
+    [Migration("20200707163503_Migracion_Inicial")]
     partial class Migracion_Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -284,7 +284,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 6, 0, 33, 19, 607, DateTimeKind.Local).AddTicks(5321),
+                            Fecha = new DateTime(2020, 7, 7, 12, 35, 2, 552, DateTimeKind.Local).AddTicks(735),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",

@@ -79,6 +79,7 @@
 
 @code {
     List<Productos> ListaProductos = new List<Productos>();
+    RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
 
     private string filtro;
     private string criterio;
@@ -89,7 +90,7 @@
 
         if (string.IsNullOrWhiteSpace(criterio))
         {
-            ListaProductos = ProductosBLL.GetList(x => true);
+            ListaProductos = repositorioProductos.GetList(x => true);
         }
         else
         {
@@ -99,17 +100,17 @@
                     toast.ShowError("¡Opcion incorrecta!");
                     break;
                 case 1:
-                    ListaProductos = ProductosBLL.GetList(x => true);
+                    ListaProductos = repositorioProductos.GetList(x => true);
                     break;
                 case 2:
                     int id = Convert.ToInt32(criterio);
-                    ListaProductos = ProductosBLL.GetList(x => x.ProductoId == id);
+                    ListaProductos = repositorioProductos.GetList(x => x.ProductoId == id);
                     break;
                 case 3:
-                    ListaProductos = ProductosBLL.GetList(x => x.Nombre == criterio);
+                    ListaProductos = repositorioProductos.GetList(x => x.Nombre == criterio);
                     break;
                 case 4:
-                    ListaProductos = ProductosBLL.GetList(x => x.Marca == criterio);
+                    ListaProductos = repositorioProductos.GetList(x => x.Marca == criterio);
                     break;
             }
         }
