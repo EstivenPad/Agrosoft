@@ -39,14 +39,21 @@
                 @*Proveedor*@
                 <div class="form-group">
                     <label>Proveedor</label>
-                    <select class="form-control" @bind="Compra.ProveedorId">
-                        <option value="0" disabled>Seleccione una opcion</option>
-                        @foreach (var item in ListaProveedores)
-                        {
-                            <option value="@item.ProveedorId">@item.Nombres</option>
-                        }
-                    </select>
-                    <ValidationMessage For="@(()=>Compra.ProveedorId)" />
+                    <div class="input-group">
+                        <select class="form-control" @bind="Compra.ProveedorId">
+                            <option value="0" disabled>Seleccione una opcion</option>
+                            @foreach (var item in ListaProveedores)
+                            {
+                                <option value="@item.ProveedorId">@item.Nombres</option>
+                            }
+                        </select>
+                        <ValidationMessage For="@(()=>Compra.ProveedorId)" />
+                        <div class="input-group-append">
+                            <NavLink type="button" class="btn btn-primary" href="RegistroProveedores">
+                                <i class="oi oi-plus" aria-hidden="true" />
+                            </NavLink>
+                        </div>
+                    </div>
                 </div>
 
                 @*Datos del detalle*@
@@ -99,7 +106,7 @@
                             @*Precio*@
                             <div class="form-group col">
                                 <label>Precio</label>
-                                <InputNumber @bind-Value="precio" min="0" class="form-control" readOnly="true" />
+                                <InputNumber @bind-Value="precio" min="0" class="form-control" @onfocusout="CalcularImporte" readOnly="true" />
                             </div>
 
                             @*Importe*@
@@ -189,6 +196,9 @@
 
     public void LlenarPrecio()
     {
+        if (productoId == 0)
+            return;
+
         precio = metodosProducto.Buscar(productoId).Precio;
         LlenarMarca();
     }
@@ -335,6 +345,6 @@
 
     private void CalcularImporte()
     {
-        importe = cantidad + precio;
+        importe = cantidad * precio;
     }
 }
