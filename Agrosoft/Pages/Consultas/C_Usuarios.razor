@@ -15,10 +15,11 @@
             <select class="browser-default custom-select" @bind="Filtro">
                 <option value="0" disabled>Seleccione una opcion</option>
                 <option value="1">Todos</option>
-                <option value="2">Nombres</option>
-                <option value="3">Apellidos</option>
-                <option value="4">Nombre de usuario</option>
-                <option value="5">Tipo de usuario</option>
+                <option value="2">ID</option>
+                <option value="3">Nombres</option>
+                <option value="4">Apellidos</option>
+                <option value="5">Nombre de usuario</option>
+                <option value="6">Tipo de usuario</option>
             </select>
         </div>
 
@@ -76,28 +77,32 @@
     {
         var listado = new List<Usuarios>();
 
-
         if (Criterio.Trim().Length > 0)
         {
             switch (Filtro)
             {
-                case 0:
+                case 1:
                     listado = repositorio.GetList(p => true);
                     break;
 
-                case 1:
-                    listado = repositorio.GetList(p => p.Nombres.Contains(Criterio));
-                    break;
-
                 case 2:
-                    listado = repositorio.GetList(p => p.Apellidos.Contains(Criterio));
+                    int id = Convert.ToInt32(Criterio);
+                    listado = repositorio.GetList(p => p.UsuarioId == id);
                     break;
 
                 case 3:
-                    listado = repositorio.GetList(p => p.NombreUsuario.Contains(Criterio));
+                    listado = repositorio.GetList(p => p.Nombres.Contains(Criterio));
                     break;
 
                 case 4:
+                    listado = repositorio.GetList(p => p.Apellidos.Contains(Criterio));
+                    break;
+
+                case 5:
+                    listado = repositorio.GetList(p => p.NombreUsuario.Contains(Criterio));
+                    break;
+
+                case 6:
                     int auxiliar = 0;
 
                     if (Criterio.Contains("Administrador"))
