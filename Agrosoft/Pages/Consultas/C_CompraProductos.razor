@@ -5,8 +5,8 @@
 
 @inject IToastService toast;
 <div class="card">
-    <div class="card-header bg-success">
-        <h3>Consulta de compras</h3>
+    <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+        <h3 style="font-family:Georgia; color:white">Consulta de compras</h3>
     </div>
 
     <div class="card-body">
@@ -81,7 +81,7 @@
             </table>
         }
         else
-            toast.ShowError("¡No hay articulos guardados!");
+            toast.ShowError("¡No hay compras guardadas!");
     </div>
 </div>
 
