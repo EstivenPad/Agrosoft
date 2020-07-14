@@ -1,12 +1,12 @@
-﻿@page "/ConsultaProductos"
+﻿@page "/ConsultaCompraProductos"
 
 @using Models
 @using BLL
 
 @inject IToastService toast;
 <div class="card">
-    <div class="card-header">
-        <h3>Consulta de productos</h3>
+    <div class="card-header bg-success">
+        <h3>Consulta de compras</h3>
     </div>
 
     <div class="card-body">
@@ -19,8 +19,9 @@
                     <option value="0" disabled>Elija una opcion</option>
                     <option value="1">Todo</option>
                     <option value="2">ID</option>
-                    <option value="3">Nombre</option>
-                    <option value="4">Marca</option>
+                    <option value="3">Proveedor Id</option>
+                    <option value="4">Usuario Id</option>
+                    <option value="4">Total</option>
                 </select>
             </div>
 
@@ -37,35 +38,31 @@
                 </div>
             </div>
         </div>
-        
+
 
         @*Tabla*@
-        @if (ListaProductos != null)
+        @if (ListaComprasProductos != null)
         {
             <table class="table">
                 <thead class="thead-light">
                     <tr>
                         <th>Codigo</th>
-                        <th>Nombre</th>
-                        <th>Marca</th>
-                        <th>Cantidad minima</th>
-                        <th>Cantidad existente</th>
-                        <th>Precio</th>
-                        <th>Costo</th>
+                        <th>Fecha</th>
+                        <th>Proveedor</th>
+                        <th>Usuario</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach (var articulo in ListaProductos)
+                    @foreach (var compra in ListaComprasProductos)
                     {
                         <tr>
-                            <td>@articulo.ProductoId</td>
-                            <td>@articulo.Nombre</td>
-                            <td>@articulo.Marca</td>
-                            <td>@articulo.CantidadMinima</td>
-                            <td>@articulo.CantidadExistente</td>
-                            <td>@articulo.Precio</td>
-                            <td>@articulo.Costo</td>
+                            <td>@compra.CompraId</td>
+                            <td>@compra.Fecha</td>
+                            <td>@compra.ProveedorId</td>
+                            <td>@compra.UsuarioId</td>
+                            <td>@compra.Total</td>
                         </tr>
                     }
                 </tbody>
@@ -78,11 +75,13 @@
 </div>
 
 @code {
-    List<Productos> ListaProductos = new List<Productos>();
-    RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
+    List<CompraProductos> ListaComprasProductos = new List<CompraProductos>();
+    RepositorioBase<CompraProductos> repositorioCompras = new RepositorioBase<CompraProductos>();
 
     private string filtro;
     private string criterio;
+    private DateTime Desde;
+    private DateTime Hasta;
 
     private void Consultar()
     {
@@ -90,7 +89,8 @@
 
         if (string.IsNullOrWhiteSpace(criterio))
         {
-            ListaProductos = repositorioProductos.GetList(x => true);
+            ListaComprasProductos = repositorioCompras.GetList(x => true);
+            ListaComprasProductos = ListaComprasProductos.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
         }
         else
         {
@@ -100,19 +100,26 @@
                     toast.ShowError("¡Opcion incorrecta!");
                     break;
                 case 1:
-                    ListaProductos = repositorioProductos.GetList(x => true);
+                    ListaComprasProductos = repositorioCompras.GetList(x => true);
                     break;
                 case 2:
                     int id = Convert.ToInt32(criterio);
-                    ListaProductos = repositorioProductos.GetList(x => x.ProductoId == id);
+                    ListaComprasProductos = repositorioCompras.GetList(x => x.CompraId == id);
                     break;
                 case 3:
-                    ListaProductos = repositorioProductos.GetList(x => x.Nombre == criterio);
+                    int proveedorId = Convert.ToInt32(criterio);
+                    ListaComprasProductos = repositorioCompras.GetList(x => x.ProveedorId == proveedorId);
                     break;
                 case 4:
-                    ListaProductos = repositorioProductos.GetList(x => x.Marca == criterio);
+                    int usuarioId = Convert.ToInt32(criterio);
+                    ListaComprasProductos = repositorioCompras.GetList(x => x.UsuarioId == usuarioId);
+                    break;
+                case 5:
+                    decimal total = Convert.ToDecimal(criterio);
+                    ListaComprasProductos = repositorioCompras.GetList(x => x.Total == total);
                     break;
             }
+            ListaComprasProductos = ListaComprasProductos.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
         }
     }
 }
