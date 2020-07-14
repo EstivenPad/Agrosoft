@@ -1,0 +1,141 @@
+﻿@page "/ConsultaCobros"
+
+@using Models
+@using BLL
+
+@inject IToastService toast;
+<div class="card">
+    <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+        <h3 style="font-family:Georgia; color:white">Consulta de cobros</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            @*Desde*@
+            <div class="form-group col-2">
+                <label>Desde</label>
+                <input type="date" class="form-control" @bind="Desde" />
+            </div>
+
+            @*Hasta*@
+            <div class="form-group col-2">
+                <label>Hasta</label>
+                <input type="date" class="form-control" @bind="Hasta" />
+            </div>
+
+            @*Filtro*@
+            <div class="form-group col-3">
+                <label>Filtro</label>
+                <select @bind="filtro" class="form-control">
+                    <option value="0" disabled>Elija una opción</option>
+                    <option value="1">Todo</option>
+                    <option value="2">Cobro Id</option>
+                    <option value="3">Cliente Id</option>
+                    <option value="4">Usuario Id</option>
+                    <option value="5">Balance</option>
+                    <option value="6">Límite de crédito</option>
+                </select>
+            </div>
+
+            @*Criterio*@
+            <div class="form-group col">
+                <label>Criterio</label>
+                <div class="input-group">
+                    <input type="text" @bind="criterio" class="form-control" />
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                            <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*Tabla*@
+        @if (ListaCobros != null)
+        {
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Depósito</th>
+                        <th>Balance</th>
+                        <th>Límite de crédito</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var cobro in ListaCobros)
+                    {
+                        <tr>
+                            <td>@cobro.CobrosId</td>
+                            <td>@cobro.Fecha</td>
+                            <td>@repositorioClientes.Buscar(cobro.ClienteId).Nombres</td>
+                            <td>@cobro.Deposito</td>
+                            <td>@cobro.Balance</td>
+                            <td>@cobro.LimiteCredito</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+            toast.ShowError("¡No hay cobros guardados!");
+    </div>
+</div>
+
+@code {
+    List<Cobros> ListaCobros = new List<Cobros>();
+    RepositorioBase<Cobros> repositorioCobros = new RepositorioBase<Cobros>();
+    RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
+
+    private string filtro;
+    private string criterio;
+    private DateTime Desde = DateTime.Now;
+    private DateTime Hasta = DateTime.Now;
+
+    private void Consultar()
+    {
+        int opcion = Convert.ToInt32(filtro);
+
+        if (string.IsNullOrWhiteSpace(criterio))
+        {
+            ListaCobros = repositorioCobros.GetList(x => true);
+        }
+        else
+        {
+            switch (opcion)
+            {
+                case 0:
+                    toast.ShowError("¡Opción incorrecta!");
+                    break;
+                case 1:
+                    ListaCobros = repositorioCobros.GetList(x => true);
+                    break;
+                case 2:
+                    int id = Convert.ToInt32(criterio);
+                    ListaCobros = repositorioCobros.GetList(x => x.CobrosId == id);
+                    break;
+                case 3:
+                    int clienteId = Convert.ToInt32(criterio);
+                    ListaCobros = repositorioCobros.GetList(x => x.ClienteId == clienteId);
+                    break;
+                case 4:
+                    int usuarioId = Convert.ToInt32(criterio);
+                    ListaCobros = repositorioCobros.GetList(x => x.UsuarioId == usuarioId);
+                    break;
+                case 5:
+                    decimal balance = Convert.ToDecimal(criterio);
+                    ListaCobros = repositorioCobros.GetList(x => x.Balance == balance);
+                    break;
+                case 6:
+                    decimal limiteCredito = Convert.ToDecimal(criterio);
+                    ListaCobros = repositorioCobros.GetList(x => x.LimiteCredito == limiteCredito);
+                    break;
+            }
+            ListaCobros = ListaCobros.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+        }
+    }
+}
