@@ -10,35 +10,47 @@
     </div>
 
     <div class="card-body">
-
         <div class="row">
-            @*Filtro*@
-            <div class="form-group col">
-                <label>Filtro</label>
-                <select @bind="filtro" class="form-control">
-                    <option value="0" disabled>Elija una opcion</option>
-                    <option value="1">Todo</option>
-                    <option value="2">ID</option>
-                    <option value="3">Proveedor Id</option>
-                    <option value="4">Usuario Id</option>
-                    <option value="4">Total</option>
-                </select>
-            </div>
+            <div class="input-group col">
+                @*Desde*@
+                <div class="form-group col-2">
+                    <label>Desde</label>
+                    <input type="date" class="form-control" @bind="Desde" />
+                </div>
 
-            @*Criterio*@
-            <div class="form-group col">
-                <label>Criterio</label>
-                <div class="input-group">
-                    <input type="text" @bind="criterio" class="form-control" />
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
-                            <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
-                        </button>
+                @*Hasta*@
+                <div class="form-group col-2">
+                    <label>Hasta</label>
+                    <input type="date" class="form-control" @bind="Hasta" />
+                </div>
+
+                @*Filtro*@
+                <div class="form-group col-3">
+                    <label>Filtro</label>
+                    <select @bind="filtro" class="form-control">
+                        <option value="0" disabled>Elija una opcion</option>
+                        <option value="1">Todo</option>
+                        <option value="2">ID</option>
+                        <option value="3">Proveedor Id</option>
+                        <option value="4">Usuario Id</option>
+                        <option value="4">Total</option>
+                    </select>
+                </div>
+
+                @*Criterio*@
+                <div class="form-group col">
+                    <label>Criterio</label>
+                    <div class="input-group">
+                        <input type="text" @bind="criterio" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                                <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
 
         @*Tabla*@
         @if (ListaComprasProductos != null)
@@ -70,7 +82,6 @@
         }
         else
             toast.ShowError("¡No hay articulos guardados!");
-
     </div>
 </div>
 
@@ -80,8 +91,8 @@
 
     private string filtro;
     private string criterio;
-    private DateTime Desde;
-    private DateTime Hasta;
+    private DateTime Desde = DateTime.Now;
+    private DateTime Hasta = DateTime.Now;
 
     private void Consultar()
     {
@@ -90,7 +101,6 @@
         if (string.IsNullOrWhiteSpace(criterio))
         {
             ListaComprasProductos = repositorioCompras.GetList(x => true);
-            ListaComprasProductos = ListaComprasProductos.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
         }
         else
         {
@@ -119,7 +129,7 @@
                     ListaComprasProductos = repositorioCompras.GetList(x => x.Total == total);
                     break;
             }
-            ListaComprasProductos = ListaComprasProductos.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+            ListaComprasProductos = ListaComprasProductos.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();            
         }
     }
 }
