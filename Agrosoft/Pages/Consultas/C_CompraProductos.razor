@@ -11,42 +11,40 @@
 
     <div class="card-body">
         <div class="row">
-            <div class="input-group col">
-                @*Desde*@
-                <div class="form-group col-2">
-                    <label>Desde</label>
-                    <input type="date" class="form-control" @bind="Desde" />
-                </div>
+            @*Desde*@
+            <div class="form-group col-2">
+                <label>Desde</label>
+                <input type="date" class="form-control" @bind="Desde" />
+            </div>
 
-                @*Hasta*@
-                <div class="form-group col-2">
-                    <label>Hasta</label>
-                    <input type="date" class="form-control" @bind="Hasta" />
-                </div>
+            @*Hasta*@
+            <div class="form-group col-2">
+                <label>Hasta</label>
+                <input type="date" class="form-control" @bind="Hasta" />
+            </div>
 
-                @*Filtro*@
-                <div class="form-group col-3">
-                    <label>Filtro</label>
-                    <select @bind="filtro" class="form-control">
-                        <option value="0" disabled>Elija una opcion</option>
-                        <option value="1">Todo</option>
-                        <option value="2">ID</option>
-                        <option value="3">Proveedor Id</option>
-                        <option value="4">Usuario Id</option>
-                        <option value="4">Total</option>
-                    </select>
-                </div>
+            @*Filtro*@
+            <div class="form-group col-sm-4">
+                <label>Filtro</label>
+                <select @bind="filtro" class="form-control">
+                    <option value="0" disabled>Elija una opcion</option>
+                    <option value="1">Todo</option>
+                    <option value="2">ID</option>
+                    <option value="3">Proveedor Id</option>
+                    <option value="4">Usuario Id</option>
+                    <option value="4">Total</option>
+                </select>
+            </div>
 
-                @*Criterio*@
-                <div class="form-group col">
-                    <label>Criterio</label>
-                    <div class="input-group">
-                        <input type="text" @bind="criterio" class="form-control" />
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
-                                <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
-                            </button>
-                        </div>
+            @*Criterio*@
+            <div class="form-group col">
+                <label>Criterio</label>
+                <div class="input-group">
+                    <input type="text" @bind="criterio" class="form-control" />
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                            <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
+                        </button>
                     </div>
                 </div>
             </div>
