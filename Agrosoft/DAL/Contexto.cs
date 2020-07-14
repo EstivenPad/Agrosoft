@@ -15,6 +15,7 @@ namespace Agrosoft.DAL
         public DbSet<Clientes> Clientes { get; set; }
         public DbSet<Proveedores> Proveedores { get; set; }
         public DbSet<CompraProductos> CompraProductos { get; set; }
+        public DbSet<Cobros> Cobros { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

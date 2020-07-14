@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <label>Compra Id</label>
                             <div class="input-group">
-                                <InputNumber @bind-Value="Compra.CompraId" class="form-control col-4"></InputNumber>
+                                <InputNumber @bind-Value="Compra.CompraId" min="0" class="form-control col-4"></InputNumber>
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar"> <span class="oi oi-magnifying-glass"></span> Buscar </button>
                                 </div>
@@ -47,13 +47,13 @@
                                 <option value="@item.ProveedorId">@item.Nombres</option>
                             }
                         </select>
-                        <ValidationMessage For="@(()=>Compra.ProveedorId)" />
                         <div class="input-group-append">
                             <NavLink type="button" class="btn btn-primary" href="RegistroProveedores">
                                 <i class="oi oi-plus" aria-hidden="true" />
                             </NavLink>
                         </div>
                     </div>
+                    <ValidationMessage For="@(()=>Compra.ProveedorId)" />
                 </div>
 
                 @*Datos del detalle*@
