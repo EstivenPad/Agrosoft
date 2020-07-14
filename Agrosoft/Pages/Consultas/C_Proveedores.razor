@@ -1,0 +1,149 @@
+﻿@page "/ConsultaProveedores"
+
+@using Models
+@using BLL
+
+@inject IToastService toast;
+<div class="card">
+    <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+        <h3 style="font-family:Georgia; color:white">Consulta de proveedores</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="input-group col">
+                @*Desde*@
+                <div class="form-group col-2">
+                    <label>Desde</label>
+                    <input type="date" class="form-control" @bind="Desde" />
+                </div>
+
+                @*Hasta*@
+                <div class="form-group col-2">
+                    <label>Hasta</label>
+                    <input type="date" class="form-control" @bind="Hasta" />
+                </div>
+
+                @*Filtro*@
+                <div class="form-group col-3">
+                    <label>Filtro</label>
+                    <select @bind="filtro" class="form-control">
+                        <option value="0" disabled>Elija una opcion</option>
+                        <option value="1">Todo</option>
+                        <option value="2">ID</option>
+                        <option value="3">Proveedor Id</option>
+                        <option value="4">Usuario Id</option>
+                        <option value="5">Nombre</option>
+                        <option value="6">Apellido</option>
+                        <option value="7">Dirección</option>
+                    </select>
+                </div>
+
+                @*Criterio*@
+                <div class="form-group col">
+                    <label>Criterio</label>
+                    <div class="input-group">
+                        <input type="text" @bind="criterio" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                                <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*Tabla*@
+        @if (ListaProveedores != null)
+        {
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Fecha</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Teléfono</th>
+                        <th>Celular</th>
+                        <th>Rnc</th>
+                        <th>Email</th>
+                        <th>Dirección</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var proveedor in ListaProveedores)
+                    {
+                    <tr>
+                        <td>@proveedor.ProveedorId</td>
+                        <td>@proveedor.Fecha</td>
+                        <td>@proveedor.Nombres</td>
+                        <td>@proveedor.Telefono</td>
+                        <td>@proveedor.Celular</td>
+                        <td>@proveedor.Rnc</td>
+                        <td>@proveedor.Email</td>
+                        <td>@proveedor.Direccion</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+            toast.ShowError("¡No hay proveedores guardados!");
+    </div>
+</div>
+
+@code {
+    List<Proveedores> ListaProveedores = new List<Proveedores>();
+    RepositorioBase<Proveedores> repositorioProveedores = new RepositorioBase<Proveedores>();
+
+    private string filtro;
+    private string criterio;
+    private DateTime Desde = DateTime.Now;
+    private DateTime Hasta = DateTime.Now;
+
+    private void Consultar()
+    {
+        int opcion = Convert.ToInt32(filtro);
+
+        if (string.IsNullOrWhiteSpace(criterio))
+        {
+            ListaProveedores = repositorioProveedores.GetList(x => true);
+        }
+        else
+        {
+            switch (opcion)
+            {
+                case 0:
+                    toast.ShowError("¡Opción incorrecta!");
+                    break;
+                case 1:
+                    ListaProveedores = repositorioProveedores.GetList(x => true);
+                    break;
+                case 2:
+                    int id = Convert.ToInt32(criterio);
+                    ListaProveedores = repositorioProveedores.GetList(x => x.ProveedorId == id);
+                    break;
+                case 3:
+                    int proveedorId = Convert.ToInt32(criterio);
+                    ListaProveedores = repositorioProveedores.GetList(x => x.ProveedorId == proveedorId);
+                    break;
+                case 4:
+                    int usuarioId = Convert.ToInt32(criterio);
+                    ListaProveedores = repositorioProveedores.GetList(x => x.UsuarioId == usuarioId);
+                    break;
+                case 5:
+                    ListaProveedores = repositorioProveedores.GetList(x => x.Nombres == criterio);
+                    break;
+                case 6:
+                    ListaProveedores = repositorioProveedores.GetList(x => x.Apellidos == criterio);
+                    break;
+                case 7:
+                    ListaProveedores = repositorioProveedores.GetList(x => x.Direccion == criterio);
+                    break;
+            }
+            ListaProveedores = ListaProveedores.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+        }
+    }
+}
