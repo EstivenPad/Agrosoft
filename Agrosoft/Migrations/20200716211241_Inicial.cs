@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Agrosoft.Migrations
 {
-    public partial class Migracion_Inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,6 +25,24 @@ namespace Agrosoft.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clientes", x => x.ClienteId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cobros",
+                columns: table => new
+                {
+                    CobrosId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Fecha = table.Column<DateTime>(nullable: false),
+                    ClienteId = table.Column<int>(nullable: false),
+                    Deposito = table.Column<decimal>(nullable: false),
+                    Balance = table.Column<decimal>(nullable: false),
+                    LimiteCredito = table.Column<decimal>(nullable: false),
+                    UsuarioId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cobros", x => x.CobrosId);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,6 +137,23 @@ namespace Agrosoft.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "VentaProductos",
+                columns: table => new
+                {
+                    VentaId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ClienteId = table.Column<int>(nullable: false),
+                    UsuarioId = table.Column<int>(nullable: false),
+                    Fecha = table.Column<DateTime>(nullable: false),
+                    TipoFactura = table.Column<int>(nullable: false),
+                    Total = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VentaProductos", x => x.VentaId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CompraProductosDetalle",
                 columns: table => new
                 {
@@ -137,6 +172,29 @@ namespace Agrosoft.Migrations
                         column: x => x.CompraId,
                         principalTable: "CompraProductos",
                         principalColumn: "CompraId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VentaProductosDetalle",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    VentaId = table.Column<int>(nullable: false),
+                    ProductoId = table.Column<int>(nullable: false),
+                    Cantidad = table.Column<int>(nullable: false),
+                    PrecioUnitario = table.Column<double>(nullable: false),
+                    Importe = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VentaProductosDetalle", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VentaProductosDetalle_VentaProductos_VentaId",
+                        column: x => x.VentaId,
+                        principalTable: "VentaProductos",
+                        principalColumn: "VentaId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -168,18 +226,26 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 7, 12, 35, 2, 552, DateTimeKind.Local).AddTicks(735), "admin", "Admin", "0123456789", 1 });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 16, 17, 12, 39, 925, DateTimeKind.Local).AddTicks(6673), "admin", "Admin", "0123456789", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",
                 table: "CompraProductosDetalle",
                 column: "CompraId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VentaProductosDetalle_VentaId",
+                table: "VentaProductosDetalle",
+                column: "VentaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Clientes");
+
+            migrationBuilder.DropTable(
+                name: "Cobros");
 
             migrationBuilder.DropTable(
                 name: "CompraProductosDetalle");
@@ -197,7 +263,13 @@ namespace Agrosoft.Migrations
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
+                name: "VentaProductosDetalle");
+
+            migrationBuilder.DropTable(
                 name: "CompraProductos");
+
+            migrationBuilder.DropTable(
+                name: "VentaProductos");
         }
     }
 }

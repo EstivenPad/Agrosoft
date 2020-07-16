@@ -311,7 +311,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 14, 16, 23, 26, 399, DateTimeKind.Local).AddTicks(2282),
+                            Fecha = new DateTime(2020, 7, 16, 17, 12, 39, 925, DateTimeKind.Local).AddTicks(6673),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",
@@ -319,11 +319,74 @@ namespace Agrosoft.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Agrosoft.Models.VentaProductos", b =>
+                {
+                    b.Property<int>("VentaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TipoFactura")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("VentaId");
+
+                    b.ToTable("VentaProductos");
+                });
+
+            modelBuilder.Entity("Agrosoft.Models.VentaProductosDetalle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Importe")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("PrecioUnitario")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("VentaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VentaId");
+
+                    b.ToTable("VentaProductosDetalle");
+                });
+
             modelBuilder.Entity("Agrosoft.Models.CompraProductosDetalle", b =>
                 {
                     b.HasOne("Agrosoft.Models.CompraProductos", null)
                         .WithMany("CompraProductosDetalle")
                         .HasForeignKey("CompraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Agrosoft.Models.VentaProductosDetalle", b =>
+                {
+                    b.HasOne("Agrosoft.Models.VentaProductos", null)
+                        .WithMany("VentaProductosDetalle")
+                        .HasForeignKey("VentaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
