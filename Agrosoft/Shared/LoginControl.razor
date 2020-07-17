@@ -1,41 +1,37 @@
 ﻿@page "/loginControl"
+@using DAL
 
-@using System.Web;
-@using Models
+<CascadingAuthenticationState>
 
-<AuthorizeView>
-    <Authorized>
-        <b>Hello, @context.User.Identity.Name!</b>
-        <a class="ml-md-auto btn btn-primary"
-           href="/logout?returnUrl=/"
-           target="_top">Logout</a>
-    </Authorized>
-    <NotAuthorized>
-        <EditForm Model="Usuario">
-            <div class="form-group">
-                <label class="text-white">Usuario</label>
-                <InputText @bind-Value="Usuario.NombreUsuario" class="form-control" />
-            </div>
+    <AuthorizeView>
+        <Authorized>
+            <b>Bienvenido, @context.User.Identity.Name!</b>
+            <a class="ml-md-auto btn btn-primary" href="/logout?returnUrl=/LogInPage" target="_top">Logout</a>
+        </Authorized>
 
-            <div class="form-group">
-                <label class="text-white">Contraseña </label>
-                <input type="password" class="form-control" @bind-value="Usuario.ClaveUsuario" />
-            </div>
+        <NotAuthorized>
+            <a class="ml-md-auto btn btn-primary" href="/LogInPage" target="_top">Login</a>
+        </NotAuthorized>
+    </AuthorizeView>
 
-            <div class="form-group">
-                <a class="btn btn-success btn-block"
-                   href="/login?paramUsername=@encode(Usuario.NombreUsuario)&paramPassword=@encode(Usuario.ClaveUsuario)" target="_top">Login</a>
+</CascadingAuthenticationState>
 
-                <a class="btn btn-danger btn-block" href="/">Volver al Home</a>
-            </div>
-        </EditForm>
-    </NotAuthorized>
-</AuthorizeView>
-@code {    
-    Usuarios Usuario = new Usuarios();
+@code{
+    public static int UsuarioId;
 
-    private string encode(string param)
+    public static int GetUsuarioId(string Usuario)
     {
-        return HttpUtility.UrlEncode(param);
+        int id;
+        Contexto db = new Contexto();
+
+        try
+        {
+            id = db.Usuarios.Where(A => A.NombreUsuario.Equals(Usuario)).Select(A => A.UsuarioId).FirstOrDefault();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        return id;
     }
 }

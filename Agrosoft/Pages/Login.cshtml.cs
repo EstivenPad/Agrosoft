@@ -1,58 +1,69 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Agrosoft.BLL;
+using Agrosoft.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BlazorCookieAuth.Server.Pages
+namespace Agrosoft.Pages
 {
-    [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        public string ReturnUrl { get; set; }
-        public async Task<IActionResult>
-            OnGetAsync(string paramUsername, string paramPassword)
+        Usuarios Usuarios = new Usuarios();
+        List<Usuarios> ListaUsuarios = new List<Usuarios>();
+
+        public async Task<ActionResult> OnGetAsync(string paramUsername, string paramPassword)
         {
-            string returnUrl = Url.Content("~/");
+            string returnUrl = Url.Content("/LogInPage");
+
             try
             {
-                // Clear the existing external cookie
-                await HttpContext
-                    .SignOutAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             }
-            catch { }
-            // *** !!! This is where you would validate the user !!! ***
-            // In this example we just log the user in
-            // (Always log the user in for this demo)
-            var claims = new List<Claim>
+            catch
             {
-                new Claim(ClaimTypes.Name, paramUsername),
-                new Claim(ClaimTypes.Role, "Administrator"),
-            };
-            var claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var authProperties = new AuthenticationProperties
-            {
-                IsPersistent = true,
-                RedirectUri = this.Request.Host.Value
-            };
-            try
-            {
-                await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
+                throw;
             }
-            catch (Exception ex)
+
+            if (UsuariosBLL.ComprobarDatosUsuario(paramUsername, paramPassword))
             {
-                string error = ex.Message;
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, paramUsername),
+                    new Claim(ClaimTypes.Role, UsuariosBLL.GetTipoUsuario(paramUsername))
+
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    RedirectUri = this.Request.Host.Value
+                };
+                try
+                {
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                return LocalRedirect("/");
             }
-            return LocalRedirect(returnUrl);
+            else if (!UsuariosBLL.ComprobarDatosUsuario(paramUsername, paramPassword))
+            {
+                return LocalRedirect("/UserNotExist");
+            }
+            else
+            {
+                return LocalRedirect(returnUrl);
+            }
         }
     }
 }

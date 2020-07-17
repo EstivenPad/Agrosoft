@@ -1,0 +1,51 @@
+﻿@page "/LogInPage"
+@using Models
+@using BLL
+@using System.Web
+
+<EditForm Model="Usuario">
+    <DataAnnotationsValidator />
+
+    <div class="card">
+        <div class="form-group">
+            
+        </div>
+
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <InputText @bind-Value="Usuario.NombreUsuario" class="form-control" />
+                    <ValidationMessage For="(()=> Usuario.NombreUsuario)"></ValidationMessage>
+                </div>
+
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" class="form-control" @bind-value="Usuario.ClaveUsuario" />
+                    <ValidationMessage For="(()=> Usuario.ClaveUsuario)"></ValidationMessage>
+                </div>
+
+                <div class="form-group">
+                    <a class="btn btn-success btn-block"
+                       href="/login?paramUsername=@Encode(Usuario.NombreUsuario)&paramPassword=@Encode(Usuario.ClaveUsuario)" target="_top">Login</a>
+
+                    <a class="btn btn-danger btn-block" href="/">Volver al Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    Usuarios Usuario = new Usuarios();
+
+    protected override void OnInitialized()
+    {
+        Usuario = new Usuarios();
+    }
+
+    private string Encode(string param)
+    {
+        return HttpUtility.UrlEncode(param);
+    }
+}

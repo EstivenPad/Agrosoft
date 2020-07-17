@@ -37,7 +37,7 @@ namespace Agrosoft.DAL
                 Direccion = "Admin",
                 NombreUsuario = "admin",
                 ClaveUsuario = "admin",
-                TipoUsuario = 1
+                TipoUsuario = "Administrador"
             });
 
             //Unidades de medida

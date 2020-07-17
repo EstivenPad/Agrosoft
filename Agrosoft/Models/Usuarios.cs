@@ -45,6 +45,6 @@ namespace Agrosoft.Models
         public string ClaveUsuario { get; set; }
 
         [Range(minimum:1, maximum:3, ErrorMessage = "Seleccione un tipo de usuario")]
-        public int TipoUsuario { get; set; }
+        public string TipoUsuario { get; set; }
     }
 }
