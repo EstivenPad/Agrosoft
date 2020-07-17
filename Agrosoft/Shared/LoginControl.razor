@@ -1,0 +1,41 @@
+﻿@page "/loginControl"
+
+@using System.Web;
+@using Models
+
+<AuthorizeView>
+    <Authorized>
+        <b>Hello, @context.User.Identity.Name!</b>
+        <a class="ml-md-auto btn btn-primary"
+           href="/logout?returnUrl=/"
+           target="_top">Logout</a>
+    </Authorized>
+    <NotAuthorized>
+        <EditForm Model="Usuario">
+            <div class="form-group">
+                <label class="text-white">Usuario</label>
+                <InputText @bind-Value="Usuario.NombreUsuario" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="text-white">Contraseña </label>
+                <input type="password" class="form-control" @bind-value="Usuario.ClaveUsuario" />
+            </div>
+
+            <div class="form-group">
+                <a class="btn btn-success btn-block"
+                   href="/login?paramUsername=@encode(Usuario.NombreUsuario)&paramPassword=@encode(Usuario.ClaveUsuario)" target="_top">Login</a>
+
+                <a class="btn btn-danger btn-block" href="/">Volver al Home</a>
+            </div>
+        </EditForm>
+    </NotAuthorized>
+</AuthorizeView>
+@code {    
+    Usuarios Usuario = new Usuarios();
+
+    private string encode(string param)
+    {
+        return HttpUtility.UrlEncode(param);
+    }
+}
