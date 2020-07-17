@@ -8,6 +8,7 @@ namespace Agrosoft.Models
 {
     public class VentaProductosDetalle
     {
+        [Key]
         public int Id { get; set; }
 
         public int VentaId { get; set; }
@@ -17,8 +18,8 @@ namespace Agrosoft.Models
         [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = "La cantidad no puede ser cero (0)")]
         public int Cantidad { get; set; }
                 
-        public double PrecioUnitario { get; set; }
+        public decimal PrecioUnitario { get; set; }
 
-        public double Importe { get; set; }
+        public decimal Importe { get; set; }
     }
 }

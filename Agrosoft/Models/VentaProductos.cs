@@ -24,7 +24,7 @@ namespace Agrosoft.Models
         [Required(ErrorMessage = "Seleccione un tipo de factura")]
         public int TipoFactura { get; set; }
 
-        public double Total { get; set; }
+        public decimal Total { get; set; }
 
         [ForeignKey("VentaId")]
         public virtual List<VentaProductosDetalle> VentaProductosDetalle { get; set; } = new List<VentaProductosDetalle>();

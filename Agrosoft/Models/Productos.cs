@@ -22,6 +22,7 @@ namespace Agrosoft.Models
         [Required(ErrorMessage = "Es obligatorio introducir la cantidad existente")]
         [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "La cantidad existente debe ser mayor a 1")]
         public int CantidadExistente { get; set; }
+
         [Required(ErrorMessage = "Es obligatorio introducir el precio")]
         [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "El precio debe ser mayor a 1")]
         public decimal Precio { get; set; }
