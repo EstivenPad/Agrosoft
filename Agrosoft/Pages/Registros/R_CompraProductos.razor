@@ -70,7 +70,7 @@
                                 <div class="form-group col">
                                     <label>Producto</label>
                                     <div class="input-group">
-                                        <select class="form-control" @bind="productoId" @onfocusout="LlenarPrecio">
+                                        <select class="form-control" @bind="productoId" @onfocusout="LLenarCosto">
                                             <option value="0" disabled>Seleccione una opcion</option>
                                             @foreach (var item in ListaProductos)
                                             {
@@ -105,10 +105,10 @@
                                     <InputNumber @bind-Value="cantidad" min="0" class="form-control" @onfocusout="CalcularImporte" />
                                 </div>
 
-                                @*Precio*@
+                                @*Costo*@
                                 <div class="form-group col">
-                                    <label>Precio</label>
-                                    <InputNumber @bind-Value="precio" min="0" class="form-control" @onfocusout="CalcularImporte" readOnly="true" />
+                                    <label>Costo</label>
+                                    <InputNumber @bind-Value="costo" min="0" class="form-control" @onfocusout="CalcularImporte" readOnly="true" />
                                 </div>
 
                                 @*Importe*@
@@ -197,7 +197,7 @@ else @*Si no ha iniciado sesion*@
     private int compraId;
     private int cantidad;
     private int productoId;
-    private decimal precio;
+    private decimal costo;
     private decimal importe;
     private string marca;
     private string unidadMedida;
@@ -210,12 +210,12 @@ else @*Si no ha iniciado sesion*@
         CargarProductos();
     }
 
-    public void LlenarPrecio()
+    public void LLenarCosto()
     {
         if (productoId == 0)
             return;
 
-        precio = metodosProducto.Buscar(productoId).Precio;
+        costo = metodosProducto.Buscar(productoId).Costo;
         LlenarMarca();
     }
 
@@ -248,7 +248,7 @@ else @*Si no ha iniciado sesion*@
         cantidad = 0;
         compraId = 0;
         productoId = 0;
-        precio = 0;
+        costo = 0;
     }
 
     private void Buscar()
@@ -307,7 +307,7 @@ else @*Si no ha iniciado sesion*@
 
     private void AgregarDetalle()
     {
-        if (precio > 0)
+        if (costo > 0)
         {
             if (cantidad > 0)
             {
@@ -317,7 +317,7 @@ else @*Si no ha iniciado sesion*@
                     CompraId = Compra.CompraId,
                     ProductoId = productoId,
                     Cantidad = cantidad,
-                    Precio = precio
+                    Precio = costo
 
                 });
             }
@@ -335,7 +335,7 @@ else @*Si no ha iniciado sesion*@
         compraId = Compra.CompraId;
         productoId = 0;
         cantidad = 0;
-        precio = 0;
+        costo = 0;
 
         CalcularTotalCompra();
 
@@ -352,13 +352,13 @@ else @*Si no ha iniciado sesion*@
         decimal monto = 0;
         foreach (var item in Compra.CompraProductosDetalle)
         {
-            monto += (item.Cantidad * metodosProducto.Buscar(item.ProductoId).Precio);
+            monto += (item.Cantidad * metodosProducto.Buscar(item.ProductoId).Costo);
         }
         Compra.Total = monto;
     }
 
     private void CalcularImporte()
     {
-        importe = cantidad * precio;
+        importe = cantidad * costo;
     }
 }
