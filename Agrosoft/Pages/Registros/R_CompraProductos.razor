@@ -5,169 +5,186 @@
 
 @inject IToastService toast
 
-<EditForm Model="Compra" OnValidSubmit="Guardar">
-    <DataAnnotationsValidator />
-    <div class="card border-success">
-        <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
-            <h3 style="font-family:Georgia; color:white">Registro de compras</h3>
-        </div>
+@if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
+{
+    <EditForm Model="Compra" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        <div class="card border-success">
+            <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+                <h3 style="font-family:Georgia; color:white">Registro de compras</h3>
+            </div>
 
-        <div class="card-body">
-            <form>
-                @*CompraId*@
-                <div class="form-row align-items-center">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Compra Id</label>
-                            <div class="input-group">
-                                <InputNumber @bind-Value="Compra.CompraId" min="0" class="form-control col-4"></InputNumber>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar"> <span class="oi oi-magnifying-glass"></span> Buscar </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @*Fecha*@
-                <div class="form-group">
-                    <label>Fecha</label>
-                    <InputDate @bind-Value="Compra.Fecha" class="form-control"></InputDate>
-                    <ValidationMessage For="@(()=>Compra.Fecha)" />
-                </div>
-
-                @*Proveedor*@
-                <div class="form-group">
-                    <label>Proveedor</label>
-                    <div class="input-group">
-                        <select class="form-control" @bind="Compra.ProveedorId">
-                            <option value="0" disabled>Seleccione una opcion</option>
-                            @foreach (var item in ListaProveedores)
-                            {
-                                <option value="@item.ProveedorId">@item.Nombres</option>
-                            }
-                        </select>
-                        <div class="input-group-append">
-                            <NavLink type="button" class="btn btn-primary" href="RegistroProveedores">
-                                <i class="oi oi-plus" aria-hidden="true" />
-                            </NavLink>
-                        </div>
-                    </div>
-                    <ValidationMessage For="@(()=>Compra.ProveedorId)" />
-                </div>
-
-                @*Datos del detalle*@
-                <div class="card border-dark">
-                    <div class="card-header-tabs text-center">
-                        <h5 style="font-family:Georgia; font-style:unset">Productos</h5>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="row">
-                            @*Producto*@
-                            <div class="form-group col">
-                                <label>Producto</label>
+            <div class="card-body">
+                <form>
+                    @*CompraId*@
+                    <div class="form-row align-items-center">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Compra Id</label>
                                 <div class="input-group">
-                                    <select class="form-control" @bind="productoId" @onfocusout="LlenarPrecio">
-                                        <option value="0" disabled>Seleccione una opcion</option>
-                                        @foreach (var item in ListaProductos)
-                                        {
-                                            <option value="@item.ProductoId"> @item.Nombre</option>
-                                        }
-                                    </select>
+                                    <InputNumber @bind-Value="Compra.CompraId" min="0" class="form-control col-4"></InputNumber>
                                     <div class="input-group-append">
-                                        <NavLink type="button" class="btn btn-primary" href="RegistroProductos">
-                                            <i class="oi oi-plus" aria-hidden="true" />
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </div>
-
-                            @*Marca*@
-                            <div class="form-group col">
-                                <label>Marca</label>
-                                <InputText @bind-Value="marca" class="form-control" readOnly="true" />
-                            </div>
-
-                            @*Unidad de medida*@
-                            <div class="form-group col">
-                                <label>Unidad de medida</label>
-                                <InputText @bind-Value="unidadMedida" class="form-control" readOnly="true" />
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            @*Cantidad*@
-                            <div class="form-group col">
-                                <label>Cantidad</label>
-                                <InputNumber @bind-Value="cantidad" min="0" class="form-control" @onfocusout="CalcularImporte" />
-                            </div>
-
-                            @*Precio*@
-                            <div class="form-group col">
-                                <label>Precio</label>
-                                <InputNumber @bind-Value="precio" min="0" class="form-control" @onfocusout="CalcularImporte" readOnly="true" />
-                            </div>
-
-                            @*Importe*@
-                            <div class="form-group col">
-                                <label>Importe</label>
-                                <div class="input-group">
-                                    <InputNumber @bind-Value="importe" class="form-control" readOnly="true" />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary" @onclick="AgregarDetalle">
-                                            <i class="oi oi-plus" aria-hidden="true" /> Agregar
-                                        </button>
+                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar"> <span class="oi oi-magnifying-glass"></span> Buscar </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <br />
-                @*Tabla del detalle*@
-                <table class="table">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Costo</th>
-                            <th scope="col">Importe</th>
-                            <th scope="col">Opcion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Compra.CompraProductosDetalle)
-                        {
+                    @*Fecha*@
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <InputDate @bind-Value="Compra.Fecha" class="form-control"></InputDate>
+                        <ValidationMessage For="@(()=>Compra.Fecha)" />
+                    </div>
+
+                    @*Proveedor*@
+                    <div class="form-group">
+                        <label>Proveedor</label>
+                        <div class="input-group">
+                            <select class="form-control" @bind="Compra.ProveedorId">
+                                <option value="0" disabled>Seleccione una opcion</option>
+                                @foreach (var item in ListaProveedores)
+                                {
+                                    <option value="@item.ProveedorId">@item.Nombres</option>
+                                }
+                            </select>
+                            <div class="input-group-append">
+                                <NavLink type="button" class="btn btn-primary" href="RegistroProveedores">
+                                    <i class="oi oi-plus" aria-hidden="true" />
+                                </NavLink>
+                            </div>
+                        </div>
+                        <ValidationMessage For="@(()=>Compra.ProveedorId)" />
+                    </div>
+
+                    @*Datos del detalle*@
+                    <div class="card border-dark">
+                        <div class="card-header-tabs text-center">
+                            <h5 style="font-family:Georgia; font-style:unset">Productos</h5>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                @*Producto*@
+                                <div class="form-group col">
+                                    <label>Producto</label>
+                                    <div class="input-group">
+                                        <select class="form-control" @bind="productoId" @onfocusout="LlenarPrecio">
+                                            <option value="0" disabled>Seleccione una opcion</option>
+                                            @foreach (var item in ListaProductos)
+                                            {
+                                                <option value="@item.ProductoId"> @item.Nombre</option>
+                                            }
+                                        </select>
+                                        <div class="input-group-append">
+                                            <NavLink type="button" class="btn btn-primary" href="RegistroProductos">
+                                                <i class="oi oi-plus" aria-hidden="true" />
+                                            </NavLink>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Marca*@
+                                <div class="form-group col">
+                                    <label>Marca</label>
+                                    <InputText @bind-Value="marca" class="form-control" readOnly="true" />
+                                </div>
+
+                                @*Unidad de medida*@
+                                <div class="form-group col">
+                                    <label>Unidad de medida</label>
+                                    <InputText @bind-Value="unidadMedida" class="form-control" readOnly="true" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                @*Cantidad*@
+                                <div class="form-group col">
+                                    <label>Cantidad</label>
+                                    <InputNumber @bind-Value="cantidad" min="0" class="form-control" @onfocusout="CalcularImporte" />
+                                </div>
+
+                                @*Precio*@
+                                <div class="form-group col">
+                                    <label>Precio</label>
+                                    <InputNumber @bind-Value="precio" min="0" class="form-control" @onfocusout="CalcularImporte" readOnly="true" />
+                                </div>
+
+                                @*Importe*@
+                                <div class="form-group col">
+                                    <label>Importe</label>
+                                    <div class="input-group">
+                                        <InputNumber @bind-Value="importe" class="form-control" readOnly="true" />
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary" @onclick="AgregarDetalle">
+                                                <i class="oi oi-plus" aria-hidden="true" /> Agregar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    @*Tabla del detalle*@
+                    <table class="table">
+                        <thead class="thead-light">
                             <tr>
-                                <td>@metodosProducto.Buscar(item.ProductoId).Nombre</td>
-                                <td>@item.Cantidad</td>
-                                <td>@item.Precio</td>
-                                <td>@(item.Cantidad * item.Precio)</td>
-                                <td><button type="button" class="btn btn-danger" @onclick="(() => EliminarDetalle(item))">Remover</button></td>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Costo</th>
+                                <th scope="col">Importe</th>
+                                <th scope="col">Opcion</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Compra.CompraProductosDetalle)
+                            {
+                                <tr>
+                                    <td>@metodosProducto.Buscar(item.ProductoId).Nombre</td>
+                                    <td>@item.Cantidad</td>
+                                    <td>@item.Precio</td>
+                                    <td>@(item.Cantidad * item.Precio)</td>
+                                    <td><button type="button" class="btn btn-danger" @onclick="(() => EliminarDetalle(item))">Remover</button></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
-                @*Total*@
-                <div class="card-footer">
-                    <label>Monto</label>
-                    <InputNumber @bind-Value="Compra.Total" class="form-control col-4" readOnly="true" />
+                    @*Total*@
+                    <div class="card-footer">
+                        <label>Monto</label>
+                        <InputNumber @bind-Value="Compra.Total" class="form-control col-4" readOnly="true" />
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-footer">
+                <div class="form-group text-center" display: inline-block>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
+                    <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
                 </div>
-            </form>
-        </div>
-
-        <div class="card-footer">
-            <div class="form-group text-center" display: inline-block>
-                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
-                <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
-                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
             </div>
         </div>
+    </EditForm>
+}
+else @*Si no ha iniciado sesion*@
+{
+    <div class="card border-dark text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
+            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+        </div>
+        <div class="card-body">
+            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
+            <p>¡Debe iniciar sesión para poder tener acceso!</p>
+            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+        </div>
     </div>
-</EditForm>
+}
+
 
 @code {
     CompraProductos Compra = new CompraProductos();
@@ -175,7 +192,7 @@
     private List<Productos> ListaProductos = new List<Productos>();
     RepositorioBase<Proveedores> metodosProveedor = new RepositorioBase<Proveedores>();
     RepositorioBase<Productos> metodosProducto = new RepositorioBase<Productos>();
-    RepositorioBase<UnidadesMedida> metodosUnidad= new RepositorioBase<UnidadesMedida>();
+    RepositorioBase<UnidadesMedida> metodosUnidad = new RepositorioBase<UnidadesMedida>();
 
     private int compraId;
     private int cantidad;
@@ -210,7 +227,7 @@
 
     public void LlenarUnidadMedida()
     {
-        int unidad= metodosProducto.Buscar(productoId).UnidadMedida;
+        int unidad = metodosProducto.Buscar(productoId).UnidadMedida;
         unidadMedida = metodosUnidad.Buscar(unidad).Descripcion;
     }
 
