@@ -29,12 +29,11 @@
                 <select @bind="filtro" class="form-control">
                     <option value="0" disabled>Elija una opcion</option>
                     <option value="1">Todo</option>
-                    <option value="2">ID</option>
-                    <option value="3">Proveedor Id</option>
-                    <option value="4">Usuario Id</option>
-                    <option value="5">Nombre</option>
-                    <option value="6">Apellido</option>
-                    <option value="7">Dirección</option>
+                    <option value="2">Proveedor Id</option>
+                    <option value="3">Usuario Id</option>
+                    <option value="4">Nombre</option>
+                    <option value="5">Apellido</option>
+                    <option value="6">Dirección</option>
                 </select>
             </div>
 
@@ -126,20 +125,16 @@
                     ListaProveedores = repositorioProveedores.GetList(x => x.ProveedorId == id);
                     break;
                 case 3:
-                    int proveedorId = Convert.ToInt32(criterio);
-                    ListaProveedores = repositorioProveedores.GetList(x => x.ProveedorId == proveedorId);
-                    break;
-                case 4:
                     int usuarioId = Convert.ToInt32(criterio);
                     ListaProveedores = repositorioProveedores.GetList(x => x.UsuarioId == usuarioId);
                     break;
-                case 5:
+                case 4:
                     ListaProveedores = repositorioProveedores.GetList(x => x.Nombres == criterio);
                     break;
-                case 6:
+                case 5:
                     ListaProveedores = repositorioProveedores.GetList(x => x.Apellidos == criterio);
                     break;
-                case 7:
+                case 6:
                     ListaProveedores = repositorioProveedores.GetList(x => x.Direccion == criterio);
                     break;
             }
