@@ -37,19 +37,29 @@
     <div class="card-body">
         <table class="table">
             <tr>
-                <td>ID</td>
+                <td>Código</td>
+                <td>Fecha</td>
                 <td>Nombres</td>
                 <td>Apellidos</td>
                 <td>Teléfono</td>
                 <td>Celular</td>
                 <td>Cédula</td>
                 <td>Dirección</td>
+                <td>Usuario</td>
             </tr>
 
             @foreach (var item in Lista)
             {
                 <tr>
                     <td>@item.ClienteId</td>
+                    <td>@item.Fecha</td>
+                    <td>@item.Nombres</td>
+                    <td>@item.Apellidos</td>
+                    <td>@item.Telefono</td>
+                    <td>@item.Celular</td>
+                    <td>@item.Cedula</td>
+                    <td>@item.Direccion</td>
+                    <td>@repositorioUsuarios.Buscar(item.UsuarioId).NombreUsuario</td>
                 </tr>
             }
         </table>
@@ -68,8 +78,8 @@
     public string Criterio { get; set; }
 
     private List<Clientes> Lista = new List<Clientes>();
-
-    public RepositorioBase<Clientes> repositorio = new RepositorioBase<Clientes>();
+    public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
+    RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
 
     public void Consultar()
     {
@@ -80,42 +90,42 @@
             switch(Filtro)
             {
                 case 1:
-                    listado = repositorio.GetList(c => true);
+                    listado = repositorioClientes.GetList(c => true);
                     break;
 
                 case 2:
                     int id = Convert.ToInt32(Criterio);
-                    listado = repositorio.GetList(c => c.ClienteId == id);
+                    listado = repositorioClientes.GetList(c => c.ClienteId == id);
                     break;
 
                 case 3:
-                    listado = repositorio.GetList(c => c.Nombres.Contains(Criterio));
+                    listado = repositorioClientes.GetList(c => c.Nombres.Contains(Criterio));
                     break;
 
                 case 4:
-                    listado = repositorio.GetList(c => c.Apellidos.Contains(Criterio));
+                    listado = repositorioClientes.GetList(c => c.Apellidos.Contains(Criterio));
                     break;
 
                 case 5:
-                    listado = repositorio.GetList(c => c.Telefono.Contains(Criterio));
+                    listado = repositorioClientes.GetList(c => c.Telefono.Contains(Criterio));
                     break;
 
                 case 6:
-                    listado = repositorio.GetList(c => c.Celular.Contains(Criterio));
+                    listado = repositorioClientes.GetList(c => c.Celular.Contains(Criterio));
                     break;
 
                 case 7:
-                    listado = repositorio.GetList(c => c.Cedula.Contains(Criterio));
+                    listado = repositorioClientes.GetList(c => c.Cedula.Contains(Criterio));
                     break;
 
                 case 8:
-                    listado = repositorio.GetList(c => c.Direccion.Contains(Criterio));
+                    listado = repositorioClientes.GetList(c => c.Direccion.Contains(Criterio));
                     break;
             }
         }
         else
         {
-            listado = repositorio.GetList(p => true);
+            listado = repositorioClientes.GetList(p => true);
         }
 
         Lista = null;
