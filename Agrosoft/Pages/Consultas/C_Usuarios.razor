@@ -1,77 +1,125 @@
 ﻿@page "/ConsultaUsuarios"
 
 @using BLL
-@using Models 
+@using Models
 
 @inject IToastService toast
-
-<h3>Consulta de Usuarios</h3>
-
-<div class="card">
-    <div class="card-header">
-        @*Filtro*@
-        <div class="form-group">
-            <label>Filtro</label>
-            <select class="browser-default custom-select" @bind="Filtro">
-                <option value="0" disabled>Seleccione una opcion</option>
-                <option value="1">Todos</option>
-                <option value="2">ID</option>
-                <option value="3">Nombres</option>
-                <option value="4">Apellidos</option>
-                <option value="5">Nombre de usuario</option>
-                <option value="6">Tipo de usuario</option>
-            </select>
+@if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
+{
+    @if (!TipoUsuario)
+    {
+        <div class="card border-dark text-center">
+            <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
+                <h4 style="font-family:Georgia; color:white">Usuario no autorizado</h4>
+            </div>
+            <div class="card-body">
+                <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
+                <p>¡Sólo un usuario de tipo administrador tiene acceso!</p>
+                <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+            </div>
         </div>
+    }
+    else
+    {
+        <h3>Consulta de Usuarios</h3>
 
-        @*Criterio*@
-        <div class="form-group">
-            <label>Criterio</label>
-            <input type="text" @bind="Criterio" class="form-control"/>
+        <div class="card">
+            <div class="card-header">
+                @*Filtro*@
+                <div class="form-group">
+                    <label>Filtro</label>
+                    <select class="browser-default custom-select" @bind="Filtro">
+                        <option value="0" disabled>Seleccione una opcion</option>
+                        <option value="1">Todos</option>
+                        <option value="2">ID</option>
+                        <option value="3">Nombres</option>
+                        <option value="4">Apellidos</option>
+                        <option value="5">Nombre de usuario</option>
+                        <option value="6">Tipo de usuario</option>
+                    </select>
+                </div>
+
+                @*Criterio*@
+                <div class="form-group">
+                    <label>Criterio</label>
+                    <input type="text" @bind="Criterio" class="form-control" />
+                </div>
+                <button type="button" class="btn btn-primary" @onclick="Consultar">Consultar</button>
+            </div>
+
+            @*Tabla*@
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Direccion</th>
+                        <th>Nombre de usuario</th>
+                        <th>Tipo de usuario</th>
+                    </tr>
+
+                    @foreach (var item in Lista)
+                    {
+                        <tr>
+                            <td>@item.UsuarioId</td>
+                            <td>@item.Nombres</td>
+                            <td>@item.Apellidos</td>
+                            <td>@item.Direccion</td>
+                            <td>@item.NombreUsuario</td>
+                            <td>@item.TipoUsuario</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <div class="card-footer">
+                <div class="form-group">
+                    <label>Total de usuarios: @Total</label>
+                </div>
+            </div>
         </div>
-        <button type="button" class="btn btn-primary" @onclick="Consultar">Consultar</button>
-    </div>
-
-    @*Tabla*@
-    <div class="card-body">
-        <table class="table">
-            <tr>
-                <th>ID</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Direccion</th>
-                <th>Nombre de usuario</th>
-                <th>Tipo de usuario</th>
-            </tr>
-
-            @foreach (var item in Lista)
-            {
-                <tr>
-                    <td>@item.UsuarioId</td>
-                    <td>@item.Nombres</td>
-                    <td>@item.Apellidos</td>
-                    <td>@item.Direccion</td>
-                    <td>@item.NombreUsuario</td>
-                    <td>@item.TipoUsuario</td>
-                </tr>
-            }
-        </table>
-    </div>
-
-    <div class="card-footer">
-        <div class="form-group">
-            <label>Total de usuarios: @Total</label>
+    }
+}
+else @*Si no ha iniciado sesion*@
+{
+    <div class="card border-dark text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
+            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+        </div>
+        <div class="card-body">
+            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
+            <p>¡Debe iniciar sesión para poder tener acceso!</p>
+            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
         </div>
     </div>
-</div>
+}
 
 @code {
     public int Total { get; set; }
     public int Filtro { get; set; }
     public string Criterio { get; set; }
+    private bool TipoUsuario = false;
 
     private List<Usuarios> Lista = new List<Usuarios>();
-
     public RepositorioBase<Usuarios> repositorio = new RepositorioBase<Usuarios>();
+
+    protected override void OnInitialized()
+    {
+        TipoUsuario = GetAuthorization();
+    }
+
+    private bool GetAuthorization()
+    {
+        bool acceso;
+
+        if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.IsInRole("Administrador"))
+            acceso = true;
+        else
+            acceso = false;
+
+        return acceso;
+    }
 
     public void Consultar()
     {
