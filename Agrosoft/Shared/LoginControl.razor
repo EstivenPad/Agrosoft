@@ -5,12 +5,16 @@
 
     <AuthorizeView>
         <Authorized>
-            <b>Bienvenido, @context.User.Identity.Name!</b>
-            <a class="ml-md-auto btn btn-primary" href="/logout?returnUrl=/LogInPage" target="_top">Logout</a>
+            <b style="color:white">Bienvenido, @context.User.Identity.Name!</b>
+            <a class="ml-md-auto btn btn-outline-warning" href="/logout?returnUrl=/LogInPage" target="_top">
+                <i class="fa fa-sign-out-alt" aria-hidden="true" /> &nbsp; Logout
+            </a>
         </Authorized>
 
         <NotAuthorized>
-            <a class="ml-md-auto btn btn-primary" href="/LogInPage" target="_top">Login</a>
+            <a class="ml-md-auto btn btn-outline-light" href="/LogInPage" target="_top">
+                <i class="fa fa-sign-in-alt" aria-hidden="true" /> &nbsp; Login
+            </a>
         </NotAuthorized>
     </AuthorizeView>
 
