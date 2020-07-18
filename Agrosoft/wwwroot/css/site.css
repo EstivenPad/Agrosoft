@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.i.fa.fa-user-lock{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

@@ -1,46 +1,76 @@
 ﻿@page "/LogInPage"
 @inject IToastService toast
 
-<EditForm Model="Usuario">
-    <DataAnnotationsValidator />
+  
+    <EditForm Model="Usuario">
+        <DataAnnotationsValidator />
 
-    <div class="card border-success">
-        <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
-            <h3 style="font-family:Georgia; color:white">Login</h3>
+        <div class="card text-lg-center" style="align-items: center; width:600px">
+
+            <div class="login align-content-center" style="text-align: center; position: relative; width: 280px;">
+                <i class="fa fa-user-lock" style="color: #009900; font-weight: 600; font-size:70px; margin-bottom:20px; margin-top:10px"></i>
+                <h2 style="font-family:Georgia">Login</h2>
+
+                <div class="group" style="margin-bottom:10px; position:relative">
+                    <input type="text" @bind="Usuario.NombreUsuario" placeholder='Username' style="width: 100%; border: 0; border-radius: 20px; border-bottom: 2px solid #009900;
+                        padding: 12px 40px 12px 20px;">
+                    <i class="fa fa-user" style="color: #009900; font-size: 13.3333px; font-weight: 600; position:absolute; top:15px; right:20px"></i>
+                </div>
+
+                <div class="group" style="margin-bottom:10px; position:relative">
+                    <input type="Password" @bind-value="Usuario.ClaveUsuario" placeholder="Password" style="width: 100%; border: 0; border-radius: 20px; border-bottom: 2px solid #009900;
+                        padding: 12px 40px 12px 20px;">
+                    <i class="fa fa-lock" style="color: #009900; font-size: 13.3333px; font-weight: 600; position:absolute; top:15px; right:20px"></i>
+                </div>
+                <a class="btn btn-success" style="width: 100%; border: 0; border-radius: 20px; padding:12px; background-image: linear-gradient(to right, #4dff4d, #006600);"
+                   href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)" @onmouseover="ValidarCampos">
+                    <i class="fa fa-sign-in-alt" aria-hidden="true" /> &nbsp; Iniciar sesión
+                </a>
+
+                <a class="btn btn-success" style="width: 100%; border: 0; border-radius: 20px; padding:12px; background-image: linear-gradient(to right,   #80aaff, #003399); margin-top:10px;"
+                   href="/">
+                    <i class="fa fa-undo" aria-hidden="true" /> &nbsp; Volver al inicio
+                </a>
+
+                <p class="fs" style="margin-top:10px">
+                    Forgot
+                    <a href="#">Username</a> / <a href="#">Password</a>?
+                </p>
+            </div>
         </div>
-
-        <div class="card-body">
-            <form>
-                <div class="form-group">
-                    <label>Usuario</label>
-                    <InputText @bind-Value="Usuario.NombreUsuario" class="form-control" />
-                    <ValidationMessage For="(()=> Usuario.NombreUsuario)"></ValidationMessage>
-                </div>
-
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" class="form-control" @bind-value="Usuario.ClaveUsuario" />
-                    <ValidationMessage For="(()=> Usuario.ClaveUsuario)"></ValidationMessage>
-                </div>
-
-                <div class="card-footer">
-                    <div class="form-group text-center" display: inline-block>
-                        <a class="btn btn-outline-success"
-                           href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)" @onmouseover="ValidarCampos">
-                            <i class="fa fa-sign-in-alt" aria-hidden="true" /> &nbsp; Iniciar sesión
-                        </a>
-
-                        <a class="btn btn-outline-primary" href="/">
-                            <i class="fa fa-undo" aria-hidden="true" /> &nbsp;Volver al inicio
-                        </a>
+        @*
+            <div class="body">
+                <form>
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        <input @bind="Usuario.NombreUsuario" class="form-control" />
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" class="form-control" @bind-value="Usuario.ClaveUsuario" />
+                        <ValidationMessage For="(()=> Usuario.ClaveUsuario)"></ValidationMessage>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="form-group text-center" display: inline-block>
+                            <a class="btn btn-outline-success"
+                               href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)" @onmouseover="ValidarCampos">
+                                <i class="fa fa-sign-in-alt" aria-hidden="true" /> &nbsp; Iniciar sesión
+                            </a>
+
+                            <a class="btn btn-outline-primary" href="/">
+                                <i class="fa fa-undo" aria-hidden="true" /> &nbsp;Volver al inicio
+                            </a>
+                        </div>
+                    </div>
 
 
-            </form>
-        </div>
-    </div>
-</EditForm>
+                </form>
+            </div>
+        </div>*@
+    </EditForm>
+
 
 @code {
     Usuarios Usuario = new Usuarios();
