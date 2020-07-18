@@ -98,12 +98,11 @@
                 @*Tipo de Usuario*@
                 <div class="form-group">
                     <label>Tipo de usuario</label>
-                    <select @bind="Usuario.TipoUsuario" class="custom-select">
-                        <option value="0" disabled selected>Seleccione una opción</option>
-                        <option value="1">Administrador</option>
-                        <option value="2">Empleado</option>
-                        <option value="3">Invitado</option>
-                    </select>
+                    <InputSelect @bind-Value="Usuario.TipoUsuario" class="custom-select">
+                        <option disabled selected>Seleccione una opción</option>
+                        <option>Administrador</option>
+                        <option>Empleado</option>
+                    </InputSelect>
                     <ValidationMessage For="@(() => Usuario.TipoUsuario)" />
                 </div>
             </form>

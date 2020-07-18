@@ -1,11 +1,6 @@
 ﻿@page "/RegistroClientes"
 @page "/RegistroClientes/{ClienteId:int}"
 
-@using BLL
-@using Models
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@inject IToastService toast
-
 <CascadingAuthenticationState>
     <AuthorizeView>
         <NotAuthorized>
@@ -16,7 +11,6 @@
                 <div class="card-body">
                     <h5>Atención</h5>
                     <p>Debe iniciar sesion para poder acceder a estas opciones</p>
-                    <a href="/" class="btn btn-primary">Volver al Menú anterior</a>
                 </div>
             </div>
         </NotAuthorized>
@@ -188,7 +182,8 @@
     {
         bool acceso;
 
-        if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.IsInRole("Administrador"))
+        if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.IsInRole("Administrador")
+                )
             acceso = true;
         else
             acceso = false;
