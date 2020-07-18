@@ -5,98 +5,115 @@
 
 @inject IToastService toast
 
-<EditForm Model="Producto" OnValidSubmit="Guardar">
-    <DataAnnotationsValidator />
-    <div class="card">
-        <div class="card-header">
-            <h3>Registro de productos</h3>
-        </div>
-        <div class="card-body">
-            <form>
-                @*Producto id*@
-                <div class="form-row align-items-center">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Producto Id</label>
-                            <div class="input-group">
-                                <InputNumber @bind-Value="Producto.ProductoId "min="0" class="form-control col-4"></InputNumber>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
-                                        <span class="oi oi-zoom-in"> </span> Buscar
-                                    </button>
+@if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
+{
+    <EditForm Model="Producto" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        <div class="card">
+            <div class="card-header">
+                <h3>Registro de productos</h3>
+            </div>
+            <div class="card-body">
+                <form>
+                    @*Producto id*@
+                    <div class="form-row align-items-center">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Producto Id</label>
+                                <div class="input-group">
+                                    <InputNumber @bind-Value="Producto.ProductoId " min="0" class="form-control col-4"></InputNumber>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
+                                            <span class="oi oi-zoom-in"> </span> Buscar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                @*Nombre*@
-                <div class="form-group">
-                    <label>Nombre</label>
-                    <InputText @bind-Value="Producto.Nombre" class="form-control"></InputText>
-                    <ValidationMessage For="@(()=>Producto.Nombre)" />
-                </div>
+                    @*Nombre*@
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <InputText @bind-Value="Producto.Nombre" class="form-control"></InputText>
+                        <ValidationMessage For="@(()=>Producto.Nombre)" />
+                    </div>
 
-                @*Marca*@
-                <div class="form-group">
-                    <label>Marca</label>
-                    <InputText @bind-Value="Producto.Marca" class="form-control"></InputText>
-                    <ValidationMessage For="@(()=>Producto.Marca)" />
-                </div>
+                    @*Marca*@
+                    <div class="form-group">
+                        <label>Marca</label>
+                        <InputText @bind-Value="Producto.Marca" class="form-control"></InputText>
+                        <ValidationMessage For="@(()=>Producto.Marca)" />
+                    </div>
 
-                @*Unidad de medida*@
-                <div class="form-group">
-                    <label>Unidad de medida</label>
-                    <select @bind="Producto.UnidadMedida" class="form-control">
-                        <option value="0" disabled>Seleccione una opcion</option>
-                        @foreach (var item in ListaUnidades)
-                        {
-                            <option value=@item.UnidadId >@item.Descripcion</option>
-                        }
-                    </select>
-                    <ValidationMessage For="@(()=>Producto.UnidadMedida)" />
-                </div>
+                    @*Unidad de medida*@
+                    <div class="form-group">
+                        <label>Unidad de medida</label>
+                        <select @bind="Producto.UnidadMedida" class="form-control">
+                            <option value="0" disabled>Seleccione una opcion</option>
+                            @foreach (var item in ListaUnidades)
+                            {
+                                <option value=@item.UnidadId>@item.Descripcion</option>
+                            }
+                        </select>
+                        <ValidationMessage For="@(()=>Producto.UnidadMedida)" />
+                    </div>
 
-                @*Cantidad minima*@
-                <div class="form-group">
-                    <label>Cantidad minima</label>
-                    <InputNumber @bind-Value="Producto.CantidadMinima" min="0" class="form-control"></InputNumber>
-                    <ValidationMessage For="@(()=>Producto.CantidadMinima)" />
-                </div>
+                    @*Cantidad minima*@
+                    <div class="form-group">
+                        <label>Cantidad minima</label>
+                        <InputNumber @bind-Value="Producto.CantidadMinima" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Producto.CantidadMinima)" />
+                    </div>
 
-                @*Cantidad existente*@
-                <div class="form-group">
-                    <label>Cantidad existente</label>
-                    <InputNumber @bind-Value="Producto.CantidadExistente" min="0" class="form-control"></InputNumber>
-                    <ValidationMessage For="@(()=>Producto.CantidadExistente)" />
-                </div>
+                    @*Cantidad existente*@
+                    <div class="form-group">
+                        <label>Cantidad existente</label>
+                        <InputNumber @bind-Value="Producto.CantidadExistente" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Producto.CantidadExistente)" />
+                    </div>
 
-                @*Precio*@
-                <div class="form-group">
-                    <label>Precio</label>
-                    <InputNumber @bind-Value="Producto.Precio" min="0" class="form-control"></InputNumber>
-                    <ValidationMessage For="@(()=>Producto.Precio)" />
-                </div>
+                    @*Precio*@
+                    <div class="form-group">
+                        <label>Precio</label>
+                        <InputNumber @bind-Value="Producto.Precio" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Producto.Precio)" />
+                    </div>
 
-                @*Costo*@
-                <div class="form-group">
-                    <label>Costo</label>
-                    <InputNumber @bind-Value="Producto.Costo" min="0" class="form-control"></InputNumber>
-                    <ValidationMessage For="@(()=>Producto.Costo)" />
-                </div>
-            </form>
-        </div>
-
-        <div class="card-footer">
-            <div class="form-group text-center" display: inline-block>
-                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
-                <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
-                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
+                    @*Costo*@
+                    <div class="form-group">
+                        <label>Costo</label>
+                        <InputNumber @bind-Value="Producto.Costo" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Producto.Costo)" />
+                    </div>
+                </form>
             </div>
-        </div>
 
+            <div class="card-footer">
+                <div class="form-group text-center" display: inline-block>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
+                    <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
+                </div>
+            </div>
+
+        </div>
+    </EditForm>
+}
+else @*Si no ha iniciado sesion*@
+{
+    <div class="card border-dark text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
+            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+        </div>
+        <div class="card-body">
+            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
+            <p>¡Debe iniciar sesión para poder tener acceso!</p>
+            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+        </div>
     </div>
-</EditForm>
+}
+
 @code {
     private Productos Producto = new Productos();
     List<UnidadesMedida> ListaUnidades = new List<UnidadesMedida>();
