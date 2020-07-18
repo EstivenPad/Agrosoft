@@ -126,6 +126,7 @@ else @*Si no ha iniciado sesion*@
     private void Nuevo()
     {
         this.Cobro = new Cobros();
+        Cobro.UsuarioId = LoginModel.UsuarioId;
     }
 
     private void Buscar()
