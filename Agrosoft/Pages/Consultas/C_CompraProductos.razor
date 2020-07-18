@@ -62,21 +62,21 @@
                             <th>Codigo</th>
                             <th>Fecha</th>
                             <th>Proveedor</th>
-                            <th>Usuario</th>
                             <th>Total</th>
+                            <th>Usuario</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @foreach (var compra in ListaComprasProductos)
                         {
-                            <tr>
-                                <td>@compra.CompraId</td>
-                                <td>@compra.Fecha</td>
-                                <td>@compra.ProveedorId</td>
-                                <td>@repositorioUsuarios.Buscar(compra.UsuarioId).NombreUsuario</td>
-                                <td>@compra.Total</td>
-                            </tr>
+                        <tr>
+                            <td>@compra.CompraId</td>
+                            <td>@compra.Fecha</td>
+                            <td>@compra.ProveedorId</td>
+                            <td>@compra.Total</td>
+                            <td>@repositorioUsuarios.Buscar(compra.UsuarioId).NombreUsuario</td>
+                        </tr>
                         }
                     </tbody>
                 </table>
