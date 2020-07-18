@@ -1,4 +1,5 @@
 ﻿@page "/LogInPage"
+@inject IToastService toast
 
 <EditForm Model="Usuario">
     <DataAnnotationsValidator />
@@ -25,17 +26,17 @@
                 <div class="card-footer">
                     <div class="form-group text-center" display: inline-block>
                         <a class="btn btn-outline-success"
-                                href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)" @onmouseover="ValidarCampos">
+                           href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)" @onmouseover="ValidarCampos">
                             <i class="fa fa-sign-in-alt" aria-hidden="true" /> &nbsp; Iniciar sesión
                         </a>
-                        
+
                         <a class="btn btn-outline-primary" href="/">
                             <i class="fa fa-undo" aria-hidden="true" /> &nbsp;Volver al inicio
                         </a>
                     </div>
                 </div>
 
-               
+
             </form>
         </div>
     </div>
