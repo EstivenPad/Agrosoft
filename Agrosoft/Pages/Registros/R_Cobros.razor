@@ -5,89 +5,106 @@
 
 @inject IToastService toast
 
-<EditForm Model="Cobro" OnValidSubmit="Guardar">
-    <DataAnnotationsValidator />
-    <div class="card border-success">
-        <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
-            <h3 style="font-family:Georgia; color:white">Registro de cobros</h3>
-        </div>
+@if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
+{
+    <EditForm Model="Cobro" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        <div class="card border-success">
+            <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+                <h3 style="font-family:Georgia; color:white">Registro de cobros</h3>
+            </div>
 
-        <div class="card-body">
-            <form>
-                @*CobroId*@
-                <div class="form-row align-items-center">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Cobro Id</label>
-                            <div class="input-group">
-                                <InputNumber @bind-Value="Cobro.CobrosId" min="0" class="form-control col-4"></InputNumber>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar"> <span class="oi oi-magnifying-glass"></span> Buscar </button>
+            <div class="card-body">
+                <form>
+                    @*CobroId*@
+                    <div class="form-row align-items-center">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Cobro Id</label>
+                                <div class="input-group">
+                                    <InputNumber @bind-Value="Cobro.CobrosId" min="0" class="form-control col-4"></InputNumber>
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar"> <span class="oi oi-magnifying-glass"></span> Buscar </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                @*Fecha*@
-                <div class="form-group">
-                    <label>Fecha</label>
-                    <InputDate @bind-Value="Cobro.Fecha" class="form-control"></InputDate>
-                    <ValidationMessage For="@(()=>Cobro.Fecha)" />
-                </div>
-
-                @*Cliente*@
-                <div class="form-group">
-                    <label>Cliente</label>
-                    <div class="input-group">
-                        <select class="form-control" @bind="Cobro.ClienteId">
-                            <option value="0" disabled>Seleccione una opcion</option>
-                            @foreach (var item in ListaClientes)
-                            {
-                                <option value="@item.ClienteId">@item.Nombres</option>
-                            }
-                        </select>
-                        <div class="input-group-append">
-                            <NavLink type="button" class="btn btn-primary" href="RegistroClientes">
-                                <i class="oi oi-plus" aria-hidden="true" />
-                            </NavLink>
-                        </div>
+                    @*Fecha*@
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <InputDate @bind-Value="Cobro.Fecha" class="form-control"></InputDate>
+                        <ValidationMessage For="@(()=>Cobro.Fecha)" />
                     </div>
-                    <ValidationMessage For="@(()=>Cobro.ClienteId)" />
-                </div>
 
-                @*Deposito*@
-                <div class="form-group">
-                    <label>Deposito</label>
-                    <InputNumber @bind-Value="Cobro.Deposito" min="0" class="form-control" @onfocusout="CalcularBalance"></InputNumber>
-                    <ValidationMessage For="@(()=>Cobro.Deposito)" />
-                </div>
+                    @*Cliente*@
+                    <div class="form-group">
+                        <label>Cliente</label>
+                        <div class="input-group">
+                            <select class="form-control" @bind="Cobro.ClienteId">
+                                <option value="0" disabled>Seleccione una opcion</option>
+                                @foreach (var item in ListaClientes)
+                                {
+                                    <option value="@item.ClienteId">@item.Nombres</option>
+                                }
+                            </select>
+                            <div class="input-group-append">
+                                <NavLink type="button" class="btn btn-primary" href="RegistroClientes">
+                                    <i class="oi oi-plus" aria-hidden="true" />
+                                </NavLink>
+                            </div>
+                        </div>
+                        <ValidationMessage For="@(()=>Cobro.ClienteId)" />
+                    </div>
 
-                @*Balance*@
-                <div class="form-group">
-                    <label>Balance</label>
-                    <InputNumber @bind-Value="Cobro.Balance" class="form-control" readOnly="true"></InputNumber>
-                    <ValidationMessage For="@(()=>Cobro.Balance)" />
-                </div>
+                    @*Deposito*@
+                    <div class="form-group">
+                        <label>Deposito</label>
+                        <InputNumber @bind-Value="Cobro.Deposito" min="0" class="form-control" @onfocusout="CalcularBalance"></InputNumber>
+                        <ValidationMessage For="@(()=>Cobro.Deposito)" />
+                    </div>
 
-                @*Limite de credito*@
-                <div class="form-group">
-                    <label>Límite de crédito</label>
-                    <InputNumber @bind-Value="Cobro.LimiteCredito" min="0" class="form-control"></InputNumber>
-                    <ValidationMessage For="@(()=>Cobro.LimiteCredito)" />
-                </div>
-            </form>
-        </div>
+                    @*Balance*@
+                    <div class="form-group">
+                        <label>Balance</label>
+                        <InputNumber @bind-Value="Cobro.Balance" class="form-control" readOnly="true"></InputNumber>
+                        <ValidationMessage For="@(()=>Cobro.Balance)" />
+                    </div>
 
-        <div class="card-footer">
-            <div class="form-group text-center" display: inline-block>
-                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
-                <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
-                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
+                    @*Limite de credito*@
+                    <div class="form-group">
+                        <label>Límite de crédito</label>
+                        <InputNumber @bind-Value="Cobro.LimiteCredito" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Cobro.LimiteCredito)" />
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-footer">
+                <div class="form-group text-center" display: inline-block>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
+                    <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
+                </div>
             </div>
         </div>
+    </EditForm>
+}
+else @*Si no ha iniciado sesion*@
+{
+    <div class="card border-dark text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
+            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+        </div>
+        <div class="card-body">
+            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
+            <p>¡Debe iniciar sesión para poder tener acceso!</p>
+            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+        </div>
     </div>
-</EditForm>
+}
+
 
 @code {
     Cobros Cobro = new Cobros();
@@ -136,7 +153,7 @@
             return;
         }
 
-        guardo = metodosCobros.Guardar(Cobro,Cobro.CobrosId);
+        guardo = metodosCobros.Guardar(Cobro, Cobro.CobrosId);
 
         if (guardo)
         {
