@@ -44,7 +44,7 @@ namespace Agrosoft.Models
         [Required(ErrorMessage = "Es obligatorio introducir el telefono")]
         public string ClaveUsuario { get; set; }
 
-        [Range(minimum:1, maximum:3, ErrorMessage = "Seleccione un tipo de usuario")]
+        [Required(ErrorMessage = "Seleccione un tipo de usuario")]
         public string TipoUsuario { get; set; }
     }
 }
