@@ -187,6 +187,7 @@ else @*Si no ha iniciado sesion*@
         Detalle = new VentaProductosDetalle();
         ListaClientes = repositorioClientes.GetList(p => true);
         ListaProductos = repositorioProductos.GetList(p => true);
+        Venta.UsuarioId = LoginModel.UsuarioId;
     }
 
     public void Buscar()
