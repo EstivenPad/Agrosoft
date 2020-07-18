@@ -74,7 +74,7 @@
                                 <td>@compra.CompraId</td>
                                 <td>@compra.Fecha</td>
                                 <td>@compra.ProveedorId</td>
-                                <td>@compra.UsuarioId</td>
+                                <td>@repositorioUsuarios.Buscar(compra.UsuarioId).NombreUsuario</td>
                                 <td>@compra.Total</td>
                             </tr>
                         }
@@ -103,6 +103,7 @@ else @*Si no ha iniciado sesion*@
 @code {
     List<CompraProductos> ListaComprasProductos = new List<CompraProductos>();
     RepositorioBase<CompraProductos> repositorioCompras = new RepositorioBase<CompraProductos>();
+    RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
 
     private string filtro;
     private string criterio;
