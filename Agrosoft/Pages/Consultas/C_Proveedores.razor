@@ -65,8 +65,8 @@
                         <th>Teléfono</th>
                         <th>Celular</th>
                         <th>Rnc</th>
-                        <th>Email</th>
                         <th>Dirección</th>
+                        <th>Usuario</th>
                     </tr>
                 </thead>
 
@@ -77,11 +77,12 @@
                         <td>@proveedor.ProveedorId</td>
                         <td>@proveedor.Fecha</td>
                         <td>@proveedor.Nombres</td>
+                        <td>@proveedor.Apellidos</td>
                         <td>@proveedor.Telefono</td>
                         <td>@proveedor.Celular</td>
                         <td>@proveedor.Rnc</td>
-                        <td>@proveedor.Email</td>
                         <td>@proveedor.Direccion</td>
+                        <td>@repositorioUsuarios.Buscar(proveedor.UsuarioId).NombreUsuario</td>
                     </tr>
                     }
                 </tbody>
@@ -95,6 +96,7 @@
 @code {
     List<Proveedores> ListaProveedores = new List<Proveedores>();
     RepositorioBase<Proveedores> repositorioProveedores = new RepositorioBase<Proveedores>();
+    RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
 
     private string filtro;
     private string criterio;

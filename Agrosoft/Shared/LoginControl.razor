@@ -15,23 +15,3 @@
     </AuthorizeView>
 
 </CascadingAuthenticationState>
-
-@code{
-    public static int UsuarioId;
-
-    public static int GetUsuarioId(string Usuario)
-    {
-        int id;
-        Contexto db = new Contexto();
-
-        try
-        {
-            id = db.Usuarios.Where(A => A.NombreUsuario.Equals(Usuario)).Select(A => A.UsuarioId).FirstOrDefault();
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-        return id;
-    }
-}

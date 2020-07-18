@@ -3,113 +3,137 @@
 
 @using BLL
 @using Models
-
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IToastService toast
 
-<EditForm Model="Cliente" OnValidSubmit="Guardar">
-    <DataAnnotationsValidator />
-    <div class="card">
-        <div class="card-header">
-            <h3>Registro de Clientes</h3>
-        </div>
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <NotAuthorized>
+            <div class="card text-center">
+                <div class="card-header">
+                    No Autorizado!
+                </div>
+                <div class="card-body">
+                    <h5>Atención</h5>
+                    <p>Debe iniciar sesion para poder acceder a estas opciones</p>
+                    <a href="/" class="btn btn-primary">Volver al Menú anterior</a>
+                </div>
+            </div>
+        </NotAuthorized>
 
-        <div class="card-body">
-            <form>
-                @*Cliente Id*@
-                <div class="form-row align-items-center">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Cliente Id</label>
-                            <div class="input-group">
-                                <InputNumber @bind-Value="Cliente.ClienteId" class="form-control col-4" />
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+        <Authorized>
+
+        </Authorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@if (TipoUsuario)
+{
+    <EditForm Model="Cliente" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        <div class="card">
+            <div class="card-header">
+                <h3>Registro de Clientes</h3>
+            </div>
+
+            <div class="card-body">
+                <form>
+                    @*Cliente Id*@
+                    <div class="form-row align-items-center">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Cliente Id</label>
+                                <div class="input-group">
+                                    <InputNumber @bind-Value="Cliente.ClienteId" class="form-control col-4" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                @*Fecha*@
-                <div class="form-group">
-                    <label>Fecha</label>
-                    <InputDate @bind-Value="Cliente.Fecha" class="form-control" />
-                    <ValidationMessage For="@(() => Cliente.Fecha)" />
-                </div>
+                    @*Fecha*@
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <InputDate @bind-Value="Cliente.Fecha" class="form-control" />
+                        <ValidationMessage For="@(() => Cliente.Fecha)" />
+                    </div>
 
-                @*Nombres*@
-                <div class="form-group">
-                    <label>Nombres</label>
-                    <InputText @bind-Value="Cliente.Nombres" class="form-control" />
-                    <ValidationMessage For="@(() => Cliente.Nombres)" />
-                </div>
+                    @*Nombres*@
+                    <div class="form-group">
+                        <label>Nombres</label>
+                        <InputText @bind-Value="Cliente.Nombres" class="form-control" />
+                        <ValidationMessage For="@(() => Cliente.Nombres)" />
+                    </div>
 
-                @*Apellidos*@
-                <div class="form-group">
-                    <label>Apellidos</label>
-                    <InputText @bind-Value="Cliente.Apellidos" class="form-control" />
-                    <ValidationMessage For="@(() => Cliente.Apellidos)" />
-                </div>
+                    @*Apellidos*@
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <InputText @bind-Value="Cliente.Apellidos" class="form-control" />
+                        <ValidationMessage For="@(() => Cliente.Apellidos)" />
+                    </div>
 
-                @*Cédula*@
-                <div class="form-group">
-                    <label>Cédula</label>
-                    <InputText @bind-Value="Cliente.Cedula" class="form-control" />
-                    <ValidationMessage For="@(() => Cliente.Cedula)" />
-                </div>
+                    @*Cédula*@
+                    <div class="form-group">
+                        <label>Cédula</label>
+                        <InputText @bind-Value="Cliente.Cedula" class="form-control" />
+                        <ValidationMessage For="@(() => Cliente.Cedula)" />
+                    </div>
 
-                @*Email*@
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" @bind="Cliente.Email" class="form-control" />
-                    <ValidationMessage For="@(() => Cliente.Email)" />
-                </div>
+                    @*Email*@
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" @bind="Cliente.Email" class="form-control" />
+                        <ValidationMessage For="@(() => Cliente.Email)" />
+                    </div>
 
-                @*Telélefono*@
-                <div class="form-group">
-                    <label>Telélefono</label>
-                    <InputText @bind-Value="Cliente.Telefono" class="form-control" />
-                    <ValidationMessage For="@(() => Cliente.Telefono)" />
-                </div>
+                    @*Telélefono*@
+                    <div class="form-group">
+                        <label>Telélefono</label>
+                        <InputText @bind-Value="Cliente.Telefono" class="form-control" />
+                        <ValidationMessage For="@(() => Cliente.Telefono)" />
+                    </div>
 
-                @*Celular*@
-                <div class="form-group">
-                    <label>Celular</label>
-                    <InputText @bind-Value="Cliente.Celular" class="form-control" />
-                    <ValidationMessage For="@(() => Cliente.Celular)" />
-                </div>
+                    @*Celular*@
+                    <div class="form-group">
+                        <label>Celular</label>
+                        <InputText @bind-Value="Cliente.Celular" class="form-control" />
+                        <ValidationMessage For="@(() => Cliente.Celular)" />
+                    </div>
 
-                @*Dirección*@
-                <div class="form-group">
-                    <label>Dirección</label>
-                    <InputText @bind-Value="Cliente.Direccion" class="form-control" />
-                    <ValidationMessage For="@(() => Cliente.Direccion)" />
-                </div>
-            </form>
-        </div>
+                    @*Dirección*@
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <InputText @bind-Value="Cliente.Direccion" class="form-control" />
+                        <ValidationMessage For="@(() => Cliente.Direccion)" />
+                    </div>
+                </form>
+            </div>
 
-        <div class="card-footer">
-            <div class="form-group text-center" display: inline-block>
-                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
-                <button type="submit" class="btn btn-lg btn-success">Guardar</button>
-                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+            <div class="card-footer">
+                <div class="form-group text-center" display: inline-block>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
+                    <button type="submit" class="btn btn-lg btn-success">Guardar</button>
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+                </div>
             </div>
         </div>
-    </div>
-</EditForm>
+    </EditForm>
+}
 
 @code {
     [Parameter]
     public int ClienteId { get; set; }
-
     private Clientes Cliente { get; set; }
-
     public RepositorioBase<Clientes> repositorio = new RepositorioBase<Clientes>();
+    private bool TipoUsuario = false;
 
     protected override void OnInitialized()
     {
         Nuevo();
         Buscar();
+        TipoUsuario = GetAuthorization();
     }
 
     private void Nuevo()
@@ -159,5 +183,18 @@
         else
             toast.ShowError("No fue posible eliminar");
     }
+
+    private bool GetAuthorization()
+    {
+        bool acceso;
+
+        if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.IsInRole("Administrador"))
+            acceso = true;
+        else
+            acceso = false;
+
+        return acceso;
+    }
+
 }
 
