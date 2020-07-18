@@ -95,7 +95,19 @@
         </div>
     </div>
 }
-
+else @*Si no ha iniciado sesion*@
+{
+    <div class="card border-dark text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
+            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+        </div>
+        <div class="card-body">
+            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
+            <p>¡Debe iniciar sesión para poder tener acceso!</p>
+            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+        </div>
+    </div>
+}
 
 @code {
     List<Proveedores> ListaProveedores = new List<Proveedores>();
