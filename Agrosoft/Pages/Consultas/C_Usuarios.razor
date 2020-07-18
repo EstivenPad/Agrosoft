@@ -75,46 +75,43 @@
 
     public void Consultar()
     {
-        var listado = new List<Usuarios>();
+        int opcion = Convert.ToInt32(Filtro);
 
-        if (Criterio.Trim().Length > 0)
+        if (string.IsNullOrWhiteSpace(Criterio))
         {
-            switch (Filtro)
+            Lista = repositorio.GetList(x => true);
+        }
+        else
+        {
+            switch (opcion)
             {
                 case 1:
-                    listado = repositorio.GetList(p => true);
+                    Lista = repositorio.GetList(p => true);
                     break;
 
                 case 2:
                     int id = Convert.ToInt32(Criterio);
-                    listado = repositorio.GetList(p => p.UsuarioId == id);
+                    Lista = repositorio.GetList(p => p.UsuarioId == id);
                     break;
 
                 case 3:
-                    listado = repositorio.GetList(p => p.Nombres.Contains(Criterio));
+                    Lista = repositorio.GetList(p => p.Nombres.Contains(Criterio));
                     break;
 
                 case 4:
-                    listado = repositorio.GetList(p => p.Apellidos.Contains(Criterio));
+                    Lista = repositorio.GetList(p => p.Apellidos.Contains(Criterio));
                     break;
 
                 case 5:
-                    listado = repositorio.GetList(p => p.NombreUsuario.Contains(Criterio));
+                    Lista = repositorio.GetList(p => p.NombreUsuario.Contains(Criterio));
                     break;
 
-                case 6: 
-                    listado = repositorio.GetList(p => p.TipoUsuario.Contains(Criterio));
+                case 6:
+                    Lista = repositorio.GetList(p => p.TipoUsuario.Contains(Criterio));
                     break;
             }
+            CalcularTotal();
         }
-        else
-        {
-            listado = repositorio.GetList(p => true);
-        }
-
-        Lista = null;
-        Lista = listado;
-        CalcularTotal();
     }
 
     public void CalcularTotal()
