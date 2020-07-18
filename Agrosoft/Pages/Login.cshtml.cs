@@ -16,13 +16,12 @@ namespace Agrosoft.Pages
 {
     public class LoginModel : PageModel
     {
-        IToastService toast;
         public static int UsuarioId;
         Usuarios Usuarios = new Usuarios();
         List<Usuarios> ListaUsuarios = new List<Usuarios>();
         Contexto db = new Contexto();
 
-        public async Task<ActionResult> OnGetAsync(string paramUsername, string paramPassword)
+        public async Task<ActionResult> OnGetAsync(string Usuario, string Clave)
         {
             string returnUrl = Url.Content("/LogInPage");
 
@@ -35,13 +34,13 @@ namespace Agrosoft.Pages
                 throw;
             }
 
-            if (UsuariosBLL.ComprobarDatosUsuario(paramUsername, paramPassword))
+            if (UsuariosBLL.ComprobarDatosUsuario(Usuario, Clave))
             {
-                UsuarioId = db.Usuarios.Where(A => A.NombreUsuario.Equals(paramUsername)).Select(A => A.UsuarioId).FirstOrDefault();
+                UsuarioId = db.Usuarios.Where(A => A.NombreUsuario.Equals(Usuario)).Select(A => A.UsuarioId).FirstOrDefault();
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, paramUsername),
-                    new Claim(ClaimTypes.Role, UsuariosBLL.GetTipoUsuario(paramUsername)),
+                    new Claim(ClaimTypes.Name, Usuario),
+                    new Claim(ClaimTypes.Role, UsuariosBLL.GetTipoUsuario(Usuario)),
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -61,7 +60,7 @@ namespace Agrosoft.Pages
                 }
                 return LocalRedirect("/");
             }
-            else if (!UsuariosBLL.ComprobarDatosUsuario(paramUsername, paramPassword))
+            else if (!UsuariosBLL.ComprobarDatosUsuario(Usuario, Clave))
             {
                 return LocalRedirect("/UserNotExist");
             }
