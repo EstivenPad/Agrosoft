@@ -1,7 +1,4 @@
 ﻿@page "/LogInPage"
-@using Models
-@using BLL
-@using System.Web
 
 <EditForm Model="Usuario">
     <DataAnnotationsValidator />
@@ -27,7 +24,7 @@
 
                 <div class="form-group">
                     <a class="btn btn-success btn-block"
-                       href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)" target="_top">Login</a>
+                       href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)" @onmouseover="ValidarCampos" target="_top">Login</a>
 
                     <a class="btn btn-danger btn-block" href="/">Volver al Home</a>
                 </div>
@@ -48,4 +45,13 @@
     {
         return HttpUtility.UrlEncode(param);
     }
+
+    private void ValidarCampos()
+    {
+        if (string.IsNullOrEmpty(Usuario.NombreUsuario) || string.IsNullOrEmpty(Usuario.NombreUsuario))
+        {
+            toast.ShowError("Los campos no pueden estar vacios");
+        }
+    }
+
 }
