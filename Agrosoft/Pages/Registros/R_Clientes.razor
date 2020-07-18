@@ -126,6 +126,7 @@ else @*Si no ha iniciado sesion*@
     private void Nuevo()
     {
         Cliente = new Clientes();
+        Cliente.UsuarioId = LoginModel.UsuarioId;
     }
 
     private void Buscar()
