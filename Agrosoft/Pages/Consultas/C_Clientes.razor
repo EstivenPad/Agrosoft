@@ -1,76 +1,92 @@
 ﻿@page "/ConsultaClientes"
 
 @using BLL
-@using Models  
+@using Models
 
 @inject IToastService toast
 
-<h3>Consulta de Clientes</h3>
+@if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
+{
+    <h3>Consulta de Clientes</h3>
 
-<div class="card">
-    <div class="card-header">
-        @*Filtro*@
-        <div class="form-group">
-            <label>Filtro</label>
-            <select class="browser-default custom-select" @bind="Filtro">
-                <option value="0" disabled>Seleccione una opcion</option>
-                <option value="1">Todos</option>
-                <option value="2">ID</option>
-                <option value="3">Nombres</option>
-                <option value="4">Apellidos</option>
-                <option value="5">Teléfono</option>
-                <option value="6">Celular</option>
-                <option value="7">Cédula</option>
-                <option value="8">Dirección</option>
-            </select>
+    <div class="card">
+        <div class="card-header">
+            @*Filtro*@
+            <div class="form-group">
+                <label>Filtro</label>
+                <select class="browser-default custom-select" @bind="Filtro">
+                    <option value="0" disabled>Seleccione una opcion</option>
+                    <option value="1">Todos</option>
+                    <option value="2">ID</option>
+                    <option value="3">Nombres</option>
+                    <option value="4">Apellidos</option>
+                    <option value="5">Teléfono</option>
+                    <option value="6">Celular</option>
+                    <option value="7">Cédula</option>
+                    <option value="8">Dirección</option>
+                </select>
+            </div>
+
+            @*Criterio*@
+            <div class="form-group">
+                <label>Criterio</label>
+                <input type="text" @bind="Criterio" class="form-control" />
+            </div>
+            <button type="button" class="btn btn-primary" @onclick="Consultar">Consultar</button>
         </div>
 
-        @*Criterio*@
-        <div class="form-group">
-            <label>Criterio</label>
-            <input type="text" @bind="Criterio" class="form-control"/>
-        </div>
-        <button type="button" class="btn btn-primary" @onclick="Consultar">Consultar</button>
-    </div>
-
-    @*Tabla*@
-    <div class="card-body">
-        <table class="table">
-            <tr>
-                <td>Código</td>
-                <td>Fecha</td>
-                <td>Nombres</td>
-                <td>Apellidos</td>
-                <td>Teléfono</td>
-                <td>Celular</td>
-                <td>Cédula</td>
-                <td>Dirección</td>
-                <td>Usuario</td>
-            </tr>
-
-            @foreach (var item in Lista)
-            {
+        @*Tabla*@
+        <div class="card-body">
+            <table class="table">
                 <tr>
-                    <td>@item.ClienteId</td>
-                    <td>@item.Fecha</td>
-                    <td>@item.Nombres</td>
-                    <td>@item.Apellidos</td>
-                    <td>@item.Telefono</td>
-                    <td>@item.Celular</td>
-                    <td>@item.Cedula</td>
-                    <td>@item.Direccion</td>
-                    <td>@repositorioUsuarios.Buscar(item.UsuarioId).NombreUsuario</td>
+                    <td>Código</td>
+                    <td>Fecha</td>
+                    <td>Nombres</td>
+                    <td>Apellidos</td>
+                    <td>Teléfono</td>
+                    <td>Celular</td>
+                    <td>Cédula</td>
+                    <td>Dirección</td>
+                    <td>Usuario</td>
                 </tr>
-            }
-        </table>
-    </div>
 
-    <div class="card-footer">
-        <div class="form-group">
-            <label>Total de clientes: @Total</label>
+                @foreach (var item in Lista)
+                {
+                    <tr>
+                        <td>@item.ClienteId</td>
+                        <td>@item.Fecha</td>
+                        <td>@item.Nombres</td>
+                        <td>@item.Apellidos</td>
+                        <td>@item.Telefono</td>
+                        <td>@item.Celular</td>
+                        <td>@item.Cedula</td>
+                        <td>@item.Direccion</td>
+                        <td>@repositorioUsuarios.Buscar(item.UsuarioId).NombreUsuario</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="card-footer">
+            <div class="form-group">
+                <label>Total de clientes: @Total</label>
+            </div>
         </div>
     </div>
-</div>
+}
+else @*Si no ha iniciado sesion*@
+{
+    <div class="card border-dark text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
+            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+        </div>
+        <div class="card-body">
+            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
+            <p>¡Debe iniciar sesión para poder tener acceso!</p>
+            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+        </div>
+    </div>
+}
 
 @code {
     public int Total { get; set; }
@@ -85,9 +101,9 @@
     {
         var listado = new List<Clientes>();
 
-        if(Criterio.Trim().Length > 0)
+        if (Criterio.Trim().Length > 0)
         {
-            switch(Filtro)
+            switch (Filtro)
             {
                 case 1:
                     listado = repositorioClientes.GetList(c => true);

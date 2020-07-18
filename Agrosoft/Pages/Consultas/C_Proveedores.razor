@@ -4,93 +4,98 @@
 @using BLL
 
 @inject IToastService toast;
-<div class="card">
-    <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
-        <h3 style="font-family:Georgia; color:white">Consulta de proveedores</h3>
-    </div>
 
-    <div class="card-body">
-        <div class="row">
-            @*Desde*@
-            <div class="form-group col-2">
-                <label>Desde</label>
-                <input type="date" class="form-control" @bind="Desde" />
-            </div>
+@if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
+{
+    <div class="card">
+        <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+            <h3 style="font-family:Georgia; color:white">Consulta de proveedores</h3>
+        </div>
 
-            @*Hasta*@
-            <div class="form-group col-2">
-                <label>Hasta</label>
-                <input type="date" class="form-control" @bind="Hasta" />
-            </div>
+        <div class="card-body">
+            <div class="row">
+                @*Desde*@
+                <div class="form-group col-2">
+                    <label>Desde</label>
+                    <input type="date" class="form-control" @bind="Desde" />
+                </div>
 
-            @*Filtro*@
-            <div class="form-group col-3">
-                <label>Filtro</label>
-                <select @bind="filtro" class="form-control">
-                    <option value="0" disabled>Elija una opcion</option>
-                    <option value="1">Todo</option>
-                    <option value="2">Proveedor Id</option>
-                    <option value="3">Usuario Id</option>
-                    <option value="4">Nombre</option>
-                    <option value="5">Apellido</option>
-                    <option value="6">Dirección</option>
-                </select>
-            </div>
+                @*Hasta*@
+                <div class="form-group col-2">
+                    <label>Hasta</label>
+                    <input type="date" class="form-control" @bind="Hasta" />
+                </div>
 
-            @*Criterio*@
-            <div class="form-group col">
-                <label>Criterio</label>
-                <div class="input-group">
-                    <input type="text" @bind="criterio" class="form-control" />
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
-                            <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
-                        </button>
+                @*Filtro*@
+                <div class="form-group col-3">
+                    <label>Filtro</label>
+                    <select @bind="filtro" class="form-control">
+                        <option value="0" disabled>Elija una opcion</option>
+                        <option value="1">Todo</option>
+                        <option value="2">Proveedor Id</option>
+                        <option value="3">Usuario Id</option>
+                        <option value="4">Nombre</option>
+                        <option value="5">Apellido</option>
+                        <option value="6">Dirección</option>
+                    </select>
+                </div>
+
+                @*Criterio*@
+                <div class="form-group col">
+                    <label>Criterio</label>
+                    <div class="input-group">
+                        <input type="text" @bind="criterio" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                                <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            @*Tabla*@
+            @if (ListaProveedores != null)
+            {
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Fecha</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Teléfono</th>
+                            <th>Celular</th>
+                            <th>Rnc</th>
+                            <th>Dirección</th>
+                            <th>Usuario</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var proveedor in ListaProveedores)
+                        {
+                            <tr>
+                                <td>@proveedor.ProveedorId</td>
+                                <td>@proveedor.Fecha</td>
+                                <td>@proveedor.Nombres</td>
+                                <td>@proveedor.Apellidos</td>
+                                <td>@proveedor.Telefono</td>
+                                <td>@proveedor.Celular</td>
+                                <td>@proveedor.Rnc</td>
+                                <td>@proveedor.Direccion</td>
+                                <td>@repositorioUsuarios.Buscar(proveedor.UsuarioId).NombreUsuario</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+                toast.ShowError("¡No hay proveedores guardados!");
         </div>
-
-        @*Tabla*@
-        @if (ListaProveedores != null)
-        {
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Fecha</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
-                        <th>Teléfono</th>
-                        <th>Celular</th>
-                        <th>Rnc</th>
-                        <th>Dirección</th>
-                        <th>Usuario</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var proveedor in ListaProveedores)
-                    {
-                    <tr>
-                        <td>@proveedor.ProveedorId</td>
-                        <td>@proveedor.Fecha</td>
-                        <td>@proveedor.Nombres</td>
-                        <td>@proveedor.Apellidos</td>
-                        <td>@proveedor.Telefono</td>
-                        <td>@proveedor.Celular</td>
-                        <td>@proveedor.Rnc</td>
-                        <td>@proveedor.Direccion</td>
-                        <td>@repositorioUsuarios.Buscar(proveedor.UsuarioId).NombreUsuario</td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-            toast.ShowError("¡No hay proveedores guardados!");
     </div>
-</div>
+}
+
 
 @code {
     List<Proveedores> ListaProveedores = new List<Proveedores>();
