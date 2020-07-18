@@ -2,10 +2,10 @@
 @inject IToastService toast
 
 <EditForm Model="Usuario">
-    <div class="card text-lg-center" style="align-items: center; width:600px">
+    <div class="card text-lg-center" style="align-items: center; width:40%; margin-top:10%; margin-left:30%; border-radius: 15px">
 
         <div class="login align-content-center" style="text-align: center; position: relative; width: 280px;">
-            <i class="fa fa-user-lock" style="color: #009900; font-weight: 600; font-size:70px; margin-bottom:20px; margin-top:10px"></i>
+            <i class="fa fa-user-lock" style="color: #009900; font-weight: 600; font-size:70px; margin-bottom:20px; margin-top:15px"></i>
             <h2 style="font-family:Georgia">Login</h2>
 
             @*Usuario*@
@@ -37,6 +37,13 @@
             </p>
         </div>
     </div>
+
+    <style>
+        body {
+            background: url(/Imagenes/wallpaper.jpg);
+            background-position:center;
+        }
+    </style>
 </EditForm>
 
 @code {
