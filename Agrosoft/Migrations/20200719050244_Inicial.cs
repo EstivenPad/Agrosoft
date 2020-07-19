@@ -63,6 +63,20 @@ namespace Agrosoft.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Marcas",
+                columns: table => new
+                {
+                    MarcaId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductoId = table.Column<int>(nullable: false),
+                    Descripcion = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Marcas", x => x.MarcaId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
@@ -227,7 +241,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 19, 0, 27, 35, 855, DateTimeKind.Local).AddTicks(1362), "admin", "Admin", "0123456789", "Administrador" });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 19, 1, 2, 43, 945, DateTimeKind.Local).AddTicks(5955), "admin", "Admin", "0123456789", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",
@@ -250,6 +264,9 @@ namespace Agrosoft.Migrations
 
             migrationBuilder.DropTable(
                 name: "CompraProductosDetalle");
+
+            migrationBuilder.DropTable(
+                name: "Marcas");
 
             migrationBuilder.DropTable(
                 name: "Productos");

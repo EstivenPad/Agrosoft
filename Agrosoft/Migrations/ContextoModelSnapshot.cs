@@ -138,6 +138,24 @@ namespace Agrosoft.Migrations
                     b.ToTable("CompraProductosDetalle");
                 });
 
+            modelBuilder.Entity("Agrosoft.Models.Marcas", b =>
+                {
+                    b.Property<int>("MarcaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("MarcaId");
+
+                    b.ToTable("Marcas");
+                });
+
             modelBuilder.Entity("Agrosoft.Models.Productos", b =>
                 {
                     b.Property<int>("ProductoId")
@@ -315,7 +333,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 19, 0, 27, 35, 855, DateTimeKind.Local).AddTicks(1362),
+                            Fecha = new DateTime(2020, 7, 19, 1, 2, 43, 945, DateTimeKind.Local).AddTicks(5955),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",

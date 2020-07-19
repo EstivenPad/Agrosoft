@@ -17,6 +17,7 @@ namespace Agrosoft.DAL
         public DbSet<CompraProductos> CompraProductos { get; set; }
         public DbSet<VentaProductos> VentaProductos { get; set; }
         public DbSet<Cobros> Cobros { get; set; }
+        public DbSet<Marcas> Marcas { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
