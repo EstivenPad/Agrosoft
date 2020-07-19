@@ -46,11 +46,12 @@ namespace Agrosoft.BLL
         {
             bool paso = false;
             Contexto contexto = new Contexto();
+            VentaProductosBLL repositorioVentas = new VentaProductosBLL();
             RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
 
             try
             {
-                var ventaAnterior = base.Buscar(venta.VentaId);
+                var ventaAnterior = repositorioVentas.Buscar(venta.VentaId);
 
                 foreach (var item in ventaAnterior.VentaProductosDetalle)
                 {
@@ -88,11 +89,12 @@ namespace Agrosoft.BLL
         public override bool Eliminar(int id)
         {
             bool paso = false;
+            VentaProductosBLL repositorioVentas = new VentaProductosBLL();
             RepositorioBase<Productos> repositorio = new RepositorioBase<Productos>();
 
             try
             {
-                var venta = base.Buscar(id);
+                var venta = repositorioVentas.Buscar(id);
 
                 foreach (var item in venta.VentaProductosDetalle)
                 {

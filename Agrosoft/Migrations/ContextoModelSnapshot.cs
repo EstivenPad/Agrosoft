@@ -53,6 +53,9 @@ namespace Agrosoft.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ClienteId");
 
                     b.ToTable("Clientes");
@@ -312,7 +315,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 17, 23, 32, 29, 549, DateTimeKind.Local).AddTicks(7482),
+                            Fecha = new DateTime(2020, 7, 19, 0, 27, 35, 855, DateTimeKind.Local).AddTicks(1362),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",
