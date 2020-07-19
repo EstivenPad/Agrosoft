@@ -3,7 +3,6 @@
 
 <EditForm Model="Usuario">
     <div class="card border-dark text-lg-center" style="align-items: center; width:40%; margin-top:10%; margin-left:30%; border-radius: 15px">
-
         <div class="login align-content-center" style="text-align: center; position: relative; width: 280px;">
             <i class="fa fa-user-lock" style="color: #009900; font-weight: 600; font-size:70px; margin-bottom:20px; margin-top:15px"></i>
             <h2 style="font-family:Georgia; color: #444">Login</h2>
@@ -22,7 +21,7 @@
                 <i class="fa fa-lock" style="color: #009900; font-size: 13.3333px; font-weight: 600; position:absolute; top:15px; right:20px"></i>
             </div>
             <a class="btn btn-success" style="width: 100%; border: 0; border-radius: 20px; padding:12px; background-image: linear-gradient(to right, #4dff4d, #006600);"
-               href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)" @onmouseover="ValidarCampos">
+               href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)">
                 <i class="fa fa-sign-in-alt" aria-hidden="true" /> &nbsp; Iniciar sesión
             </a>
 
@@ -39,10 +38,6 @@
     </div>
 
     <style>
-        button{
-            cursor:pointer;
-        }
-
         input:focus, input:focus::placeholder, input:focus+i {
             color: #009900;
         }
@@ -68,13 +63,5 @@
     private string Encode(string param)
     {
         return HttpUtility.UrlEncode(param);
-    }
-
-    private void ValidarCampos()
-    {
-        if (string.IsNullOrEmpty(Usuario.NombreUsuario) || string.IsNullOrEmpty(Usuario.NombreUsuario))
-        {
-            toast.ShowError("Los campos no pueden estar vacios");
-        }
     }
 }
