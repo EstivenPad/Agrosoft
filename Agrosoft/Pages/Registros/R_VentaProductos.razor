@@ -10,9 +10,9 @@
 {
     <EditForm Model="Venta" OnValidSubmit="Guardar">
         <DataAnnotationsValidator />
-        <div class="card">
-            <div class="card-header">
-                <h3>Registro de Venta</h3>
+        <div class="card border-success">
+            <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+                <h3 style="font-family:Georgia; color:white">Registro de ventas</h3>
             </div>
 
             <div class="card-body">
@@ -25,7 +25,9 @@
                                 <div class="input-group">
                                     <InputNumber @bind-Value="Venta.VentaId" class="form-control col-4" />
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
+                                            <span class="oi oi-magnifying-glass"> </span>Buscar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
