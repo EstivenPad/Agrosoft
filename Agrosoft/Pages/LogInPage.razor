@@ -2,22 +2,22 @@
 @inject IToastService toast
 
 <EditForm Model="Usuario">
-    <div class="card text-lg-center" style="align-items: center; width:40%; margin-top:10%; margin-left:30%; border-radius: 15px">
+    <div class="card border-dark text-lg-center" style="align-items: center; width:40%; margin-top:10%; margin-left:30%; border-radius: 15px">
 
         <div class="login align-content-center" style="text-align: center; position: relative; width: 280px;">
             <i class="fa fa-user-lock" style="color: #009900; font-weight: 600; font-size:70px; margin-bottom:20px; margin-top:15px"></i>
-            <h2 style="font-family:Georgia">Login</h2>
+            <h2 style="font-family:Georgia; color: #444">Login</h2>
 
             @*Usuario*@
             <div class="group" style="margin-bottom:10px; position:relative">
-                <input type="text" @bind="Usuario.NombreUsuario" placeholder='Username' style="width: 100%; border: 0; border-radius: 20px; border-bottom: 2px solid #009900;
+                <input type="text" @bind="Usuario.NombreUsuario" placeholder='Username' style="width: 100%; border: 0; border-radius: 20px; border-bottom: 2px solid #444;
                         padding: 12px 40px 12px 20px;">
                 <i class="fa fa-user" style="color: #009900; font-size: 13.3333px; font-weight: 600; position:absolute; top:15px; right:20px"></i>
             </div>
 
             @*Contraseña*@
             <div class="group" style="margin-bottom:10px; position:relative">
-                <input type="Password" @bind-value="Usuario.ClaveUsuario" placeholder="Password" style="width: 100%; border: 0; border-radius: 20px; border-bottom: 2px solid #009900;
+                <input type="Password" @bind-value="Usuario.ClaveUsuario" placeholder="Password" style="width: 100%; border: 0; border-radius: 20px; border-bottom: 2px solid #444;
                         padding: 12px 40px 12px 20px;">
                 <i class="fa fa-lock" style="color: #009900; font-size: 13.3333px; font-weight: 600; position:absolute; top:15px; right:20px"></i>
             </div>
@@ -39,9 +39,20 @@
     </div>
 
     <style>
-        body {
-            background: url(/Imagenes/wallpaper.jpg);
-            background-position:center;
+        button{
+            cursor:pointer;
+        }
+
+        input:focus, input:focus::placeholder, input:focus+i {
+            color: #009900;
+        }
+
+        input:hover, input:hover::placeholder, input:hover + i {
+            color: #009900;
+        }
+
+        input:focus, button:focus{
+            outline:0;
         }
     </style>
 </EditForm>
