@@ -1,0 +1,125 @@
+﻿@page "/RegistroMarcas"
+@page "/RegistroMarcas/{MarcaId:int}"
+
+@inject IToastService toast
+
+@if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
+{
+    <EditForm Model="Marca" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        <div class="card">
+            <div class="card-header">
+                <h3>Registro de Marcas</h3>
+            </div>
+
+            <div class="card-body">
+                <form>
+                    @*Marca Id*@
+                    <div class="form-row align-items-center">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Marca Id</label>
+                                <div class="input-group">
+                                    <InputNumber @bind-Value="Marca.MarcaId" class="form-control col-4" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*Descripcion*@
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <InputText @bind-Value="Marca.Descripcion" class="form-control" />
+                        <ValidationMessage For="@(() => Marca.Descripcion)" />
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-footer">
+                <div class="form-group text-center" display: inline-block>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
+                    <button type="submit" class="btn btn-lg btn-success">Guardar</button>
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+else @*Si no ha iniciado sesion*@
+{
+    <div class="card border-dark text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
+            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+        </div>
+        <div class="card-body">
+            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
+            <p>¡Debe iniciar sesión para poder tener acceso!</p>
+            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int MarcaId { get; set; }
+    private Marcas Marca { get; set; }
+    public RepositorioBase<Marcas> repositorio = new RepositorioBase<Marcas>();
+
+    protected override void OnInitialized()
+    {
+        Nuevo();
+        Buscar();
+    }
+
+    private void Nuevo()
+    {
+        Marca = new Marcas();
+        Marca.UsuarioId = LoginModel.UsuarioId;
+    }
+
+    private void Buscar()
+    {
+        if (Marca.MarcaId > 0)
+        {
+            var encontrado = repositorio.Buscar(Marca.MarcaId);
+
+            if (encontrado != null)
+                this.Marca = encontrado;
+            else
+                toast.ShowWarning("No encontrado");
+        }
+    }
+
+    public void Guardar()
+    {
+        bool guardo;
+
+        guardo = repositorio.Guardar(Marca, Marca.MarcaId);
+
+        if (guardo)
+        {
+            Nuevo();
+            toast.ShowSuccess("Guardado correctamente");
+        }
+        else
+            toast.ShowError("No fue posible guardar");
+    }
+
+    public void Eliminar()
+    {
+        bool elimino;
+
+        elimino = repositorio.Eliminar(Marca.MarcaId);
+
+        if (elimino)
+        {
+            Nuevo();
+            toast.ShowSuccess("Eliminado correctamente");
+        }
+        else
+            toast.ShowError("No fue posible eliminar");
+    }
+}

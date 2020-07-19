@@ -1,5 +1,6 @@
 ﻿@page "/RegistroClientes"
 @page "/RegistroClientes/{ClienteId:int}"
+
 @inject IToastService toast
 
 @if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)

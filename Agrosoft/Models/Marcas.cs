@@ -12,8 +12,8 @@ namespace Agrosoft.Models
         [Key]
         public int MarcaId { get; set; }
 
-        [ForeignKey("ProductoId")]
-        public int ProductoId { get; set; }
+        [ForeignKey("UsuarioId")]
+        public int UsuarioId { get; set; }
 
         [Required(ErrorMessage = "Es obligatorio introducir la descripción")]
         public string Descripcion { get; set; }
