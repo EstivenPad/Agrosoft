@@ -61,7 +61,7 @@
                     @*Deposito*@
                     <div class="form-group">
                         <label>Deposito</label>
-                        <InputNumber @bind-Value="Cobro.Deposito" min="0" class="form-control" readOnly="@sePuedeDepositar" @onfocusout="CalcularBalance"></InputNumber>
+                        <InputNumber @bind-Value="Cobro.Deposito" min="0" class="form-control" readOnly="@noSePuedeDepositar" @onfocusout="CalcularBalance"></InputNumber>
                         <ValidationMessage For="@(()=>Cobro.Deposito)" />
                     </div>
 
@@ -106,21 +106,22 @@ else @*Si no ha iniciado sesion*@
 
 @code {
     Cobros Cobro = new Cobros();
-    Clientes Cliente = new Clientes();
-
+    Clientes Cliente;
     private List<Clientes> ListaClientes = new List<Clientes>();
-    RepositorioBase<Clientes> metodosClientes = new RepositorioBase<Clientes>();
-    RepositorioBase<Cobros> metodosCobros = new RepositorioBase<Cobros>();
+    RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
+    RepositorioBase<Cobros> repositorioCobros = new RepositorioBase<Cobros>();
+
 
     decimal Balance;
     decimal LimiteCredito;
-    string sePuedeDepositar = "false";
+    bool noSePuedeDepositar;
 
     protected override void OnInitialized()
     {
         Nuevo();
         Buscar();
         CargarClientes();
+        noSePuedeDepositar = true;
     }
 
     public void LLenarBalance()
@@ -128,24 +129,24 @@ else @*Si no ha iniciado sesion*@
         if (Cobro.ClienteId == 0)
             return;
 
-        Balance = metodosClientes.Buscar(Cobro.ClienteId).Balance;
+        Cliente = repositorioClientes.Buscar(Cobro.ClienteId);
+        Balance = Cliente.Balance;
 
         if (Balance > 0)
         {
-            sePuedeDepositar = "true";
+            noSePuedeDepositar = false;
         }
-
         LlenarLimiteCredito();
     }
 
     public void LlenarLimiteCredito()
     {
-        LimiteCredito = metodosClientes.Buscar(Cobro.ClienteId).LimiteCredito;
+        LimiteCredito = repositorioClientes.Buscar(Cobro.ClienteId).LimiteCredito;
     }
 
     public void CargarClientes()
     {
-        ListaClientes = metodosClientes.GetList(p => true);
+        ListaClientes = repositorioClientes.GetList(p => true);
     }
 
     private void Nuevo()
@@ -158,7 +159,7 @@ else @*Si no ha iniciado sesion*@
     {
         if (Cobro.CobrosId > 0)
         {
-            var encontrado = metodosCobros.Buscar(Cobro.CobrosId);
+            var encontrado = repositorioCobros.Buscar(Cobro.CobrosId);
 
             if (encontrado != null)
                 this.Cobro = encontrado;
@@ -178,13 +179,14 @@ else @*Si no ha iniciado sesion*@
             return;
         }
 
-        guardo = metodosCobros.Guardar(Cobro, Cobro.CobrosId);
+        guardo = repositorioCobros.Guardar(Cobro, Cobro.CobrosId);
 
         if (guardo)
         {
             Nuevo();
+            Cliente.Balance = Balance;
+            repositorioClientes.Modificar(Cliente);
             toast.ShowSuccess("¡Guardado!");
-            sePuedeDepositar = "false";
         }
         else
             toast.ShowError("¡No Guardado!");
@@ -207,6 +209,7 @@ else @*Si no ha iniciado sesion*@
 
     private void CalcularBalance()
     {
+
         if (Balance > 0)
             Balance -= Cobro.Deposito;
         else
