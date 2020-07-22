@@ -86,6 +86,20 @@
                         <InputText @bind-Value="Cliente.Direccion" class="form-control" />
                         <ValidationMessage For="@(() => Cliente.Direccion)" />
                     </div>
+
+                    @*Limite de credito*@
+                    <div class="form-group">
+                        <label>Límite de crédito</label>
+                        <InputNumber @bind-Value="Cliente.LimiteCredito" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Cliente.LimiteCredito)" />
+                    </div>
+
+                    @*Balance*@
+                    <div class="form-group">
+                        <label>Balance</label>
+                        <InputNumber @bind-Value="Cliente.Balance" class="form-control" readOnly="true"></InputNumber>
+                        <ValidationMessage For="@(()=>Cliente.Balance)" />
+                    </div>
                 </form>
             </div>
 
