@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <label>Cliente</label>
                         <div class="input-group">
-                            <select class="form-control" @bind="Cobro.ClienteId">
+                            <select class="form-control" @bind="Cobro.ClienteId" @onfocusout="LLenarBalance">
                                 <option value="0" disabled>Seleccione una opcion</option>
                                 @foreach (var item in ListaClientes)
                                 {
@@ -65,17 +65,18 @@
                         <ValidationMessage For="@(()=>Cobro.Deposito)" />
                     </div>
 
+                    @*Limite de credito*@
+                    <div class="form-group">
+                        <label>Límite de crédito</label>
+                        <InputNumber @bind-Value="LimiteCredito" min="0" class="form-control" readOnly="true"></InputNumber>
+                    </div>
+
                     @*Balance*@
                     <div class="form-group">
                         <label>Balance</label>
                         <InputNumber @bind-Value="Balance" class="form-control" readOnly="true"></InputNumber>
                     </div>
 
-                    @*Limite de credito*@
-                    <div class="form-group">
-                        <label>Límite de crédito</label>
-                        <InputNumber @bind-Value="LimiteCredito" min="0" class="form-control"></InputNumber>
-                    </div>
                 </form>
             </div>
 
@@ -113,7 +114,7 @@ else @*Si no ha iniciado sesion*@
 
     decimal Balance;
     decimal LimiteCredito;
-    bool sePuedeDepositar = false;
+    string sePuedeDepositar = "false";
 
     protected override void OnInitialized()
     {
@@ -131,7 +132,7 @@ else @*Si no ha iniciado sesion*@
 
         if (Balance > 0)
         {
-            sePuedeDepositar = true;
+            sePuedeDepositar = "true";
         }
 
         LlenarLimiteCredito();
@@ -183,7 +184,7 @@ else @*Si no ha iniciado sesion*@
         {
             Nuevo();
             toast.ShowSuccess("¡Guardado!");
-            sePuedeDepositar = false;
+            sePuedeDepositar = "false";
         }
         else
             toast.ShowError("¡No Guardado!");

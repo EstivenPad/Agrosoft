@@ -26,6 +26,9 @@ namespace Agrosoft.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Cedula")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -43,6 +46,9 @@ namespace Agrosoft.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("LimiteCredito")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nombres")
@@ -67,9 +73,6 @@ namespace Agrosoft.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ClienteId")
                         .HasColumnType("INTEGER");
 
@@ -77,9 +80,6 @@ namespace Agrosoft.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("LimiteCredito")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("UsuarioId")
@@ -333,7 +333,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 19, 1, 18, 32, 668, DateTimeKind.Local).AddTicks(8362),
+                            Fecha = new DateTime(2020, 7, 22, 15, 6, 38, 363, DateTimeKind.Local).AddTicks(9026),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",

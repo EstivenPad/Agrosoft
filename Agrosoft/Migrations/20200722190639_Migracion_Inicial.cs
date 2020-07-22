@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Agrosoft.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class Migracion_Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,9 @@ namespace Agrosoft.Migrations
                     Email = table.Column<string>(nullable: false),
                     Telefono = table.Column<string>(nullable: false),
                     Celular = table.Column<string>(nullable: false),
-                    Direccion = table.Column<string>(nullable: false)
+                    Direccion = table.Column<string>(nullable: false),
+                    LimiteCredito = table.Column<decimal>(nullable: false),
+                    Balance = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,8 +39,6 @@ namespace Agrosoft.Migrations
                     Fecha = table.Column<DateTime>(nullable: false),
                     ClienteId = table.Column<int>(nullable: false),
                     Deposito = table.Column<decimal>(nullable: false),
-                    Balance = table.Column<decimal>(nullable: false),
-                    LimiteCredito = table.Column<decimal>(nullable: false),
                     UsuarioId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -241,7 +241,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 19, 1, 18, 32, 668, DateTimeKind.Local).AddTicks(8362), "admin", "Admin", "0123456789", "Administrador" });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 22, 15, 6, 38, 363, DateTimeKind.Local).AddTicks(9026), "admin", "Admin", "0123456789", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",
