@@ -5,14 +5,14 @@
 
     <AuthorizeView>
         <Authorized>
-            <b style="color:white">Bienvenido, @context.User.Identity.Name!</b>
-            <a class="ml-md-auto btn btn-outline-warning" href="/logout?returnUrl=/LogInPage" target="_top">
+            <b style="font-family:'Agency FB'; font-size:30px;">Bienvenido, @context.User.Identity.Name!</b>
+            <a class="ml-md-auto btn btn-outline-success" href="/logout?returnUrl=/LogInPage" target="_top">
                 <i class="fa fa-sign-out-alt" aria-hidden="true" /> &nbsp; Logout
             </a>
         </Authorized>
 
         <NotAuthorized>
-            <a class="ml-md-auto btn btn-outline-light" href="/LogInPage" target="_top">
+            <a class="ml-md-auto btn btn-outline-info" href="/LogInPage" target="_top">
                 <i class="fa fa-sign-in-alt" aria-hidden="true" /> &nbsp; Login
             </a>
         </NotAuthorized>
