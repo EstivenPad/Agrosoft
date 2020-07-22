@@ -61,22 +61,20 @@
                     @*Deposito*@
                     <div class="form-group">
                         <label>Deposito</label>
-                        <InputNumber @bind-Value="Cobro.Deposito" min="0" class="form-control" @onfocusout="CalcularBalance"></InputNumber>
+                        <InputNumber @bind-Value="Cobro.Deposito" min="0" class="form-control" readOnly="@sePuedeDepositar" @onfocusout="CalcularBalance"></InputNumber>
                         <ValidationMessage For="@(()=>Cobro.Deposito)" />
                     </div>
 
                     @*Balance*@
                     <div class="form-group">
                         <label>Balance</label>
-                        <InputNumber @bind-Value="Cobro.Balance" class="form-control" readOnly="true"></InputNumber>
-                        <ValidationMessage For="@(()=>Cobro.Balance)" />
+                        <InputNumber @bind-Value="Balance" class="form-control" readOnly="true"></InputNumber>
                     </div>
 
                     @*Limite de credito*@
                     <div class="form-group">
                         <label>Límite de crédito</label>
-                        <InputNumber @bind-Value="Cobro.LimiteCredito" min="0" class="form-control"></InputNumber>
-                        <ValidationMessage For="@(()=>Cobro.LimiteCredito)" />
+                        <InputNumber @bind-Value="LimiteCredito" min="0" class="form-control"></InputNumber>
                     </div>
                 </form>
             </div>
@@ -107,15 +105,41 @@ else @*Si no ha iniciado sesion*@
 
 @code {
     Cobros Cobro = new Cobros();
+    Clientes Cliente = new Clientes();
+
     private List<Clientes> ListaClientes = new List<Clientes>();
     RepositorioBase<Clientes> metodosClientes = new RepositorioBase<Clientes>();
     RepositorioBase<Cobros> metodosCobros = new RepositorioBase<Cobros>();
+
+    decimal Balance;
+    decimal LimiteCredito;
+    bool sePuedeDepositar = false;
 
     protected override void OnInitialized()
     {
         Nuevo();
         Buscar();
         CargarClientes();
+    }
+
+    public void LLenarBalance()
+    {
+        if (Cobro.ClienteId == 0)
+            return;
+
+        Balance = metodosClientes.Buscar(Cobro.ClienteId).Balance;
+
+        if (Balance > 0)
+        {
+            sePuedeDepositar = true;
+        }
+
+        LlenarLimiteCredito();
+    }
+
+    public void LlenarLimiteCredito()
+    {
+        LimiteCredito = metodosClientes.Buscar(Cobro.ClienteId).LimiteCredito;
     }
 
     public void CargarClientes()
@@ -146,7 +170,7 @@ else @*Si no ha iniciado sesion*@
     {
         bool guardo;
 
-        if (Cobro.Deposito > Cobro.Balance)
+        if (Cobro.Deposito > Balance)
         {
             toast.ShowError("¡La cantidad a depositar no puede ser mayor al balance!");
             Cobro.Deposito = 0;
@@ -159,6 +183,7 @@ else @*Si no ha iniciado sesion*@
         {
             Nuevo();
             toast.ShowSuccess("¡Guardado!");
+            sePuedeDepositar = false;
         }
         else
             toast.ShowError("¡No Guardado!");
@@ -181,9 +206,9 @@ else @*Si no ha iniciado sesion*@
 
     private void CalcularBalance()
     {
-        if (Cobro.Balance > 0)
-            Cobro.Balance -= Cobro.Deposito;
+        if (Balance > 0)
+            Balance -= Cobro.Deposito;
         else
-            Cobro.Balance = 0;
+            Balance = 0;
     }
 }

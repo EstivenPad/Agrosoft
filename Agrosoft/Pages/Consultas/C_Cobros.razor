@@ -64,8 +64,6 @@
                             <th>Fecha</th>
                             <th>Cliente</th>
                             <th>Depósito</th>
-                            <th>Balance</th>
-                            <th>Límite de crédito</th>
                             <th>Usuario</th>
                         </tr>
                     </thead>
@@ -78,8 +76,6 @@
                                 <td>@cobro.Fecha</td>
                                 <td>@repositorioClientes.Buscar(cobro.ClienteId).Nombres</td>
                                 <td>@cobro.Deposito</td>
-                                <td>@cobro.Balance</td>
-                                <td>@cobro.LimiteCredito</td>
                                 <td>@repositorioUsuarios.Buscar(cobro.UsuarioId).NombreUsuario</td>
                             </tr>
                         }
@@ -146,14 +142,7 @@ else @*Si no ha iniciado sesion*@
                     int usuarioId = Convert.ToInt32(criterio);
                     ListaCobros = repositorioCobros.GetList(x => x.UsuarioId == usuarioId);
                     break;
-                case 5:
-                    decimal balance = Convert.ToDecimal(criterio);
-                    ListaCobros = repositorioCobros.GetList(x => x.Balance == balance);
-                    break;
-                case 6:
-                    decimal limiteCredito = Convert.ToDecimal(criterio);
-                    ListaCobros = repositorioCobros.GetList(x => x.LimiteCredito == limiteCredito);
-                    break;
+                
             }
             ListaCobros = ListaCobros.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
         }
