@@ -17,28 +17,36 @@
 
             <div class="card-body">
                 <form>
-                    @*Venta Id*@
-                    <div class="form-row align-items-center">
-                        <div class="col">
-                            <div class="form-group">
-                                <label>Venta Id</label>
-                                <div class="input-group">
-                                    <InputNumber @bind-Value="Venta.VentaId" class="form-control col-4" />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
-                                            <span class="oi oi-magnifying-glass"> </span>Buscar
-                                        </button>
-                                    </div>
+                    <div class="row">
+                        @*Venta Id*@
+                        <div class="form-group col-6">
+                            <label>Venta Id</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="Venta.VentaId" min="0" class="form-control"> </InputNumber>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
+                                        <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Buscar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    @*Fecha*@
-                    <div class="form-group">
-                        <label>Fecha</label>
-                        <InputDate @bind-Value="Venta.Fecha" class="form-control" />
-                        <ValidationMessage For="@(() => Venta.Fecha)" />
+                        @*Tipo de Factura*@
+                        <div class="form-group col-3">
+                            <label>Tipo de factura</label>
+                            <select class="browser-default custom-select" @bind="Venta.TipoFactura">
+                                <option value="0" selected disabled>Seleccione un tipo de factura</option>
+                                <option value="1">A credito</option>
+                                <option value="2">A contado</option>
+                            </select>
+                        </div>
+
+                        @*Fecha*@
+                        <div class="form-group col-3">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="Venta.Fecha" class="form-control" />
+                            <ValidationMessage For="@(() => Venta.Fecha)" />
+                        </div>
                     </div>
 
                     <div class="form-row">
@@ -53,16 +61,6 @@
                                 }
                             </select>
                             <ValidationMessage For="@(() => Venta.ClienteId)" />
-                        </div>
-
-                        @*Tipo de Factura*@
-                        <div class="form-group col">
-                            <label>Tipo de factura</label>
-                            <select class="browser-default custom-select" @bind="Venta.TipoFactura">
-                                <option value="0" selected disabled>Seleccione un tipo de factura</option>
-                                <option value="1">A credito</option>
-                                <option value="2">A contado</option>
-                            </select>
                         </div>
                     </div>
 
