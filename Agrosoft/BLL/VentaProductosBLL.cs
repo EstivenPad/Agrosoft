@@ -31,8 +31,8 @@ namespace Agrosoft.BLL
                     producto.CantidadExistente -= item.Cantidad;
                     repositorioProductos.Modificar(producto);                    
                 }
-
                 paso = base.Insertar(venta);
+                GuardarBalance(venta);
             }
             catch (Exception)
             {
@@ -75,7 +75,7 @@ namespace Agrosoft.BLL
                     producto.CantidadExistente -= item.Cantidad;
                     repositorioProductos.Modificar(producto);
                 }
-
+                ModificarBalance(venta);
                 paso = contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -102,7 +102,7 @@ namespace Agrosoft.BLL
                     producto.CantidadExistente += item.Cantidad;
                     repositorio.Modificar(producto);
                 }
-
+                EliminarBalance(venta);
                 paso = base.Eliminar(id);
             }
             catch (Exception)
@@ -135,6 +135,45 @@ namespace Agrosoft.BLL
             }
 
             return venta;
+        }
+
+        public static void GuardarBalance(VentaProductos venta)
+        {
+            Clientes cliente = new Clientes();
+            RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
+
+            cliente = repositorioClientes.Buscar(venta.ClienteId);
+            cliente.Balance += venta.Total;
+
+            repositorioClientes.Modificar(cliente);
+        }
+
+        public static void ModificarBalance(VentaProductos venta)
+        {
+            Clientes cliente = new Clientes();
+            VentaProductos ventaAnterior = new VentaProductos();
+
+            RepositorioBase<VentaProductos> repositorioVentas = new RepositorioBase<VentaProductos>();
+            RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
+
+            cliente = repositorioClientes.Buscar(venta.ClienteId);
+            ventaAnterior = repositorioVentas.Buscar(venta.VentaId);
+
+            cliente.Balance -= ventaAnterior.Total;
+            cliente.Balance += venta.Total;
+
+            repositorioClientes.Modificar(cliente);
+        }
+
+        public static void EliminarBalance(VentaProductos venta)
+        {
+            Clientes cliente = new Clientes();
+            RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
+
+            cliente = repositorioClientes.Buscar(venta.ClienteId);
+            cliente.Balance -= venta.Total;
+
+            repositorioClientes.Modificar(cliente);
         }
     }
 }
