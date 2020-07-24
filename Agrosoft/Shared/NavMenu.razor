@@ -1,5 +1,5 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a style="font-size: 1.5rem; color: black; font-family: Georgia; margin-left:25%;">Agrosoft</a>
+    <a style="font-size: 1.5rem; color: white; font-family: 'Agency FB'; margin-left:25%;">Agrosoft</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -7,16 +7,16 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-        <li class="nav-item px-1">
+        <li class="nav-item px-0">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <i class="oi oi-home" aria-hidden="true"></i> &emsp; &emsp; Menu inicio
             </NavLink>
         </li>
 
         @*Registros*@
-        <li class="nav-item px-1">
+        <li class="nav-item px-0">
             <NavLink class="nav-link" href="" @onclick="ToggleRegistrosMenu">
-                <span class="oi oi-file" aria-hidden="true"></span> Registros &nbsp; <span class="fa fa-chevron-down"></span>
+                <i class="oi oi-file" aria-hidden="true"></i> &emsp; &emsp; Registros<span style="margin-left:31%" class=@imgRegistros></span>
             </NavLink>
             @if (expandirRegistrosMenu)
             {
@@ -74,9 +74,9 @@
         </li>
 
         @*Consultas*@
-        <li class="nav-item px-1">
+        <li class="nav-item px-0">
             <NavLink class="nav-link" href="" @onclick="ToggleConsultasMenu">
-                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Consultas &nbsp; <span class="fa fa-chevron-down"></span>
+                <i class="oi oi-magnifying-glass" aria-hidden="true"></i> &emsp; &emsp; Consultas <span style="margin-left:30%" class=@imgConsultas></span>
             </NavLink>
             @if (expandirConsultasMenu)
             {
@@ -94,7 +94,6 @@
                     </li>
 
                     <li class="nav-fill px-1">
-
                         <NavLink class="nav-link" href="ConsultaClientes" @onclick="Ocultar">
                             &nbsp; &nbsp; <span class="fa fa-user" aria-hidden="true"></span> &nbsp; Clientes
                         </NavLink>
@@ -195,17 +194,24 @@
     </ul>
 </div>
 
+<div class="card-footer text-center" style=" position: absolute; bottom: 0; display: flex; width:100%">
+    <LoginControl/>
+</div>
+
 @code {
     private bool collapseNavMenu = true;
     private bool expandirRegistrosMenu = false;
     private bool expandirConsultasMenu = false;
     private bool expandirReportesMenu = false;
+    string imgRegistros = "fas fa-chevron-left";
+    string imgConsultas = "fas fa-chevron-left";
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+
     }
 
     private void Ocultar()
@@ -213,20 +219,36 @@
         expandirRegistrosMenu = false;
         expandirConsultasMenu = false;
         expandirReportesMenu = false;
+        imgRegistros = "fas fa-chevron-left";
+        imgConsultas = "fas fa-chevron-left";
     }
 
     private void ToggleRegistrosMenu()
     {
         expandirRegistrosMenu = !expandirRegistrosMenu;
+        imgRegistros = "fas fa-chevron-down";
+        imgConsultas = "fas fa-chevron-left";
         expandirConsultasMenu = false;
         expandirReportesMenu = false;
+
+        if(expandirRegistrosMenu == false)
+        {
+            imgRegistros = "fas fa-chevron-left";
+        }
     }
 
     private void ToggleConsultasMenu()
     {
         expandirConsultasMenu = !expandirConsultasMenu;
+        imgConsultas = "fas fa-chevron-down";
+        imgRegistros = "fas fa-chevron-left";
         expandirRegistrosMenu = false;
         expandirReportesMenu = false;
+
+        if (expandirConsultasMenu == false)
+        {
+            imgConsultas = "fas fa-chevron-left";
+        }
     }
 
     private void ToggleReportesMenu()

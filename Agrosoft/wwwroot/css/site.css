@@ -48,11 +48,13 @@ app {
 }
 
 .sidebar {
-    background-image: linear-gradient(360deg, rgb(242, 242, 242) 40%, #d9d9d9 60%);
+    /*background-image: linear-gradient(360deg, rgb(242, 242, 242) 40%, #141f1f 60%);*/
+    background-color: #393d47;
 }
 
     .sidebar .top-row {
-        background-color: #ffffff;
+        background-color: #393d47;
+        border-bottom: 1px solid #595959;
     }
 
     .sidebar .navbar-brand {
@@ -82,31 +84,39 @@ app {
         }
 
         .sidebar .nav-item a {
-            color: #000000;
-            border-radius: 4px;
+            color: #a2c3c3;
+            border-radius: 6px;
             height: 3rem;
             display: flex;
             align-items: center;
             line-height: 3rem;
-            background-color: #b3b3b3;
+            background-color: #393d47;
         }
 
             .sidebar .nav-item a.active {
-                background-color: #b3b3b3;
-                color: black;
+                background-color: #393d47;
+                color: #a2c3c3;
             }
 
             .sidebar .nav-item a:hover {
-                background-color: #999999;
+                background-color: #2d3039;
+                border-radius: 10px;
                 color: white;
             }
 
+            .sidebar .nav-item a:hover i {
+                color: #47d147 !important;
+            }
+
             .sidebar .nav-fill a{
-                margin-bottom:4px;
-                background-color: #70db70;
+                border-radius: 0px;
+                margin-bottom:0px;
+                background-color: #666d7f;
+                color:#a2c3c3;
             }
 
             .sidebar .nav-fill a:hover{
+                border-radius: 10px;
                 background-color: #47d147;
                 color: white;
             }

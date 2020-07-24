@@ -11,14 +11,14 @@
             <div class="group" style="margin-bottom:10px; position:relative">
                 <input type="text" @bind="Usuario.NombreUsuario" placeholder='Username' style="width: 100%; border: 0; border-radius: 20px; border-bottom: 2px solid #444;
                         padding: 12px 40px 12px 20px;">
-                <i class="fa fa-user" style="color: #009900; font-size: 13.3333px; font-weight: 600; position:absolute; top:15px; right:20px"></i>
+                <i class="fa fa-user" style="color: #444; font-size: 13.3333px; font-weight: 600; position:absolute; top:15px; right:20px"></i>
             </div>
 
             @*Contraseña*@
             <div class="group" style="margin-bottom:10px; position:relative">
                 <input type="Password" @bind-value="Usuario.ClaveUsuario" placeholder="Password" style="width: 100%; border: 0; border-radius: 20px; border-bottom: 2px solid #444;
                         padding: 12px 40px 12px 20px;">
-                <i class="fa fa-lock" style="color: #009900; font-size: 13.3333px; font-weight: 600; position:absolute; top:15px; right:20px"></i>
+                <i class="fa fa-lock" style="color: #444; font-size: 13.3333px; font-weight: 600; position:absolute; top:15px; right:20px"></i>
             </div>
             <a class="btn btn-success" style="width: 100%; border: 0; border-radius: 20px; padding:12px; background-image: linear-gradient(to right, #4dff4d, #006600);"
                href="/login?Usuario=@Encode(Usuario.NombreUsuario)&Clave=@Encode(Usuario.ClaveUsuario)">
@@ -38,12 +38,12 @@
     </div>
 
     <style>
-        input:focus, input:focus::placeholder, input:focus+i {
-            color: #009900;
+        input:focus, input:focus::placeholder, .group:focus i {
+            color: #009900 !important;
         }
 
-        input:hover, input:hover::placeholder, input:hover + i {
-            color: #009900;
+        input:hover, input:hover::placeholder, .group:hover i {
+            color: #009900 !important;
         }
 
         input:focus, button:focus{
