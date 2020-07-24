@@ -10,7 +10,7 @@
 {
     <EditForm Model="Venta" OnValidSubmit="Guardar">
         <DataAnnotationsValidator />
-        <div class="card border-success">
+        <div class="card border-success mb-3">
             <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
                 <h3 style="font-family:Georgia; color:white">Registro de ventas</h3>
             </div>
@@ -51,9 +51,9 @@
 
                     <div class="form-row">
                         @*Cliente*@
-                        <div class="form-group col">
+                        <div class="col-6 form-group">
                             <label>Cliente</label>
-                            <select class="browser-default custom-select" @bind="Venta.ClienteId">
+                            <select class="browser-default custom-select" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
                                 <option value="0" selected disabled>Seleccione un cliente</option>
                                 @foreach (var item in ListaClientes)
                                 {
@@ -62,48 +62,68 @@
                             </select>
                             <ValidationMessage For="@(() => Venta.ClienteId)" />
                         </div>
+
+                        @*Balance*@
+                        <div class="col-3 form-group">
+                            <label>Balance</label>
+                            <InputNumber @bind-Value="Balance" class="form-control" readOnly="true"/>
+                        </div>
+
+                        @*Limite de crédito*@
+                        <div class="col-3 form-group">
+                            <label>Limite de crédito</label>
+                            <InputNumber @bind-Value="LimiteCredito" class="form-control" readOnly="true"/>
+                        </div>
                     </div>
 
                     @*Detalle*@
-                    <div class="form-row">
-                        @*Producto*@
-                        <div class="form-group col">
-                            <label>Producto</label>
-                            <select class="browser-default custom-select" @bind="Detalle.ProductoId" @onfocusout="LlenarPrecioUnitario">
-                                <option value="0" selected disabled>Seleccione un producto</option>
-                                @foreach (var item in ListaProductos)
-                                {
-                                    <option value="@item.ProductoId">@item.Nombre</option>
-                                }
-                            </select>
+                    <div class="card">
+                        <div class="card-header-tabs text-center">
+                            <div class="mt-2">
+                                <h5 style="font-family:Georgia; font-style:unset">Productos</h5>
+                            </div>
                         </div>
 
-                        @*Cantidad*@
-                        <div class="form-group col">
-                            <label>Cantidad</label>
-                            <InputNumber @bind-Value="Detalle.Cantidad" class="form-control" @onfocusout="CalcularImporte" />
-                        </div>
+                        <div class="card-body form-row">
+                            @*Producto*@
+                            <div class="form-group col">
+                                <label>Producto</label>
+                                <select class="browser-default custom-select" @bind="Detalle.ProductoId" @onfocusout="LlenarPrecioUnitario">
+                                    <option value="0" selected disabled>Seleccione un producto</option>
+                                    @foreach (var item in ListaProductos)
+                                    {
+                                        <option value="@item.ProductoId">@item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
 
-                        @*Precio Unitario*@
-                        <div class="form-group col">
-                            <label>Precio Unitario</label>
-                            <InputNumber @bind-Value="Detalle.PrecioUnitario" class="form-control" disabled />
-                        </div>
+                            @*Cantidad*@
+                            <div class="form-group col">
+                                <label>Cantidad</label>
+                                <InputNumber @bind-Value="Detalle.Cantidad" class="form-control" @onfocusout="CalcularImporte" />
+                            </div>
 
-                        @*Importe*@
-                        <div class="form-group col">
-                            <label>Importe</label>
-                            <div class="input-group">
-                                <InputNumber @bind-Value="Detalle.Importe" class="form-control" disabled />
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" @onclick="AgregarDetalle"><i class="oi oi-plus" aria-hidden="true" /></button>
+                            @*Precio Unitario*@
+                            <div class="form-group col">
+                                <label>Precio Unitario</label>
+                                <InputNumber @bind-Value="Detalle.PrecioUnitario" class="form-control" disabled />
+                            </div>
+
+                            @*Importe*@
+                            <div class="form-group col">
+                                <label>Importe</label>
+                                <div class="input-group">
+                                    <InputNumber @bind-Value="Detalle.Importe" class="form-control" disabled />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary" @onclick="AgregarDetalle"><i class="oi oi-plus" aria-hidden="true" /></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                    
 
-                    <table class="table">
-                        <thead>
+                    <table class="table table-hover mt-3">
+                        <thead class="thead-dark">
                             <tr>
                                 <th>Producto</th>
                                 <th>Cantidad</th>
@@ -164,6 +184,8 @@ else @*Si no ha iniciado sesion*@
     [Parameter]
     public int VentaId { get; set; }
 
+    private decimal Balance;
+    private decimal LimiteCredito;
     private VentaProductos Venta = new VentaProductos();
     private VentaProductosDetalle Detalle = new VentaProductosDetalle();
     private List<Clientes> ListaClientes = new List<Clientes>();
@@ -183,6 +205,8 @@ else @*Si no ha iniciado sesion*@
 
     public void Nuevo()
     {
+        Balance = 0;
+        LimiteCredito = 0;
         Venta = new VentaProductos();
         Detalle = new VentaProductosDetalle();
         ListaClientes = repositorioClientes.GetList(p => true);
@@ -207,15 +231,22 @@ else @*Si no ha iniciado sesion*@
     {
         bool guardo;
 
-        guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
-
-        if (guardo)
+        if(Venta.Total > (LimiteCredito - Balance))
         {
-            Nuevo();
-            toast.ShowSuccess("Guardado correctamente");
+            toast.ShowError("El total de la factura excede el límite de crédito del cliente");
         }
         else
-            toast.ShowError("No fue posible guardar");
+        {
+            guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
+
+            if (guardo)
+            {
+                Nuevo();
+                toast.ShowSuccess("Guardado correctamente");
+            }
+            else
+                toast.ShowError("No fue posible guardar");
+        }
     }
 
     public void Eliminar()
@@ -261,5 +292,11 @@ else @*Si no ha iniciado sesion*@
     {
         Venta.Total -= filaRemovida.Importe;
         Venta.VentaProductosDetalle.Remove(filaRemovida);
+    }
+
+    public void BuscarBalanceLimiteCredito()
+    {
+        Balance = repositorioClientes.Buscar(Venta.ClienteId).Balance;
+        LimiteCredito = repositorioClientes.Buscar(Venta.ClienteId).LimiteCredito;
     }
 }
