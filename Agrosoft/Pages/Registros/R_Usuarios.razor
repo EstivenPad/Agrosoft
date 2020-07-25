@@ -110,7 +110,7 @@
                         @*Clave de Usuario*@
                         <div class="form-group">
                             <label>Clave de usuario</label>
-                            <input type="password" @bind="Usuario.ClaveUsuario" class="form-control" />
+                            <InputText @bind-Value="Usuario.ClaveUsuario" class="form-control" />
                             <ValidationMessage For="@(() => Usuario.ClaveUsuario)" />
                         </div>
 

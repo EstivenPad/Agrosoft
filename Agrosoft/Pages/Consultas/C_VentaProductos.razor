@@ -118,6 +118,7 @@ else @*Si no ha iniciado sesion*@
 
     public void Consultar()
     {
+        int id = 0;
         int opcion = Convert.ToInt32(Filtro);
 
         if (string.IsNullOrWhiteSpace(Criterio))
@@ -133,13 +134,23 @@ else @*Si no ha iniciado sesion*@
                     break;
 
                 case 2:
-                    int id = Convert.ToInt32(Criterio);
+                    id = Convert.ToInt32(Criterio);
                     Lista = repositorioVentas.GetList(p => p.VentaId == id);
                     break;
 
                 case 3:
-                    //TODO: Hacer que filtre por cliente
-                    //Lista = repositorioVentas.GetList(p => repositorioClientes.Buscar(p.ClienteId));
+                    id = 0;
+                    List<Clientes> clientes = repositorioClientes.GetList(p => true);
+
+                    foreach (var item in clientes)
+                    {
+                        if (Criterio.Contains(item.Nombres))
+                            id = item.ClienteId;
+                        else if (Criterio.Contains(item.Apellidos))
+                            id = item.ClienteId;
+                    }
+
+                    Lista = repositorioVentas.GetList(p => p.ClienteId == id);
                     break;
 
                 case 4:
