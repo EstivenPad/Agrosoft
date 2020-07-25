@@ -15,13 +15,19 @@
 
         @*Registros*@
         <li class="nav-item px-0">
-            <NavLink class="nav-link" href="" @onclick="ToggleRegistrosMenu">
+            <NavLink class="nav-link" @onclick="ToggleRegistrosMenu" style="cursor:pointer">
                 <i class="oi oi-file" aria-hidden="true"></i> &emsp; &emsp; Registros<span style="margin-left:31%" class=@imgRegistros></span>
             </NavLink>
             @if (expandirRegistrosMenu)
             {
+                <style>
+                    .sidebar{
+                        height:790px;
+                    }
+                </style>
+
                 <ul class="nav flex-column">
-                    <li class="nav-fill px-1" style="margin-top:10px">
+                    <li class="nav-fill-up px-1" style="margin-top:10px">
                         <NavLink class="nav-link" href="RegistroUsuarios" @onclick="Ocultar">
                             &nbsp; &nbsp; <span class="fa fa-users" aria-hidden="true"></span> &nbsp; Usuarios
                         </NavLink>
@@ -64,7 +70,7 @@
                         </NavLink>
                     </li>
 
-                    <li class="nav-fill px-1">
+                    <li class="nav-fill-down px-1">
                         <NavLink class="nav-link" href="RegistroVentaProductos" @onclick="Ocultar">
                             &nbsp; &nbsp; <span class="fa fa-shopping-bag" aria-hidden="true"></span> &nbsp; Venta productos
                         </NavLink>
@@ -75,13 +81,19 @@
 
         @*Consultas*@
         <li class="nav-item px-0">
-            <NavLink class="nav-link" href="" @onclick="ToggleConsultasMenu">
+            <NavLink class="nav-link" @onclick="ToggleConsultasMenu" style="cursor:pointer">
                 <i class="oi oi-magnifying-glass" aria-hidden="true"></i> &emsp; &emsp; Consultas <span style="margin-left:30%" class=@imgConsultas></span>
             </NavLink>
             @if (expandirConsultasMenu)
             {
+                <style>
+                    .sidebar{
+                        height:790px;
+                    }
+                </style>
+
                 <ul class="nav flex-column">
-                    <li class="nav-fill px-1" style="margin-top:10px">
+                    <li class="nav-fill-up px-1" style="margin-top:10px">
                         <NavLink class="nav-link" href="ConsultaUsuarios" @onclick="Ocultar">
                             &nbsp; &nbsp; <span class="fa fa-users" aria-hidden="true"></span> &nbsp; Usuarios
                         </NavLink>
@@ -123,7 +135,7 @@
                         </NavLink>
                     </li>
 
-                    <li class="nav-fill px-1">
+                    <li class="nav-fill-down px-1">
                         <NavLink class="nav-link" href="ConsultaVentaProductos" @onclick="Ocultar">
                             &nbsp; &nbsp; <span class="fa fa-shopping-bag" aria-hidden="true"></span> &nbsp; Venta productos
                         </NavLink>
@@ -131,66 +143,6 @@
                 </ul>
             }
         </li>
-
-        @*Reportes*@
-        @*<li class="nav-item px-1">
-            <NavLink class="nav-link" href="" @onclick="ToggleReportesMenu">
-                <span class="oi oi-bar-chart" aria-hidden="true"></span> Reportes &nbsp; <span class="fa fa-chevron-down"></span>
-            </NavLink>
-            @if (expandirReportesMenu)
-            {
-                <ul class="nav flex-column">
-                    <li class="nav-item px-1">
-                        <NavLink class="nav-link" href="ReporteUsuarios">
-                            &nbsp; &nbsp; <span class="fa fa-users" aria-hidden="true"></span> &nbsp; Usuarios
-                        </NavLink>
-                    </li>
-
-                    <li class="nav-item px-1">
-                        <NavLink class="nav-link" href="ReporteProveedores">
-                            &nbsp; &nbsp; <span class="fa fa-user-tie" aria-hidden="true"></span> &nbsp; Proveedores
-                        </NavLink>
-                    </li>
-
-                    <li class="nav-item px-1">
-
-                        <NavLink class="nav-link" href="ReporteClientes">
-                            &nbsp; &nbsp; <span class="fa fa-user" aria-hidden="true"></span> &nbsp; Clientes
-                        </NavLink>
-                    </li>
-
-                    <li class="nav-item px-1">
-                        <NavLink class="nav-link" href="ReporteCobros">
-                            &nbsp; &nbsp; <span class="fa fa-money-check-alt" aria-hidden="true"></span> &nbsp; Cobros
-                        </NavLink>
-                    </li>
-
-                    <li class="nav-item px-1">
-                        <NavLink class="nav-link" href="ReporteProductos">
-                            &nbsp; &nbsp; <span class="fa fa-store" aria-hidden="true"></span> &nbsp; Productos
-                        </NavLink>
-                    </li>
-
-                    <li class="nav-item px-1">
-                        <NavLink class="nav-link" href="ReporteMarcas" @onclick="Ocultar">
-                            &nbsp; &nbsp; <span class="fab fa-slack" aria-hidden="true"></span> &nbsp; Marcas
-                        </NavLink>
-                    </li>
-
-                    <li class="nav-item px-1">
-                        <NavLink class="nav-link" href="ReporteCompraProductos">
-                            &nbsp; &nbsp; <span class="fa fa-cart-plus" aria-hidden="true"></span> &nbsp; Compra productos
-                        </NavLink>
-                    </li>
-
-                    <li class="nav-item px-1">
-                        <NavLink class="nav-link" href="ReporteVentaProductos">
-                            &nbsp; &nbsp; <span class="fa fa-shopping-bag" aria-hidden="true"></span> &nbsp; Venta productos
-                        </NavLink>
-                    </li>
-                </ul>
-            }
-        </li>*@
     </ul>
 </div>
 
