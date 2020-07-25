@@ -79,7 +79,16 @@ else @*Si no ha iniciado sesion*@
     private void Nuevo()
     {
         Marca = new Marcas();
-        Marca.UsuarioId = LoginModel.UsuarioId;
+        Marca.UsuarioId = GetUsuarioId();
+    }
+
+    public int GetUsuarioId()
+    {
+        int id;
+        Contexto db = new Contexto();
+        id = db.Usuarios.Where(A => A.NombreUsuario.Equals(AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.Name)).Select(A => A.UsuarioId).FirstOrDefault();
+
+        return id;
     }
 
     private void Buscar()

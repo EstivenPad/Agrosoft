@@ -249,7 +249,16 @@ else @*Si no ha iniciado sesion*@
         compraId = 0;
         productoId = 0;
         costo = 0;
-        Compra.UsuarioId = LoginModel.UsuarioId;
+        Compra.UsuarioId = GetUsuarioId();
+    }
+
+    public int GetUsuarioId()
+    {
+        int id;
+        Contexto db = new Contexto();
+        id = db.Usuarios.Where(A => A.NombreUsuario.Equals(AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.Name)).Select(A => A.UsuarioId).FirstOrDefault();
+
+        return id;
     }
 
     private void Buscar()

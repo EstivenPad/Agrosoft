@@ -16,7 +16,6 @@ namespace Agrosoft.Pages
 {
     public class LoginModel : PageModel
     {
-        public static int UsuarioId;
         Usuarios Usuarios = new Usuarios();
         List<Usuarios> ListaUsuarios = new List<Usuarios>();
         Contexto db = new Contexto();
@@ -36,7 +35,6 @@ namespace Agrosoft.Pages
 
             if (UsuariosBLL.ComprobarDatosUsuario(Usuario, Clave))
             {
-                UsuarioId = db.Usuarios.Where(A => A.NombreUsuario.Equals(Usuario)).Select(A => A.UsuarioId).FirstOrDefault();
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, Usuario),
