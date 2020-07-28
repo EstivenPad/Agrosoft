@@ -43,7 +43,20 @@
                     @*Marca*@
                     <div class="form-group">
                         <label>Marca</label>
-                        <InputText @bind-Value="Producto.Marca" class="form-control"></InputText>
+                        <div class="input-group">
+                            <select class="form-control" @bind="Producto.Marca">
+                                <option disabled selected>Seleccione una opcion</option>
+                                @foreach (var item in ListaMarcas)
+                                {
+                                    <option>@item.Descripcion</option>
+                                }
+                            </select>
+                            <div class="input-group-append">
+                                <NavLink type="button" class="btn btn-primary" href="RegistroMarcas">
+                                    <i class="oi oi-plus" aria-hidden="true" />
+                                </NavLink>
+                            </div>
+                        </div>
                         <ValidationMessage For="@(()=>Producto.Marca)" />
                     </div>
 
@@ -118,14 +131,17 @@ else @*Si no ha iniciado sesion*@
 @code {
     private Productos Producto = new Productos();
     List<UnidadesMedida> ListaUnidades = new List<UnidadesMedida>();
+    List<Marcas> ListaMarcas = new List<Marcas>();
     RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
     RepositorioBase<UnidadesMedida> repositorioUnidades = new RepositorioBase<UnidadesMedida>();
+    RepositorioBase<Marcas> repositorioMarcas = new RepositorioBase<Marcas>();
 
     protected override void OnInitialized()
     {
         Nuevo();
         Buscar();
         CargarUnidades();
+        CargarMarcas();
     }
 
     public void Nuevo()
@@ -136,6 +152,11 @@ else @*Si no ha iniciado sesion*@
     private void CargarUnidades()
     {
         ListaUnidades = repositorioUnidades.GetList(x => true);
+    }
+
+    private void CargarMarcas()
+    {
+        ListaMarcas = repositorioMarcas.GetList(x => true);
     }
 
     private void Buscar()
