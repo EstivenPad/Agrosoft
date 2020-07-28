@@ -126,6 +126,7 @@ else @*Si no ha iniciado sesion*@
         if (string.IsNullOrWhiteSpace(criterio))
         {
             ListaProveedores = repositorioProveedores.GetList(x => true);
+            ListaProveedores = ListaProveedores.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
         }
         else
         {
