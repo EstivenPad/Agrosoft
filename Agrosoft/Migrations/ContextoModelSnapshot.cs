@@ -333,7 +333,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 25, 15, 38, 37, 444, DateTimeKind.Local).AddTicks(9497),
+                            Fecha = new DateTime(2020, 7, 28, 15, 27, 42, 636, DateTimeKind.Local).AddTicks(3710),
                             NombreUsuario = "admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",

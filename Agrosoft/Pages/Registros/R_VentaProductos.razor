@@ -34,7 +34,7 @@
                         @*Tipo de Factura*@
                         <div class="form-group col-3">
                             <label>Tipo de factura</label>
-                            <select class="browser-default custom-select" @bind="Venta.TipoFactura">
+                            <select class="form-control" @bind="Venta.TipoFactura">
                                 <option value="0" selected disabled>Seleccione un tipo de factura</option>
                                 <option value="1">A credito</option>
                                 <option value="2">A contado</option>
@@ -53,7 +53,7 @@
                         @*Cliente*@
                         <div class="col-6 form-group">
                             <label>Cliente</label>
-                            <select class="browser-default custom-select" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
+                            <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
                                 <option value="0" selected disabled>Seleccione un cliente</option>
                                 @foreach (var item in ListaClientes)
                                 {
@@ -88,7 +88,7 @@
                             @*Producto*@
                             <div class="form-group col">
                                 <label>Producto</label>
-                                <select class="browser-default custom-select" @bind="Detalle.ProductoId" @onfocusout="LlenarPrecioUnitario">
+                                <select class="form-control" @bind="Detalle.ProductoId" @onfocusout="LlenarPrecioUnitario">
                                     <option value="0" selected disabled>Seleccione un producto</option>
                                     @foreach (var item in ListaProductos)
                                     {
@@ -158,9 +158,9 @@
 
             <div class="card-footer">
                 <div class="form-group text-center" display: inline-block>
-                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
-                    <button type="submit" class="btn btn-lg btn-success">Guardar</button>
-                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
+                    <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
                 </div>
             </div>
         </div>

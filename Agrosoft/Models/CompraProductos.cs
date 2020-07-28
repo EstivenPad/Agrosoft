@@ -21,6 +21,6 @@ namespace Agrosoft.Models
         [Required(ErrorMessage = "El total no puede estar vacío")]
         public decimal Total { get; set; }
         [ForeignKey("CompraId")]
-        public virtual List<CompraProductosDetalle> CompraProductosDetalle { get; set; }
+        public virtual List<CompraProductosDetalle> CompraProductosDetalle { get; set; } = new List<CompraProductosDetalle>();
     }
 }
