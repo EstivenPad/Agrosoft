@@ -29,21 +29,5 @@ namespace Agrosoft.Models
         [Required(ErrorMessage = "Es obligatorio introducir el costo")]
         [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "El costo debe ser mayor a 1")]
         public decimal Costo { get; set; }
-
-        public Productos()
-        {
-        }
-
-        public Productos(int productoId, string nombre, string marca, int unidadMedida, int cantidadMinima, int cantidadExistente, decimal precio, decimal costo)
-        {
-            ProductoId = productoId;
-            Nombre = nombre;
-            Marca = marca;
-            UnidadMedida = unidadMedida;
-            CantidadMinima = cantidadMinima;
-            CantidadExistente = cantidadExistente;
-            Precio = precio;
-            Costo = costo;
-        }
     }
 }

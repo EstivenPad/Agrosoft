@@ -18,18 +18,5 @@ namespace Agrosoft.Models
         [Required(ErrorMessage = "Es obligatorio llenar la cantidad")]
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
-
-        public CompraProductosDetalle()
-        {
-        }
-
-        public CompraProductosDetalle(int id, int compraId, int productoId, int cantidad, decimal precio)
-        {
-            Id = id;
-            CompraId = compraId;
-            ProductoId = productoId;
-            Cantidad = cantidad;
-            Precio = precio;
-        }
     }
 }

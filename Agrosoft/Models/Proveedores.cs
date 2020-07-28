@@ -13,7 +13,7 @@ namespace Agrosoft.Models
         public int UsuarioId { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime Fecha { get; set; }
+        public DateTime Fecha { get; set; } = DateTime.Now;
         [Required(ErrorMessage = "Es obligatorio introducir el nombre")]
         public string Nombres { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir el apellido")]
@@ -34,23 +34,5 @@ namespace Agrosoft.Models
         public string Email { get; set; }
         [Required(ErrorMessage = "Es obligatorio introducir la dirección")]
         public string Direccion { get; set; }
-
-        public Proveedores()
-        {
-        }
-
-        public Proveedores(int proveedorId, int usuarioId, DateTime fecha, string nombres, string apellidos, string telefono, string celular, int rnc, string email, string direccion)
-        {
-            ProveedorId = proveedorId;
-            UsuarioId = usuarioId;
-            Fecha = fecha;
-            Nombres = nombres;
-            Apellidos = apellidos;
-            Telefono = telefono;
-            Celular = celular;
-            Rnc = rnc;
-            Email = email;
-            Direccion = direccion;
-        }
     }
 }

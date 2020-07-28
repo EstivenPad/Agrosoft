@@ -13,7 +13,7 @@ namespace Agrosoft.Models
         public int CompraId { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime Fecha { get; set; }
+        public DateTime Fecha { get; set; } = DateTime.Now;
         [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "Debe seleccionar un proveedor")]
         [Required(ErrorMessage = "Debe seleccionar un proveedor")]
         public int ProveedorId { get; set; }
@@ -22,25 +22,5 @@ namespace Agrosoft.Models
         public decimal Total { get; set; }
         [ForeignKey("CompraId")]
         public virtual List<CompraProductosDetalle> CompraProductosDetalle { get; set; }
-
-        public CompraProductos()
-        {
-            CompraId = 0;
-            Fecha = DateTime.Now;
-            ProveedorId = 0;
-            UsuarioId = 0;
-            Total = 0;
-            CompraProductosDetalle = new List<CompraProductosDetalle>();
-        }
-
-        public CompraProductos(int compraId, DateTime fecha, int proveedorId, int usuarioId, decimal total, List<CompraProductosDetalle> productosDetalle)
-        {
-            CompraId = compraId;
-            Fecha = fecha;
-            ProveedorId = proveedorId;
-            UsuarioId = usuarioId;
-            Total = total;
-            CompraProductosDetalle = productosDetalle;
-        }
     }
 }

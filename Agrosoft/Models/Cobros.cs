@@ -10,7 +10,7 @@ namespace Agrosoft.Models
     {
         [Key]
         public int CobrosId { get; set; }
-        public DateTime Fecha { get; set; }
+        public DateTime Fecha { get; set; } = DateTime.Now;
         [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "Debe seleccionar un cliente")]
         [Required(ErrorMessage = "Debe seleccionar un cliente")]
         public int ClienteId { get; set; }
