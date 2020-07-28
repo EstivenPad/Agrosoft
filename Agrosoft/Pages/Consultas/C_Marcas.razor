@@ -1,0 +1,121 @@
+﻿@page "/ConsultaMarcas"
+
+@using Models
+@using BLL
+
+@inject IToastService toast;
+
+@if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
+{
+    <div class="card border-success">
+        <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+            <h3 style="font-family:Georgia; color:white">Consulta de marcas</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                @*Filtro*@
+                <div class="form-group col">
+                    <label>Filtro</label>
+                    <select @bind="filtro" class="form-control">
+                        <option value="0" disabled>Elija una opcion</option>
+                        <option value="1">Todo</option>
+                        <option value="2">Código</option>
+                        <option value="3">Descripción</option>
+                    </select>
+                </div>
+
+                @*Criterio*@
+                <div class="form-group col">
+                    <label>Criterio</label>
+                    <div class="input-group">
+                        <input type="text" @bind="criterio" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                                <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*Tabla*@
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var compra in ListaMarcas)
+                    {
+                        <tr>
+                            <td>@compra.MarcaId</td>
+                            <td>@compra.Descripcion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+else @*Si no ha iniciado sesion*@
+{
+    <div class="card border-dark text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
+            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+        </div>
+        <div class="card-body">
+            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
+            <p>¡Debe iniciar sesión para poder tener acceso!</p>
+            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+        </div>
+    </div>
+}
+
+@code {
+    List<Marcas> ListaMarcas = new List<Marcas>();
+    RepositorioBase<Marcas> repositorioMarcas = new RepositorioBase<Marcas>();
+
+    private int filtro;
+    private string criterio;
+    
+    private void Consultar()
+    {
+        if (string.IsNullOrWhiteSpace(criterio))
+        {
+            ListaMarcas = repositorioMarcas.GetList(x => true);
+
+            if (ListaMarcas.Count == 0)
+            {
+                toast.ShowInfo("¡No hay datos para mostrar!");
+            }
+        }
+        else
+        {
+            switch (filtro)
+            {
+                case 0:
+                    toast.ShowError("¡Opcion incorrecta!");
+                    break;
+                case 1:
+                    ListaMarcas = repositorioMarcas.GetList(x => true);
+                    break;
+                case 2:
+                    int id = Convert.ToInt32(criterio);
+                    ListaMarcas = repositorioMarcas.GetList(x => x.MarcaId == id);
+                    break;
+                case 3:
+                    ListaMarcas = repositorioMarcas.GetList(x => x.Descripcion == criterio);
+                    break;               
+            }
+            if (ListaMarcas.Count == 0)
+            {
+                toast.ShowInfo("¡No hay datos para mostrar!");
+            }
+        }
+    }
+}
