@@ -7,13 +7,12 @@
 
 @if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
 {
-    <div class="card">
+    <div class="card border-success">
         <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
             <h3 style="font-family:Georgia; color:white">Consulta de productos</h3>
         </div>
 
         <div class="card-body">
-
             <div class="row">
                 @*Filtro*@
                 <div class="form-group col">
@@ -21,7 +20,7 @@
                     <select @bind="filtro" class="form-control">
                         <option value="0" disabled>Elija una opcion</option>
                         <option value="1">Todo</option>
-                        <option value="2">ID</option>
+                        <option value="2">Código</option>
                         <option value="3">Nombre</option>
                         <option value="4">Marca</option>
                     </select>
@@ -43,12 +42,10 @@
 
 
             @*Tabla*@
-            @if (ListaProductos != null)
-            {
-                <table class="table">
-                    <thead class="thead-light">
+            <table class="table table-hover">
+                    <thead class="thead-dark">
                         <tr>
-                            <th>Codigo</th>
+                            <th>Código</th>
                             <th>Nombre</th>
                             <th>Marca</th>
                             <th>Cantidad minima</th>
@@ -73,9 +70,6 @@
                         }
                     </tbody>
                 </table>
-            }
-            else
-                toast.ShowError("¡No hay articulos guardados!");
 
         </div>
     </div>
@@ -98,20 +92,22 @@ else @*Si no ha iniciado sesion*@
     List<Productos> ListaProductos = new List<Productos>();
     RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
 
-    private string filtro;
+    private int filtro;
     private string criterio;
 
     private void Consultar()
     {
-        int opcion = Convert.ToInt32(filtro);
-
         if (string.IsNullOrWhiteSpace(criterio))
         {
             ListaProductos = repositorioProductos.GetList(x => true);
+            if (ListaProductos.Count == 0)
+            {
+                toast.ShowInfo("¡No hay datos para mostrar!");
+            }
         }
         else
         {
-            switch (opcion)
+            switch (filtro)
             {
                 case 0:
                     toast.ShowError("¡Opcion incorrecta!");
@@ -129,6 +125,10 @@ else @*Si no ha iniciado sesion*@
                 case 4:
                     ListaProductos = repositorioProductos.GetList(x => x.Marca == criterio);
                     break;
+            }
+            if (ListaProductos.Count == 0)
+            {
+                toast.ShowInfo("¡No hay datos para mostrar!");
             }
         }
     }

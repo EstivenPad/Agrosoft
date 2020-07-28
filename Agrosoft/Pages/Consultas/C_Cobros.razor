@@ -7,7 +7,7 @@
 
 @if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
 {
-    <div class="card">
+    <div class="card border-success">
         <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
             <h3 style="font-family:Georgia; color:white">Consulta de cobros</h3>
         </div>
@@ -32,9 +32,9 @@
                     <select @bind="filtro" class="form-control">
                         <option value="0" disabled>Elija una opción</option>
                         <option value="1">Todo</option>
-                        <option value="2">Cobro Id</option>
-                        <option value="3">Cliente Id</option>
-                        <option value="4">Usuario Id</option>
+                        <option value="2">Código cobro</option>
+                        <option value="3">Código cliente</option>
+                        <option value="4">Código usuario</option>
                         <option value="5">Balance</option>
                         <option value="6">Límite de crédito</option>
                     </select>
@@ -55,35 +55,31 @@
             </div>
 
             @*Tabla*@
-            @if (ListaCobros != null)
-            {
-                <table class="table">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>Codigo</th>
-                            <th>Fecha</th>
-                            <th>Cliente</th>
-                            <th>Depósito</th>
-                            <th>Usuario</th>
-                        </tr>
-                    </thead>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Código</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Depósito</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                        @foreach (var cobro in ListaCobros)
-                        {
-                            <tr>
-                                <td>@cobro.CobrosId</td>
-                                <td>@cobro.Fecha</td>
-                                <td>@repositorioClientes.Buscar(cobro.ClienteId).Nombres</td>
-                                <td>@cobro.Deposito</td>
-                                <td>@repositorioUsuarios.Buscar(cobro.UsuarioId).NombreUsuario</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-                toast.ShowError("¡No hay cobros guardados!");
+                <tbody>
+                    @foreach (var cobro in ListaCobros)
+                    {
+                        <tr>
+                            <td>@cobro.CobrosId</td>
+                            <td>@cobro.Fecha</td>
+                            <td>@repositorioClientes.Buscar(cobro.ClienteId).Nombres</td>
+                            <td>@cobro.Deposito</td>
+                            <td>@repositorioUsuarios.Buscar(cobro.UsuarioId).NombreUsuario</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
         </div>
     </div>
 }
@@ -107,22 +103,26 @@ else @*Si no ha iniciado sesion*@
     RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
     RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
 
-    private string filtro;
+    private int filtro;
     private string criterio;
     private DateTime Desde = DateTime.Now;
     private DateTime Hasta = DateTime.Now;
 
     private void Consultar()
     {
-        int opcion = Convert.ToInt32(filtro);
-
         if (string.IsNullOrWhiteSpace(criterio))
         {
             ListaCobros = repositorioCobros.GetList(x => true);
+            ListaCobros = ListaCobros.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+
+            if (ListaCobros.Count == 0)
+            {
+                toast.ShowInfo("¡No hay datos para mostrar!");
+            }
         }
         else
         {
-            switch (opcion)
+            switch (filtro)
             {
                 case 0:
                     toast.ShowError("¡Opción incorrecta!");
@@ -142,9 +142,13 @@ else @*Si no ha iniciado sesion*@
                     int usuarioId = Convert.ToInt32(criterio);
                     ListaCobros = repositorioCobros.GetList(x => x.UsuarioId == usuarioId);
                     break;
-                
+
             }
             ListaCobros = ListaCobros.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+            if (ListaCobros.Count == 0)
+            {
+                toast.ShowInfo("¡No hay datos para mostrar!");
+            }
         }
     }
 }

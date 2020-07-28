@@ -21,37 +21,46 @@
     }
     else
     {
-        <h3>Consulta de Usuarios</h3>
-
-        <div class="card">
-            <div class="card-header">
-                @*Filtro*@
-                <div class="form-group">
-                    <label>Filtro</label>
-                    <select class="browser-default custom-select" @bind="Filtro">
-                        <option value="0" disabled>Seleccione una opcion</option>
-                        <option value="1">Todos</option>
-                        <option value="2">ID</option>
-                        <option value="3">Nombres</option>
-                        <option value="4">Apellidos</option>
-                        <option value="5">Nombre de usuario</option>
-                        <option value="6">Tipo de usuario</option>
-                    </select>
-                </div>
-
-                @*Criterio*@
-                <div class="form-group">
-                    <label>Criterio</label>
-                    <input type="text" @bind="Criterio" class="form-control" />
-                </div>
-                <button type="button" class="btn btn-primary" @onclick="Consultar">Consultar</button>
+        <div class="card border-success">
+            <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+                <h3 style="font-family:Georgia; color:white">Consulta de usuarios</h3>
             </div>
 
-            @*Tabla*@
             <div class="card-body">
-                <table class="table">
-                    <tr>
-                        <th>ID</th>
+                <div class="row">
+                    @*Filtro*@
+                    <div class="form-group col">
+                        <label>Filtro</label>
+                        <select @bind="Filtro" class="form-control">
+                            <option value="0" disabled>Elija una opción</option>
+                            <option value="1">Todo</option>
+                            <option value="2">Código</option>
+                            <option value="3">Nombres</option>
+                            <option value="4">Apellidos</option>
+                            <option value="5">Nombre de usuario</option>
+                            <option value="6">Tipo de usuario</option>
+                        </select>
+                    </div>
+
+                    @*Criterio*@
+                    <div class="form-group col">
+                        <label>Criterio</label>
+                        <div class="input-group">
+                            <input type="text" @bind="Criterio" class="form-control" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                                    <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @*Tabla*@
+                <table class="table table-hover">
+                    <tr class="thead-dark">
+                        <th>Código</th>
                         <th>Nombres</th>
                         <th>Apellidos</th>
                         <th>Direccion</th>
@@ -59,7 +68,7 @@
                         <th>Tipo de usuario</th>
                     </tr>
 
-                    @foreach (var item in Lista)
+                    @foreach (var item in ListaUsuarios)
                     {
                         <tr>
                             <td>@item.UsuarioId</td>
@@ -71,11 +80,11 @@
                         </tr>
                     }
                 </table>
-            </div>
 
-            <div class="card-footer">
-                <div class="form-group">
-                    <label>Total de usuarios: @Total</label>
+                <div class="card-footer">
+                    <div class="form-group">
+                        <label>Total de usuarios: @Total</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,8 +110,8 @@ else @*Si no ha iniciado sesion*@
     public string Criterio { get; set; }
     private bool TipoUsuario = false;
 
-    private List<Usuarios> Lista = new List<Usuarios>();
-    public RepositorioBase<Usuarios> repositorio = new RepositorioBase<Usuarios>();
+    private List<Usuarios> ListaUsuarios = new List<Usuarios>();
+    public RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
 
     protected override void OnInitialized()
     {
@@ -123,42 +132,48 @@ else @*Si no ha iniciado sesion*@
 
     public void Consultar()
     {
-        int opcion = Convert.ToInt32(Filtro);
-
         if (string.IsNullOrWhiteSpace(Criterio))
         {
-            Lista = repositorio.GetList(x => true);
+            ListaUsuarios = repositorioUsuarios.GetList(x => true);
+
+            if (ListaUsuarios.Count == 0)
+            {
+                toast.ShowInfo("¡No hay datos para mostrar!");
+            }
         }
         else
         {
-            switch (opcion)
+            switch (Filtro)
             {
-                case 1:
-                    Lista = repositorio.GetList(p => true);
+                case 0:
+                    toast.ShowError("¡Opcion incorrecta!");
                     break;
-
+                case 1:
+                    ListaUsuarios = repositorioUsuarios.GetList(p => true);
+                    break;
                 case 2:
                     int id = Convert.ToInt32(Criterio);
-                    Lista = repositorio.GetList(p => p.UsuarioId == id);
+                    ListaUsuarios = repositorioUsuarios.GetList(p => p.UsuarioId == id);
                     break;
-
                 case 3:
-                    Lista = repositorio.GetList(p => p.Nombres.Contains(Criterio));
+                    ListaUsuarios = repositorioUsuarios.GetList(p => p.Nombres.Contains(Criterio));
                     break;
-
                 case 4:
-                    Lista = repositorio.GetList(p => p.Apellidos.Contains(Criterio));
+                    ListaUsuarios = repositorioUsuarios.GetList(p => p.Apellidos.Contains(Criterio));
                     break;
-
                 case 5:
-                    Lista = repositorio.GetList(p => p.NombreUsuario.Contains(Criterio));
+                    ListaUsuarios = repositorioUsuarios.GetList(p => p.NombreUsuario.Contains(Criterio));
                     break;
-
                 case 6:
-                    Lista = repositorio.GetList(p => p.TipoUsuario.Contains(Criterio));
+                    ListaUsuarios = repositorioUsuarios.GetList(p => p.TipoUsuario.Contains(Criterio));
                     break;
             }
             CalcularTotal();
+
+            if (ListaUsuarios.Count == 0)
+            {
+                toast.ShowInfo("¡No hay datos para mostrar!");
+            }
         }
     }
 
@@ -166,7 +181,7 @@ else @*Si no ha iniciado sesion*@
     {
         Total = 0;
 
-        foreach (var item in Lista)
+        foreach (var item in ListaUsuarios)
         {
             Total++;
         }
