@@ -10,62 +10,84 @@
     <h3>Consulta de Clientes</h3>
 
     <div class="card">
-        <div class="card-header">
-            @*Filtro*@
-            <div class="form-group">
-                <label>Filtro</label>
-                <select class="browser-default custom-select" @bind="Filtro">
-                    <option value="0" disabled>Seleccione una opcion</option>
-                    <option value="1">Todos</option>
-                    <option value="2">ID</option>
-                    <option value="3">Nombres</option>
-                    <option value="4">Apellidos</option>
-                    <option value="5">Teléfono</option>
-                    <option value="6">Celular</option>
-                    <option value="7">Cédula</option>
-                    <option value="8">Dirección</option>
-                </select>
-            </div>
+        <div class="card-header bg-success text-lg-center" style="border-radius:5px;">
+            <h3 style="font-family:Georgia; color:white">Consulta de clientes</h3>
+        </div>
 
-            @*Criterio*@
-            <div class="form-group">
-                <label>Criterio</label>
-                <input type="text" @bind="Criterio" class="form-control" />
+        <div class="card-body border-success">
+            <div class="row">
+                @*Desde*@
+                <div class="form-group col-2">
+                    <label>Desde</label>
+                    <input type="date" class="form-control" @bind="Desde" />
+                </div>
+
+                @*Hasta*@
+                <div class="form-group col-2">
+                    <label>Hasta</label>
+                    <input type="date" class="form-control" @bind="Hasta" />
+                </div>
+
+                @*Filtro*@
+                <div class="form-group col-3">
+                    <label>Filtro</label>
+                    <select @bind="Filtro" class="form-control">
+                        <option value="0" disabled>Seleccione una opcion</option>
+                        <option value="1">Todos</option>
+                        <option value="2">ID</option>
+                        <option value="3">Nombres</option>
+                        <option value="4">Apellidos</option>
+                        <option value="5">Teléfono</option>
+                        <option value="6">Celular</option>
+                        <option value="7">Cédula</option>
+                        <option value="8">Dirección</option>
+                    </select>
+                </div>
+
+                @*Criterio*@
+                <div class="form-group col">
+                    <label>Criterio</label>
+                    <div class="input-group">
+                        <input type="text" @bind="Criterio" class="form-control" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                                <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button type="button" class="btn btn-primary" @onclick="Consultar">Consultar</button>
         </div>
 
         @*Tabla*@
-        <div class="card-body">
-            <table class="table">
-                <tr>
-                    <td>Código</td>
-                    <td>Fecha</td>
-                    <td>Nombres</td>
-                    <td>Apellidos</td>
-                    <td>Teléfono</td>
-                    <td>Celular</td>
-                    <td>Cédula</td>
-                    <td>Dirección</td>
-                    <td>Usuario</td>
-                </tr>
+        <table class="table">
+            <tr>
+                <td>Código</td>
+                <td>Fecha</td>
+                <td>Nombres</td>
+                <td>Apellidos</td>
+                <td>Teléfono</td>
+                <td>Celular</td>
+                <td>Cédula</td>
+                <td>Dirección</td>
+                <td>Usuario</td>
+            </tr>
 
-                @foreach (var item in Lista)
-                {
-                    <tr>
-                        <td>@item.ClienteId</td>
-                        <td>@item.Fecha</td>
-                        <td>@item.Nombres</td>
-                        <td>@item.Apellidos</td>
-                        <td>@item.Telefono</td>
-                        <td>@item.Celular</td>
-                        <td>@item.Cedula</td>
-                        <td>@item.Direccion</td>
-                        <td>@repositorioUsuarios.Buscar(item.UsuarioId).NombreUsuario</td>
-                    </tr>
-                }
-            </table>
-        </div>
+            @foreach (var item in Lista)
+            {
+                <tr>
+                    <td>@item.ClienteId</td>
+                    <td>@item.Fecha</td>
+                    <td>@item.Nombres</td>
+                    <td>@item.Apellidos</td>
+                    <td>@item.Telefono</td>
+                    <td>@item.Celular</td>
+                    <td>@item.Cedula</td>
+                    <td>@item.Direccion</td>
+                    <td>@repositorioUsuarios.Buscar(item.UsuarioId).NombreUsuario</td>
+                </tr>
+            }
+        </table>
 
         <div class="card-footer">
             <div class="form-group">
@@ -92,6 +114,8 @@ else @*Si no ha iniciado sesion*@
     public int Total { get; set; }
     public int Filtro { get; set; }
     public string Criterio { get; set; }
+    private DateTime Desde = DateTime.Now;
+    private DateTime Hasta = DateTime.Now;
 
     private List<Clientes> Lista = new List<Clientes>();
     public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
