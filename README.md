@@ -75,7 +75,7 @@ Este es el registro de venta de productos, en este es donde se realizarán las v
 
 Si desea registrar un Cliente o un Producto sin dirigirse al menú, lo puede hacer a través de este mismo registro. Si es para agregar un Cliente, se procede a dar clic al botón '+' que está a su lado. En caso que desee agregar un Producto, es similar, se procede a dar clic al botón '+' que está a su lado.
 
-## Consultas
+## 🗃 Consultas
 
 Cada registro antes mencionado tiene una consulta. Las consultas pueden ser accesibles por todos los tipos de usuarios, excepto la consulta de usuarios, a quien sólo tiene permitido acceder el adminitrador/a.
 
@@ -94,5 +94,5 @@ Imagen de un reporte
 
 ## ✒️ Desarrolladores 
 
-_**Estiven de Jesús Padilla Santos (2017-0596).**_
-_**José Armando Flores Baldera (2017-0599).**_
+* _**Estiven de Jesús Padilla Santos (2017-0596).**_
+* _**José Armando Flores Baldera (2017-0599).**_
