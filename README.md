@@ -4,7 +4,7 @@
 
 Hoy en día se ve como cada vez más los sistemas manuales son desplazados, dando paso a los sistemas automatizados, los cuales nos ofrecen un amplio abanico de posibilidades. Y en un área como la agroproducción estas posibilidades son muy rentables permitiendo el ahorro de espacio, tiempo y dinero.
 
-Agrosoft es un sistema informático desarrollado para la plataforma Web, el cuál tiene como objetivo optimizar y automatizar el proceso de compra y venta de productos agroquimicos en conjunto con otros modulos caracteristicos de un sistema informático de compra y venta como son: Usuarios, Clientes, Productos, Cobros, etc.
+Agrosoft es un sistema informático desarrollado para la plataforma Web, el cuál tiene como objetivo optimizar y automatizar el proceso de compra y venta de productos agricolas en conjunto con otros modulos caracteristicos de un sistema informático de compra y venta como son: Usuarios, Clientes, Productos, Cobros, etc.
 
 ## 🔒 Login
 
