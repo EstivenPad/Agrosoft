@@ -50,11 +50,15 @@
                             <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
                                 <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
                             </button>
+
+                            &nbsp;
+
+                            <button class="btn btn-outline-primary" @onclick="GenerarReporte">
+                                <span class="oi oi-print" aria-hidden="true"></span>  Imprimir
+                            </button>
                         </div>
                     </div>
                 </div>
-
-                <button class="btn btn-outline-primary" @onclick="GenerarReporte">Imprimir</button>
             </div>
 
             @*Tabla*@
@@ -161,6 +165,12 @@ else @*Si no ha iniciado sesion*@
     {
         CompraProductosReport compraProductosReport = new CompraProductosReport();
         var parametros = new ModalParameters();
+
+        if (ListaComprasProductos.Count == 0)
+        {
+            toast.ShowInfo("¡No hay datos para imprimir!");
+            return;
+        }
 
         parametros.Add("listaCompraProductos", ListaComprasProductos);
 
