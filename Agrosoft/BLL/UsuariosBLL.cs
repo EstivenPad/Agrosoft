@@ -196,7 +196,7 @@ namespace Agrosoft.BLL
             return string.Empty;
         }
 
-        public static string DesEncriptar(string cadenaDesencriptada)
+        public static string Desencriptar(string cadenaDesencriptada)
         {
             if (!string.IsNullOrEmpty(cadenaDesencriptada))
             {
