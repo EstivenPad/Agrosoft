@@ -74,7 +74,7 @@
                                             <option value="0" disabled>Seleccione una opcion</option>
                                             @foreach (var item in ListaProductos)
                                             {
-                                                <option value="@item.ProductoId"> @item.Nombre</option>
+                                                <option value="@item.ProductoId">@(item.Nombre + " " + item.Marca + " " + metodosUnidad.Buscar(item.UnidadMedida).Descripcion)</option>
                                             }
                                         </select>
                                         <div class="input-group-append">
@@ -83,18 +83,6 @@
                                             </NavLink>
                                         </div>
                                     </div>
-                                </div>
-
-                                @*Marca*@
-                                <div class="form-group col">
-                                    <label>Marca</label>
-                                    <InputText @bind-Value="marca" class="form-control" readOnly="true" />
-                                </div>
-
-                                @*Unidad de medida*@
-                                <div class="form-group col">
-                                    <label>Unidad de medida</label>
-                                    <InputText @bind-Value="unidadMedida" class="form-control" readOnly="true" />
                                 </div>
                             </div>
 
@@ -117,7 +105,7 @@
                                     <div class="input-group">
                                         <InputNumber @bind-Value="importe" class="form-control" readOnly="true" />
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-primary" @onclick="AgregarDetalle">
+                                            <button type="button" class="btn btn-outline-info" @onclick="AgregarDetalle">
                                                 <i class="oi oi-plus" aria-hidden="true" /> Agregar
                                             </button>
                                         </div>
@@ -198,8 +186,6 @@ else @*Si no ha iniciado sesion*@
     private int productoId;
     private decimal costo;
     private decimal importe;
-    private string marca;
-    private string unidadMedida;
 
     protected override void OnInitialized()
     {
@@ -215,19 +201,6 @@ else @*Si no ha iniciado sesion*@
             return;
 
         costo = metodosProducto.Buscar(productoId).Costo;
-        LlenarMarca();
-    }
-
-    public void LlenarMarca()
-    {
-        marca = metodosProducto.Buscar(productoId).Marca;
-        LlenarUnidadMedida();
-    }
-
-    public void LlenarUnidadMedida()
-    {
-        int unidad = metodosProducto.Buscar(productoId).UnidadMedida;
-        unidadMedida = metodosUnidad.Buscar(unidad).Descripcion;
     }
 
     public void CargarProveedores()
@@ -316,7 +289,7 @@ else @*Si no ha iniciado sesion*@
 
     private void AgregarDetalle()
     {
-        if (costo > 0)
+        if (productoId > 0)
         {
             if (cantidad > 0)
             {
