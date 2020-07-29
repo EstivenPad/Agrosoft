@@ -175,5 +175,14 @@ namespace Agrosoft.BLL
 
             repositorioClientes.Modificar(cliente);
         }
+
+        public static List<VentaProductos> GetVentasDelDia()
+        {
+            Contexto db = new Contexto();
+            List<VentaProductos> Lista = new List<VentaProductos>();
+
+            Lista = db.VentaProductos.AsNoTracking().Where(p => p.Fecha == DateTime.Now).ToList();
+            return Lista;
+        }
     }
 }
