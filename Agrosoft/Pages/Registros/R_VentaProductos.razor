@@ -34,10 +34,11 @@
                         @*Tipo de Factura*@
                         <div class="form-group col-3">
                             <label>Tipo de factura</label>
-                            <select class="form-control" @bind="Venta.TipoFactura">
+                            <select class="form-control" @bind="Venta.TipoFactura" @onfocusout="identificarTipoFactura">
                                 <option value="0" selected disabled>Seleccione un tipo de factura</option>
                                 <option value="1">A credito</option>
                                 <option value="2">A contado</option>
+                                <ValidationMessage For="@(() => Venta.TipoFactura)" />
                             </select>
                         </div>
 
@@ -48,33 +49,48 @@
                             <ValidationMessage For="@(() => Venta.Fecha)" />
                         </div>
                     </div>
-
-                    <div class="form-row">
+                    @if (esAContado)
+                    {
                         @*Cliente*@
-                        <div class="col-6 form-group">
+                        <div class="form-group">
                             <label>Cliente</label>
                             <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
                                 <option value="0" selected disabled>Seleccione un cliente</option>
-                                @foreach (var item in ListaClientes)
-                                {
-                                    <option value="@item.ClienteId">@(item.Nombres + " " + item.Apellidos)</option>
-                                }
+                                <option value="1">@(repositorioClientes.Buscar(1).Nombres + " " + repositorioClientes.Buscar(1).Apellidos)</option>
                             </select>
                             <ValidationMessage For="@(() => Venta.ClienteId)" />
                         </div>
+                    }
+                    else
+                    {
+                        <div class="form-row">
+                            @*Cliente*@
+                            <div class="col-6 form-group">
+                                <label>Cliente</label>
+                                <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
+                                    <option value="0" selected disabled>Seleccione un cliente</option>
+                                    @foreach (var item in ListaClientes)
+                                    {
+                                        <option value="@item.ClienteId">@(item.Nombres + " " + item.Apellidos)</option>
+                                    }
+                                </select>
+                                <ValidationMessage For="@(() => Venta.ClienteId)" />
+                            </div>
 
-                        @*Balance*@
-                        <div class="col-3 form-group">
-                            <label>Balance</label>
-                            <InputNumber @bind-Value="Balance" class="form-control" readOnly="true"/>
-                        </div>
+                            @*Balance*@
+                            <div class="col-3 form-group">
+                                <label>Balance</label>
+                                <InputNumber @bind-Value="Balance" class="form-control" readOnly="true" />
+                            </div>
 
-                        @*Limite de crédito*@
-                        <div class="col-3 form-group">
-                            <label>Limite de crédito</label>
-                            <InputNumber @bind-Value="LimiteCredito" class="form-control" readOnly="true"/>
+                            @*Limite de crédito*@
+                            <div class="col-3 form-group">
+                                <label>Limite de crédito</label>
+                                <InputNumber @bind-Value="LimiteCredito" class="form-control" readOnly="true" />
+                            </div>
                         </div>
-                    </div>
+                    }
+
 
                     @*Detalle*@
                     <div class="card border-dark">
@@ -120,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
 
                     <table class="table table-hover mt-3">
                         <thead class="thead-dark">
@@ -183,6 +199,8 @@ else @*Si no ha iniciado sesion*@
 @code {
     [Parameter]
     public int VentaId { get; set; }
+    bool esACredito = false;
+    bool esAContado = false;
 
     private decimal Balance;
     private decimal LimiteCredito;
@@ -194,6 +212,20 @@ else @*Si no ha iniciado sesion*@
     public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
     public RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
     public VentaProductosBLL repositorioVentas = new VentaProductosBLL();
+
+    public void identificarTipoFactura()
+    {
+        if (Venta.TipoFactura == 1)
+        {
+            esACredito = true;
+            esAContado = false;
+        }
+        else if (Venta.TipoFactura == 2)
+        {
+            esAContado = true;
+            esACredito = false;
+        }
+    }
 
     protected override void OnInitialized()
     {
