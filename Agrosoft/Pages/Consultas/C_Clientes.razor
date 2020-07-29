@@ -2,8 +2,11 @@
 
 @using BLL
 @using Models
+@using iTextSharpBlazor.Reportes
+@using Agrosoft.Pages.Viewers
 
 @inject IToastService toast
+@inject IModalService modal
 
 @if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
 {
@@ -54,6 +57,8 @@
                         </div>
                     </div>
                 </div>
+
+                <button class="btn btn-outline-primary" @onclick="GenerarReporte">Imprimir</button>
             </div>
 
             @*Tabla*@
@@ -179,5 +184,15 @@ else @*Si no ha iniciado sesion*@
         {
             Total++;
         }
+    }
+
+    public void GenerarReporte()
+    {
+        ClientesReport clienteReport = new ClientesReport();
+        var parametros = new ModalParameters();
+
+        parametros.Add("listaClientes", ListaClientes);
+
+        modal.Show<ClientesViewer>("Reporte de Clientes", parametros);
     }
 }
