@@ -162,7 +162,6 @@ namespace iTextSharpBlazor.Reportes
 
             #region Table Body
             int num = 0;
-            decimal totalBalance = 0;
 
             foreach (var item in listaVentaProductos)
             {

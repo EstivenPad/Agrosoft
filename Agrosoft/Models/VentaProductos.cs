@@ -13,6 +13,7 @@ namespace Agrosoft.Models
         public int VentaId { get; set; }
 
         [Required(ErrorMessage = "Seleccione un cliente")]
+        [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "Debe seleccionar un cliente")]
         public int ClienteId { get; set; }
 
         public int UsuarioId { get; set; }
@@ -22,6 +23,7 @@ namespace Agrosoft.Models
         public DateTime Fecha { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "Seleccione un tipo de factura")]
+        [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "Debe seleccionar el tipo de factura")]
         public int TipoFactura { get; set; }
 
         public decimal Total { get; set; }

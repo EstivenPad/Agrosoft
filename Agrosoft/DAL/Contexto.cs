@@ -36,11 +36,27 @@ namespace Agrosoft.DAL
                 Celular = "0123456789",
                 Email = "Admin@hotmail.com",
                 Direccion = "Admin",
-                NombreUsuario = "admin",
+                NombreUsuario = "Admin",
                 ClaveUsuario = "admin",
                 TipoUsuario = "Administrador"
             });
 
+            //Cliente
+            modelBuilder.Entity<Clientes>().HasData(new Clientes
+            {
+                ClienteId=1,
+                UsuarioId = 1,
+                Fecha = DateTime.Now,
+                Nombres = "Cliente",
+                Apellidos = "ocasional",
+                Cedula="00000000000",
+                Telefono = "0000000000",
+                Celular = "0000000000",
+                Email = "clienteOcasional@hotmail.com",
+                Direccion = "xxxxxxxxxxxxx",
+                LimiteCredito = 0,
+                Balance = 0,
+            });
             //Unidades de medida
             modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
             {

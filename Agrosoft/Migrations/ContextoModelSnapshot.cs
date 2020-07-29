@@ -65,6 +65,23 @@ namespace Agrosoft.Migrations
                     b.HasKey("ClienteId");
 
                     b.ToTable("Clientes");
+
+                    b.HasData(
+                        new
+                        {
+                            ClienteId = 1,
+                            Apellidos = "ocasional",
+                            Balance = 0m,
+                            Cedula = "00000000000",
+                            Celular = "0000000000",
+                            Direccion = "xxxxxxxxxxxxx",
+                            Email = "clienteOcasional@hotmail.com",
+                            Fecha = new DateTime(2020, 7, 29, 2, 46, 21, 67, DateTimeKind.Local).AddTicks(3113),
+                            LimiteCredito = 0m,
+                            Nombres = "Cliente",
+                            Telefono = "0000000000",
+                            UsuarioId = 1
+                        });
                 });
 
             modelBuilder.Entity("Agrosoft.Models.Cobros", b =>
@@ -333,8 +350,8 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 28, 15, 27, 42, 636, DateTimeKind.Local).AddTicks(3710),
-                            NombreUsuario = "admin",
+                            Fecha = new DateTime(2020, 7, 29, 2, 46, 21, 65, DateTimeKind.Local).AddTicks(1971),
+                            NombreUsuario = "Admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",
                             TipoUsuario = "Administrador"
