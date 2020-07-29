@@ -38,6 +38,7 @@ namespace Agrosoft.DAL
                 Direccion = "Admin",
                 NombreUsuario = "Admin",
                 ClaveUsuario = "admin",
+                ClaveConfirmada = "admin",
                 TipoUsuario = "Administrador"
             });
 

@@ -144,6 +144,7 @@ namespace Agrosoft.Migrations
                     Direccion = table.Column<string>(nullable: false),
                     NombreUsuario = table.Column<string>(nullable: false),
                     ClaveUsuario = table.Column<string>(nullable: false),
+                    ClaveConfirmada = table.Column<string>(nullable: false),
                     TipoUsuario = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -216,7 +217,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Clientes",
                 columns: new[] { "ClienteId", "Apellidos", "Balance", "Cedula", "Celular", "Direccion", "Email", "Fecha", "LimiteCredito", "Nombres", "Telefono", "UsuarioId" },
-                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 7, 29, 2, 46, 21, 67, DateTimeKind.Local).AddTicks(3113), 0m, "Cliente", "0000000000", 1 });
+                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 7, 29, 16, 11, 44, 350, DateTimeKind.Local).AddTicks(2844), 0m, "Cliente", "0000000000", 1 });
 
             migrationBuilder.InsertData(
                 table: "UnidadesMedida",
@@ -245,8 +246,8 @@ namespace Agrosoft.Migrations
 
             migrationBuilder.InsertData(
                 table: "Usuarios",
-                columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 29, 2, 46, 21, 65, DateTimeKind.Local).AddTicks(1971), "Admin", "Admin", "0123456789", "Administrador" });
+                columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveConfirmada", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
+                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 29, 16, 11, 44, 347, DateTimeKind.Local).AddTicks(3791), "Admin", "Admin", "0123456789", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",

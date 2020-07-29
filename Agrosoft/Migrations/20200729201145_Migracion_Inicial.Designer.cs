@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agrosoft.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200729064621_Migracion_Inicial")]
+    [Migration("20200729201145_Migracion_Inicial")]
     partial class Migracion_Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,7 +78,7 @@ namespace Agrosoft.Migrations
                             Celular = "0000000000",
                             Direccion = "xxxxxxxxxxxxx",
                             Email = "clienteOcasional@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 29, 2, 46, 21, 67, DateTimeKind.Local).AddTicks(3113),
+                            Fecha = new DateTime(2020, 7, 29, 16, 11, 44, 350, DateTimeKind.Local).AddTicks(2844),
                             LimiteCredito = 0m,
                             Nombres = "Cliente",
                             Telefono = "0000000000",
@@ -308,6 +308,10 @@ namespace Agrosoft.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ClaveConfirmada")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ClaveUsuario")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -349,10 +353,11 @@ namespace Agrosoft.Migrations
                             UsuarioId = 1,
                             Apellidos = "Admin",
                             Celular = "0123456789",
+                            ClaveConfirmada = "admin",
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 29, 2, 46, 21, 65, DateTimeKind.Local).AddTicks(1971),
+                            Fecha = new DateTime(2020, 7, 29, 16, 11, 44, 347, DateTimeKind.Local).AddTicks(3791),
                             NombreUsuario = "Admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",
