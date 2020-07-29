@@ -27,7 +27,7 @@ Imagen
 Este es el registro de usuarios, a la hora de crear un usuario se debe elegir el tipo de usurio, de entre las posibles opciones están:
 
 * **Administrador/a:** Este tiene acceso a todos los módulos del sistema y es el único capaz de crear nuevos usuarios y consultarlos.
-* **Empleado/a:** Este sólo tiene acceso a los siguiente módulos: Clientes, Cobradores, Prestamos y Cobros.
+* **Empleado/a:** Este sólo tiene acceso a los siguiente módulos: Clientes, Proveedores, Productos, Marcas, Compras, Ventas y Cobros.
 
 ### Registro de proveedores
 
