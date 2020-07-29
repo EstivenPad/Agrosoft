@@ -42,6 +42,7 @@
                         <option value="6">Celular</option>
                         <option value="7">Cédula</option>
                         <option value="8">Dirección</option>
+                        <option value="9">Clientes con deudas</option>
                     </select>
                 </div>
 
@@ -73,6 +74,7 @@
                         <th>Celular</th>
                         <th>Cédula</th>
                         <th>Dirección</th>
+                        <th>Balance</th>
                         <th>Usuario</th>
                     </tr>
                 </thead>
@@ -88,6 +90,7 @@
                         <td>@item.Celular</td>
                         <td>@item.Cedula</td>
                         <td>@item.Direccion</td>
+                        <td>@item.Balance</td>
                         <td>@repositorioUsuarios.Buscar(item.UsuarioId).NombreUsuario</td>
                     </tr>
                 }
@@ -130,8 +133,16 @@ else @*Si no ha iniciado sesion*@
     {
         if (string.IsNullOrWhiteSpace(Criterio))
         {
-            ListaClientes = repositorioClientes.GetList(x => true);
-            ListaClientes = ListaClientes.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+            if (Filtro == 9)
+            {
+                ListaClientes = ClientesBLL.GetClientesConDeudas();
+            }
+            else
+            {
+                ListaClientes = repositorioClientes.GetList(x => true);
+                ListaClientes = ListaClientes.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+            }
+
             calcularTotal();
 
             if (ListaClientes.Count == 0)
@@ -172,7 +183,13 @@ else @*Si no ha iniciado sesion*@
                     ListaClientes = repositorioClientes.GetList(c => c.Direccion.Contains(Criterio));
                     break;
             }
+            ListaClientes = ListaClientes.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
             calcularTotal();
+
+            if (ListaClientes.Count == 0)
+            {
+                toast.ShowInfo("¡No hay datos para mostrar!");
+            }
         }
     }
 

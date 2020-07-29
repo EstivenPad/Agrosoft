@@ -181,7 +181,7 @@ namespace Agrosoft.BLL
             Contexto db = new Contexto();
             List<VentaProductos> Lista = new List<VentaProductos>();
 
-            Lista = db.VentaProductos.AsNoTracking().Where(p => p.Fecha == DateTime.Now).ToList();
+            Lista = db.VentaProductos.Where(p => p.Fecha.Date == DateTime.Today).ToList();
             return Lista;
         }
     }

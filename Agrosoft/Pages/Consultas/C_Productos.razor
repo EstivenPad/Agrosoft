@@ -26,6 +26,7 @@
                         <option value="2">Código</option>
                         <option value="3">Nombre</option>
                         <option value="4">Marca</option>
+                        <option value="5">Productos en reorden</option>
                     </select>
                 </div>
 
@@ -103,7 +104,15 @@ else @*Si no ha iniciado sesion*@
     {
         if (string.IsNullOrWhiteSpace(criterio))
         {
-            ListaProductos = repositorioProductos.GetList(x => true);
+            if (filtro == 5)
+            {
+                ListaProductos = ProductosBLL.GetProductosEnReorden();
+            }
+            else
+            {
+                ListaProductos = repositorioProductos.GetList(x => true);
+            }
+
             if (ListaProductos.Count == 0)
             {
                 toast.ShowInfo("¡No hay datos para mostrar!");

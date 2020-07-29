@@ -14,7 +14,7 @@ namespace Agrosoft.BLL
             Contexto db = new Contexto();
             List<Clientes> Lista = new List<Clientes>();
 
-            Lista = db.Clientes.Where(p => p.Balance > 0).ToList();
+            Lista = db.Clientes.AsEnumerable().Where(p => p.Balance > 0).ToList();
             return Lista;
         }
     }

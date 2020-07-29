@@ -34,6 +34,7 @@
                         <option value="2">Código</option>
                         <option value="3">Cliente</option>
                         <option value="4">Tipo de factura</option>
+                        <option value="5">Ventas del día</option>
                     </select>
                 </div>
 
@@ -56,6 +57,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Código</th>
+                        <th>Fecha</th>
                         <th>Cliente</th>
                         <th>Tipo de factura</th>
                         <th>Total</th>
@@ -66,6 +68,7 @@
                 {
                     <tr>
                         <td>@item.VentaId</td>
+                        <td>@item.Fecha</td>
                         <td>@(repositorioClientes.Buscar(item.ClienteId).Nombres + " " + repositorioClientes.Buscar(item.ClienteId).Apellidos)</td>
                         <td>@item.TipoFactura</td>
                         <td>@item.Total</td>
@@ -112,8 +115,16 @@ else @*Si no ha iniciado sesion*@
 
         if (string.IsNullOrWhiteSpace(Criterio))
         {
-            ListaVentas = repositorioVentas.GetList(x => true);
-            ListaVentas = ListaVentas.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+            if (Filtro == 5)
+            {
+                ListaVentas = VentaProductosBLL.GetVentasDelDia();
+            }
+            else
+            {
+                ListaVentas = repositorioVentas.GetList(x => true);
+                ListaVentas = ListaVentas.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+            }
+            CalcularTotal();
 
             if (ListaVentas.Count == 0)
             {
