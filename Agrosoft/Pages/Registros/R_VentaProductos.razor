@@ -38,8 +38,8 @@
                                 <option value="0" selected disabled>Seleccione un tipo de factura</option>
                                 <option value="1">A credito</option>
                                 <option value="2">A contado</option>
-                                <ValidationMessage For="@(() => Venta.TipoFactura)" />
                             </select>
+                            <ValidationMessage For="@(() => Venta.TipoFactura)" />
                         </div>
 
                         @*Fecha*@
@@ -69,6 +69,7 @@
                                 <label>Cliente</label>
                                 <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
                                     <option value="0" selected disabled>Seleccione un cliente</option>
+
                                     @foreach (var item in ListaClientes)
                                     {
                                         <option value="@item.ClienteId">@(item.Nombres + " " + item.Apellidos)</option>
@@ -272,21 +273,51 @@ else @*Si no ha iniciado sesion*@
     {
         bool guardo;
 
-        if(Venta.Total > (LimiteCredito - Balance))
+        if (Venta.TipoFactura == 1)
         {
-            toast.ShowError("El total de la factura excede el límite de crédito del cliente");
+            if (Venta.Total > (LimiteCredito - Balance))
+            {
+                toast.ShowError("El total de la factura excede el límite de crédito del cliente");
+            }
+            else if (Venta.ClienteId == 1)
+            {
+                toast.ShowError("Este cliente no puede realizar compras a crédito");
+            }
+            else if (Venta.VentaProductosDetalle.Count == 0)
+            {
+                toast.ShowError("¡Debe agregar al menos un producto al detalle!");
+            }
+            else
+            {
+                guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
+
+                if (guardo)
+                {
+                    Nuevo();
+                    toast.ShowSuccess("Guardado correctamente");
+                }
+                else
+                    toast.ShowError("No fue posible guardar");
+            }
         }
         else
         {
-            guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
-
-            if (guardo)
+            if (Venta.VentaProductosDetalle.Count == 0)
             {
-                Nuevo();
-                toast.ShowSuccess("Guardado correctamente");
+                toast.ShowError("¡Debe agregar al menos un producto al detalle!");
             }
             else
-                toast.ShowError("No fue posible guardar");
+            {
+                guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
+
+                if (guardo)
+                {
+                    Nuevo();
+                    toast.ShowSuccess("Guardado correctamente");
+                }
+                else
+                    toast.ShowError("No fue posible guardar");
+            }
         }
     }
 
@@ -321,16 +352,29 @@ else @*Si no ha iniciado sesion*@
 
     public void AgregarDetalle()
     {
-        Venta.VentaProductosDetalle.Add(new VentaProductosDetalle
+        if(Detalle.ProductoId > 0)
         {
-            VentaId = Venta.VentaId,
-            ProductoId = Detalle.ProductoId,
-            Cantidad = Detalle.Cantidad,
-            PrecioUnitario = Detalle.PrecioUnitario,
-            Importe = Detalle.Importe
-        });
+            if(Detalle.Cantidad > 0)
+            {
+                Venta.VentaProductosDetalle.Add(new VentaProductosDetalle
+                {
+                    VentaId = Venta.VentaId,
+                    ProductoId = Detalle.ProductoId,
+                    Cantidad = Detalle.Cantidad,
+                    PrecioUnitario = Detalle.PrecioUnitario,
+                    Importe = Detalle.Importe
+                });
 
-        Venta.Total += Detalle.Importe;
+                Venta.Total += Detalle.Importe;
+            }
+            else
+            {
+                toast.ShowError("¡Debe introducir la cantidad!");
+                return;
+            }
+        }
+        else
+            toast.ShowError("¡Debe seleccionar un producto!");
     }
 
     public void RemoverFila(VentaProductosDetalle filaRemovida)
