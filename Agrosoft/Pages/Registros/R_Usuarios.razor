@@ -138,7 +138,7 @@
                             <div class="form-group col">
                                 <label>Confirmar clave</label>
                                 <div class="input-group">
-                                    <input type="@(mostrarClave? "text" : "password")" @bind="confirmarClave" class="form-control" @onfocusout="CompararClaves" />
+                                    <input type="@(mostrarClave? "text" : "password")" @bind="Usuario.ClaveConfirmada" class="form-control" @onfocusout="CompararClaves" />
 
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-outline-info" @onmousedown="MostrarClave" @onmouseup="OcultarClave">
