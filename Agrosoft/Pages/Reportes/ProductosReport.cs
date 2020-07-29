@@ -1,4 +1,5 @@
-﻿using Agrosoft.Models;
+﻿using Agrosoft.BLL;
+using Agrosoft.Models;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -21,6 +22,7 @@ namespace iTextSharpBlazor.Reportes
         MemoryStream memoryStream = new MemoryStream();
 
         List<Productos> listaProductos = new List<Productos>();
+        RepositorioBase<UnidadesMedida> repositorioUnidades = new RepositorioBase<UnidadesMedida>();
 
         public byte[] Reporte(List<Productos> productos)
         {
@@ -178,12 +180,11 @@ namespace iTextSharpBlazor.Reportes
                 pdfCell.BackgroundColor = BaseColor.White;
                 pdfTable.AddCell(pdfCell);
 
-                pdfCell = new PdfPCell(new Phrase(item.UnidadMedida.ToString(), _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(repositorioUnidades.Buscar(item.UnidadMedida).Descripcion, _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 pdfCell.BackgroundColor = BaseColor.White;
                 pdfTable.AddCell(pdfCell);
-
 
                 pdfCell = new PdfPCell(new Phrase(item.CantidadExistente.ToString(), _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_RIGHT;
