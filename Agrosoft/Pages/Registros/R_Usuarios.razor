@@ -108,24 +108,46 @@
                                 <ValidationMessage For="@(() => Usuario.NombreUsuario)" />
                             </div>
 
-                            @*Clave de Usuario*@
-                            <div class="form-group col">
-                                <label>Clave de usuario</label>
-                                <InputText @bind-Value="Usuario.ClaveUsuario" class="form-control" />
-                                <ValidationMessage For="@(() => Usuario.ClaveUsuario)" />
-                            </div>
-
                             @*Tipo de Usuario*@
                             <div class="form-group col">
                                 <label>Tipo de usuario</label>
-                                <InputSelect @bind-Value="Usuario.TipoUsuario" class="custom-select">
+                                <InputSelect @bind-Value="Usuario.TipoUsuario" class="form-control">
                                     <option disabled selected>Seleccione una opción</option>
                                     <option>Administrador</option>
                                     <option>Empleado</option>
                                 </InputSelect>
                                 <ValidationMessage For="@(() => Usuario.TipoUsuario)" />
                             </div>
-                        </div>                        
+
+                            
+                        </div> 
+                        
+                        <div class="form-row">
+                            @*Clave de Usuario*@
+                            <div class="form-group col">
+                                <label>Clave de usuario</label>
+                                
+                                    <input type="@(mostrarClave? "text" : "password")" @bind="Usuario.ClaveUsuario" class="form-control" />
+
+                                   
+                                
+                                <ValidationMessage For="@(() => Usuario.ClaveUsuario)" />
+                            </div>
+
+                            @*Confirmar clave de Usuario*@
+                            <div class="form-group col">
+                                <label>Confirmar clave</label>
+                                <div class="input-group">
+                                    <input type="@(mostrarClave? "text" : "password")" @bind="confirmarClave" class="form-control" @onfocusout="CompararClaves" />
+
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-info" @onmousedown="MostrarClave" @onmouseup="OcultarClave">
+                                            <span class="fa fa-eye" style="margin-top:2px"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
 
@@ -160,6 +182,41 @@ else @*Si no ha iniciado sesion*@
     private Usuarios Usuario = new Usuarios();
     public UsuariosBLL repositorio = new UsuariosBLL();
     private bool TipoUsuario = false;
+    private string confirmarClave;
+    private bool mostrarClave;
+    private bool ClaveVerificada = false;
+
+    public void MostrarClave()
+    {
+        mostrarClave = true;
+    }
+
+    public void OcultarClave()
+    {
+        mostrarClave = false;
+    }
+
+    public void CompararClaves()
+    {
+        if (Usuario.ClaveUsuario != confirmarClave)
+        {
+            ClaveVerificada = false;
+        }
+        else
+        {
+            ClaveVerificada = true;            
+        }
+    }
+
+    public bool ValidarClave()
+    {
+        bool paso = true;
+        if(Usuario.ClaveUsuario.Length < 8)
+        {
+            paso = false;
+        }
+        return paso;
+    }
 
     protected override void OnInitialized()
     {
@@ -190,15 +247,27 @@ else @*Si no ha iniciado sesion*@
     {
         bool guardo;
 
-        guardo = repositorio.Guardar(Usuario, Usuario.UsuarioId);
-
-        if (guardo)
+        if (ClaveVerificada)
         {
-            Nuevo();
-            toast.ShowSuccess("Guardado correctamente");
+            if (ValidarClave() == true)
+            {
+                guardo = repositorio.Guardar(Usuario, Usuario.UsuarioId);
+
+                if (guardo)
+                {
+                    Nuevo();
+                    toast.ShowSuccess("Guardado correctamente");
+                }
+                else
+                    toast.ShowError("No fue posible guardar");
+            }
+            else
+            {
+                toast.ShowWarning("La contraseña debe tener 8 o mas caracteres");
+            }
         }
         else
-            toast.ShowError("No fue posible guardar");
+            toast.ShowWarning("Las contraseñas no coinciden");
     }
 
     public void Eliminar()
