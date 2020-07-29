@@ -126,11 +126,7 @@
                             @*Clave de Usuario*@
                             <div class="form-group col">
                                 <label>Clave de usuario</label>
-                                
-                                    <input type="@(mostrarClave? "text" : "password")" @bind="Usuario.ClaveUsuario" class="form-control" />
-
-                                   
-                                
+                                <input type="@(mostrarClave? "text" : "password")" @bind="Usuario.ClaveUsuario" class="form-control" />
                                 <ValidationMessage For="@(() => Usuario.ClaveUsuario)" />
                             </div>
 
