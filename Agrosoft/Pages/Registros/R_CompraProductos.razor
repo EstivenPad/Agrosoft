@@ -134,7 +134,7 @@
                                     <td>@item.Cantidad</td>
                                     <td>@item.Precio</td>
                                     <td>@(item.Cantidad * item.Precio)</td>
-                                    <td><button type="button" class="btn btn-danger" @onclick="(() => EliminarDetalle(item))">Remover</button></td>
+                                    <td><button type="button" class="btn btn-outline-danger" @onclick="(() => EliminarDetalle(item))">Remover</button></td>
                                 </tr>
                             }
                         </tbody>
