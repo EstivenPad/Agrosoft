@@ -113,6 +113,7 @@ else @*Si no ha iniciado sesion*@
 
 
     decimal Balance;
+    decimal BalanceCliente;
     decimal LimiteCredito;
     bool noSePuedeDepositar;
 
@@ -130,9 +131,9 @@ else @*Si no ha iniciado sesion*@
             return;
 
         Cliente = repositorioClientes.Buscar(Cobro.ClienteId);
-        Balance = Cliente.Balance;
+        BalanceCliente = Cliente.Balance;
 
-        if (Balance > 0)
+        if (BalanceCliente > 0)
         {
             noSePuedeDepositar = false;
         }
@@ -219,8 +220,8 @@ else @*Si no ha iniciado sesion*@
     private void CalcularBalance()
     {
 
-        if (Balance > 0)
-            Balance -= Cobro.Deposito;
+        if (BalanceCliente > 0)
+            Balance = BalanceCliente - Cobro.Deposito;
         else
             Balance = 0;
     }
