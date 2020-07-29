@@ -116,6 +116,7 @@ namespace Agrosoft.BLL
                 usuarios = db.Usuarios.Find(id);
 
                 usuarios.ClaveUsuario = DesEncriptar(usuarios.ClaveUsuario);
+                usuarios.ClaveConfirmada = DesEncriptar(usuarios.ClaveConfirmada);
             }
             catch (Exception)
             {
