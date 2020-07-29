@@ -46,7 +46,7 @@
                                 <option value="0" disabled>Seleccione una opcion</option>
                                 @foreach (var item in ListaClientes)
                                 {
-                                    <option value="@item.ClienteId">@item.Nombres</option>
+                                    <option value="@item.ClienteId">@(item.Nombres + " " + item.Apellidos)</option>
                                 }
                             </select>
                             <div class="input-group-append">
