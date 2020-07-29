@@ -2,8 +2,11 @@
 
 @using Models
 @using BLL
+@using iTextSharpBlazor.Reportes
+@using Agrosoft.Pages.Viewers
 
-@inject IToastService toast;
+@inject IToastService toast
+@inject IModalService modal
 
 @if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
 {
@@ -37,6 +40,8 @@
                         </div>
                     </div>
                 </div>
+
+                <button class="btn btn-outline-primary" @onclick="GenerarReporte">Imprimir</button>
             </div>
 
             @*Tabla*@
@@ -82,7 +87,7 @@ else @*Si no ha iniciado sesion*@
 
     private int filtro;
     private string criterio;
-    
+
     private void Consultar()
     {
         if (string.IsNullOrWhiteSpace(criterio))
@@ -110,12 +115,22 @@ else @*Si no ha iniciado sesion*@
                     break;
                 case 3:
                     ListaMarcas = repositorioMarcas.GetList(x => x.Descripcion == criterio);
-                    break;               
+                    break;
             }
             if (ListaMarcas.Count == 0)
             {
                 toast.ShowInfo("¡No hay datos para mostrar!");
             }
         }
+    }
+
+    public void GenerarReporte()
+    {
+        MarcasReport marcasReport = new MarcasReport();
+        var parametros = new ModalParameters();
+
+        parametros.Add("listaMarcas", ListaMarcas);
+
+        modal.Show<MarcasViewer>("Reporte de Marcas", parametros);
     }
 }
