@@ -1,0 +1,24 @@
+﻿@using iTextSharpBlazor.Reportes;
+
+@if (data is { })
+{
+    <object data="@pdfContent" width="800" height="500"></object>
+}
+
+@code {
+    [Parameter]
+    public List<Proveedores> listaProveedores { get; set; } = new List<Proveedores>();
+
+    byte[] data;
+    string pdfContent;
+
+    protected override void OnInitialized()
+    {
+        ProveedoresReport proveedoresReport = new ProveedoresReport();
+
+        data = proveedoresReport.Reporte(listaProveedores);
+        pdfContent = "data:application/pdf;base64,";
+        pdfContent += System.Convert.ToBase64String(data);
+    }
+}
+

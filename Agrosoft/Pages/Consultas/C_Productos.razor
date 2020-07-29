@@ -2,8 +2,11 @@
 
 @using Models
 @using BLL
+@using iTextSharpBlazor.Reportes
+@using Agrosoft.Pages.Viewers
 
-@inject IToastService toast;
+@inject IToastService toast
+@inject IModalService modal
 
 @if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
 {
@@ -38,38 +41,39 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <button class="btn btn-outline-primary" @onclick="GenerarReporte">Imprimir</button>
+            </div>
 
             @*Tabla*@
             <table class="table table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Código</th>
-                            <th>Nombre</th>
-                            <th>Marca</th>
-                            <th>Cantidad minima</th>
-                            <th>Cantidad existente</th>
-                            <th>Precio</th>
-                            <th>Costo</th>
-                        </tr>
-                    </thead>
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Cantidad minima</th>
+                        <th>Cantidad existente</th>
+                        <th>Precio</th>
+                        <th>Costo</th>
+                    </tr>
+                </thead>
 
-                    <tbody>
-                        @foreach (var articulo in ListaProductos)
-                        {
-                            <tr>
-                                <td>@articulo.ProductoId</td>
-                                <td>@articulo.Nombre</td>
-                                <td>@articulo.Marca</td>
-                                <td>@articulo.CantidadMinima</td>
-                                <td>@articulo.CantidadExistente</td>
-                                <td>@articulo.Precio</td>
-                                <td>@articulo.Costo</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                <tbody>
+                    @foreach (var articulo in ListaProductos)
+                    {
+                        <tr>
+                            <td>@articulo.ProductoId</td>
+                            <td>@articulo.Nombre</td>
+                            <td>@articulo.Marca</td>
+                            <td>@articulo.CantidadMinima</td>
+                            <td>@articulo.CantidadExistente</td>
+                            <td>@articulo.Precio</td>
+                            <td>@articulo.Costo</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
         </div>
     </div>
@@ -131,5 +135,15 @@ else @*Si no ha iniciado sesion*@
                 toast.ShowInfo("¡No hay datos para mostrar!");
             }
         }
+    }
+
+    public void GenerarReporte()
+    {
+        ProductosReport productosReport = new ProductosReport();
+        var parametros = new ModalParameters();
+
+        parametros.Add("listaProductos", ListaProductos);
+
+        modal.Show<ProductosViewer>("Reporte de Productos", parametros);
     }
 }

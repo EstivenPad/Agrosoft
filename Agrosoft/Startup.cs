@@ -14,6 +14,7 @@ using Blazored.Toast;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
+using Blazored.Modal;
 
 namespace Agrosoft
 {
@@ -56,6 +57,7 @@ namespace Agrosoft
             services.AddScoped<HttpClient>();
             // BLAZOR COOKIE Auth Code (end)
             // ******
+            services.AddBlazoredModal();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
