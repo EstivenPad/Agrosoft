@@ -49,32 +49,46 @@
                             <ValidationMessage For="@(() => Venta.Fecha)" />
                         </div>
                     </div>
-                    @if (esAContado)
+                    @if (esAContado)//Si la factura es a contado
                     {
                         @*Cliente*@
                         <div class="form-group">
                             <label>Cliente</label>
-                            <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
-                                <option value="0" selected disabled>Seleccione un cliente</option>
-                                <option value="1">@(repositorioClientes.Buscar(1).Nombres + " " + repositorioClientes.Buscar(1).Apellidos)</option>
-                            </select>
+                            <div class="input-group">
+                                <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
+                                    <option value="0" selected disabled>Seleccione un cliente</option>
+                                    <option value="1">@(repositorioClientes.Buscar(1).Nombres + " " + repositorioClientes.Buscar(1).Apellidos)</option>
+                                </select>
+                                <div class="input-group-append">
+                                    <NavLink type="button" class="btn btn-primary" href="RegistroClientes">
+                                        <i class="oi oi-plus" aria-hidden="true" />
+                                    </NavLink>
+                                </div>
+                            </div>                            
                             <ValidationMessage For="@(() => Venta.ClienteId)" />
                         </div>
                     }
-                    else
+                    else//Si la factura es a credito
                     {
                         <div class="form-row">
                             @*Cliente*@
-                            <div class="col-6 form-group">
+                            <div class="form-group col-6">
                                 <label>Cliente</label>
-                                <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
-                                    <option value="0" selected disabled>Seleccione un cliente</option>
+                                <div class="input-group">
+                                    <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
+                                        <option value="0" selected disabled>Seleccione un cliente</option>
 
-                                    @foreach (var item in ListaClientes)
-                                    {
-                                        <option value="@item.ClienteId">@(item.Nombres + " " + item.Apellidos)</option>
-                                    }
-                                </select>
+                                        @foreach (var item in ListaClientes)
+                                        {
+                                            <option value="@item.ClienteId">@(item.Nombres + " " + item.Apellidos)</option>
+                                        }
+                                    </select>
+                                    <div class="input-group-append">
+                                        <NavLink type="button" class="btn btn-primary" href="RegistroClientes">
+                                            <i class="oi oi-plus" aria-hidden="true" />
+                                        </NavLink>
+                                    </div>
+                                </div>
                                 <ValidationMessage For="@(() => Venta.ClienteId)" />
                             </div>
 
@@ -228,12 +242,12 @@ else @*Si no ha iniciado sesion*@
 
     public void identificarTipoFactura()
     {
-        if (Venta.TipoFactura == 1)
+        if (Venta.TipoFactura == 1)//Factura a credito
         {
             esACredito = true;
             esAContado = false;
         }
-        else if (Venta.TipoFactura == 2)
+        else if (Venta.TipoFactura == 2)//Factura a contado
         {
             esAContado = true;
             esACredito = false;
@@ -285,7 +299,7 @@ else @*Si no ha iniciado sesion*@
     {
         bool guardo;
 
-        if (Venta.TipoFactura == 1)
+        if (Venta.TipoFactura == 1)//Si la factura es a credito
         {
             if (Venta.Total > (LimiteCredito - Balance))
             {
@@ -312,7 +326,7 @@ else @*Si no ha iniciado sesion*@
                     toast.ShowError("No fue posible guardar");
             }
         }
-        else
+        else//Si la factura es a contado
         {
             if (Venta.VentaProductosDetalle.Count == 0)
             {
@@ -320,7 +334,11 @@ else @*Si no ha iniciado sesion*@
             }
             else
             {
+                Clientes cliente = repositorioClientes.Buscar(Venta.ClienteId);
+                cliente.Balance = 0;
+
                 guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
+                repositorioClientes.Modificar(cliente);
 
                 if (guardo)
                 {
