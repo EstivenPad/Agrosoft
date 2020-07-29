@@ -33,12 +33,12 @@
                 <div class="card-body">
                     <form>
                         @*Usuario Id*@
-                        <div class="form-row align-items-center">
-                            <div class="col">
+                        <div class="form-row justify-content-between">
+                            <div class="col-5">
                                 <div class="form-group">
                                     <label>Usuario Id</label>
                                     <div class="input-group">
-                                        <InputNumber @bind-Value="Usuario.UsuarioId" class="form-control col-4" />
+                                        <InputNumber @bind-Value="Usuario.UsuarioId" min="0" class="form-control col" />
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
                                                 <span class="oi oi-magnifying-glass"> </span>Buscar
@@ -47,13 +47,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        @*Fecha*@
-                        <div class="form-group">
-                            <label>Fecha</label>
-                            <InputDate @bind-Value="Usuario.Fecha" class="form-control" />
-                            <ValidationMessage For="@(() => Usuario.Fecha)" />
+                            @*Fecha*@
+                            <div class="form-group col-4">
+                                <label>Fecha</label>
+                                <InputDate @bind-Value="Usuario.Fecha" class="form-control" />
+                                <ValidationMessage For="@(() => Usuario.Fecha)" />
+                            </div>
                         </div>
 
                         @*Nombres*@
@@ -100,30 +100,32 @@
                             <ValidationMessage For="@(() => Usuario.Direccion)" />
                         </div>
 
-                        @*Nombre de Usuario*@
-                        <div class="form-group">
-                            <label>Nombre de usuario</label>
-                            <InputText @bind-Value="Usuario.NombreUsuario" class="form-control" />
-                            <ValidationMessage For="@(() => Usuario.NombreUsuario)" />
-                        </div>
+                        <div class="form-row">
+                            @*Nombre de Usuario*@
+                            <div class="form-group col">
+                                <label>Nombre de usuario</label>
+                                <InputText @bind-Value="Usuario.NombreUsuario" class="form-control" />
+                                <ValidationMessage For="@(() => Usuario.NombreUsuario)" />
+                            </div>
 
-                        @*Clave de Usuario*@
-                        <div class="form-group">
-                            <label>Clave de usuario</label>
-                            <InputText @bind-Value="Usuario.ClaveUsuario" class="form-control" />
-                            <ValidationMessage For="@(() => Usuario.ClaveUsuario)" />
-                        </div>
+                            @*Clave de Usuario*@
+                            <div class="form-group col">
+                                <label>Clave de usuario</label>
+                                <InputText @bind-Value="Usuario.ClaveUsuario" class="form-control" />
+                                <ValidationMessage For="@(() => Usuario.ClaveUsuario)" />
+                            </div>
 
-                        @*Tipo de Usuario*@
-                        <div class="form-group">
-                            <label>Tipo de usuario</label>
-                            <InputSelect @bind-Value="Usuario.TipoUsuario" class="custom-select">
-                                <option disabled selected>Seleccione una opción</option>
-                                <option>Administrador</option>
-                                <option>Empleado</option>
-                            </InputSelect>
-                            <ValidationMessage For="@(() => Usuario.TipoUsuario)" />
-                        </div>
+                            @*Tipo de Usuario*@
+                            <div class="form-group col">
+                                <label>Tipo de usuario</label>
+                                <InputSelect @bind-Value="Usuario.TipoUsuario" class="custom-select">
+                                    <option disabled selected>Seleccione una opción</option>
+                                    <option>Administrador</option>
+                                    <option>Empleado</option>
+                                </InputSelect>
+                                <ValidationMessage For="@(() => Usuario.TipoUsuario)" />
+                            </div>
+                        </div>                        
                     </form>
                 </div>
 

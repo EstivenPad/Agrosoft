@@ -17,25 +17,27 @@
             <div class="card-body">
                 <form>
                     @*CobroId*@
-                    <div class="form-row align-items-center">
-                        <div class="col">
+                    <div class="form-row justify-content-between">
+                        <div class="col-5">
                             <div class="form-group">
                                 <label>Cobro Id</label>
                                 <div class="input-group">
-                                    <InputNumber @bind-Value="Cobro.CobrosId" min="0" class="form-control col-4"></InputNumber>
+                                    <InputNumber @bind-Value="Cobro.CobrosId" min="0" class="form-control col" />
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar"> <span class="oi oi-magnifying-glass"></span> Buscar </button>
+                                        <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
+                                            <span class="oi oi-magnifying-glass"> </span>Buscar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    @*Fecha*@
-                    <div class="form-group">
-                        <label>Fecha</label>
-                        <InputDate @bind-Value="Cobro.Fecha" class="form-control"></InputDate>
-                        <ValidationMessage For="@(()=>Cobro.Fecha)" />
+                        @*Fecha*@
+                        <div class="form-group col-4">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="Cobro.Fecha" class="form-control" />
+                            <ValidationMessage For="@(() => Cobro.Fecha)" />
+                        </div>
                     </div>
 
                     @*Cliente*@

@@ -17,27 +17,27 @@
             <div class="card-body">
                 <form>
                     @*Proveedor id*@
-                    <div class="form-row align-items-center">
-                        <div class="col">
+                    <div class="form-row justify-content-between">
+                        <div class="col-5">
                             <div class="form-group">
                                 <label>Proveedor Id</label>
                                 <div class="input-group">
-                                    <InputNumber @bind-Value="Proveedor.ProveedorId " min="0" class="form-control col-4"></InputNumber>
+                                    <InputNumber @bind-Value="Proveedor.ProveedorId" min="0" class="form-control col" />
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
-                                            <span class="oi oi-magnifying-glass"> </span> Buscar
+                                            <span class="oi oi-magnifying-glass"> </span>Buscar
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    @*Fecha*@
-                    <div class="form-group">
-                        <label>Fecha</label>
-                        <InputDate @bind-Value="Proveedor.Fecha" class="form-control" />
-                        <ValidationMessage For="@(() => Proveedor.Fecha)" />
+                        @*Fecha*@
+                        <div class="form-group col-4">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="Proveedor.Fecha" class="form-control" />
+                            <ValidationMessage For="@(() => Proveedor.Fecha)" />
+                        </div>
                     </div>
 
                     @*Nombre*@
@@ -54,25 +54,27 @@
                         <ValidationMessage For="@(() => Proveedor.Apellidos)" />
                     </div>
 
-                    @*Teléfono*@
-                    <div class="form-group">
-                        <label>Teléfono</label>
-                        <InputText @bind-Value="Proveedor.Telefono" class="form-control" />
-                        <ValidationMessage For="@(() => Proveedor.Telefono)" />
-                    </div>
+                    <div class="form-row">
+                        @*Teléfono*@
+                        <div class="form-group col">
+                            <label>Teléfono</label>
+                            <InputText @bind-Value="Proveedor.Telefono" class="form-control" />
+                            <ValidationMessage For="@(() => Proveedor.Telefono)" />
+                        </div>
 
-                    @*Celular*@
-                    <div class="form-group">
-                        <label>Celular</label>
-                        <InputText @bind-Value="Proveedor.Celular" class="form-control" />
-                        <ValidationMessage For="@(() => Proveedor.Celular)" />
-                    </div>
+                        @*Celular*@
+                        <div class="form-group col">
+                            <label>Celular</label>
+                            <InputText @bind-Value="Proveedor.Celular" class="form-control" />
+                            <ValidationMessage For="@(() => Proveedor.Celular)" />
+                        </div>
 
-                    @*RNC*@
-                    <div class="form-group">
-                        <label>RNC</label>
-                        <InputNumber @bind-Value="Proveedor.Rnc" class="form-control" />
-                        <ValidationMessage For="@(() => Proveedor.Rnc)" />
+                        @*RNC*@
+                        <div class="form-group col">
+                            <label>RNC</label>
+                            <InputNumber @bind-Value="Proveedor.Rnc" class="form-control" />
+                            <ValidationMessage For="@(() => Proveedor.Rnc)" />
+                        </div>
                     </div>
 
                     @*Email*@

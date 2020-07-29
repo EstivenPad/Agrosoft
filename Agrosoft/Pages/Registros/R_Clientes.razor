@@ -15,12 +15,12 @@
             <div class="card-body">
                 <form>
                     @*Cliente Id*@
-                    <div class="form-row">
-                        <div class="col">
+                    <div class="form-row justify-content-between">
+                        <div class="col-5">
                             <div class="form-group">
                                 <label>Cliente Id</label>
                                 <div class="input-group">
-                                    <InputNumber @bind-Value="Cliente.ClienteId" class="form-control col" />
+                                    <InputNumber @bind-Value="Cliente.ClienteId" min="0" class="form-control col" />
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
                                             <span class="oi oi-magnifying-glass"> </span>Buscar
@@ -31,7 +31,7 @@
                         </div>
 
                         @*Fecha*@
-                        <div class="form-group col">
+                        <div class="form-group col-4">
                             <label>Fecha</label>
                             <InputDate @bind-Value="Cliente.Fecha" class="form-control" />
                             <ValidationMessage For="@(() => Cliente.Fecha)" />
@@ -66,19 +66,21 @@
                         <ValidationMessage For="@(() => Cliente.Email)" />
                     </div>
 
-                    @*Telélefono*@
-                    <div class="form-group">
-                        <label>Teléfono</label>
-                        <InputText @bind-Value="Cliente.Telefono" class="form-control" />
-                        <ValidationMessage For="@(() => Cliente.Telefono)" />
-                    </div>
+                    <div class="form-row">
+                        @*Telélefono*@
+                        <div class="form-group col">
+                            <label>Teléfono</label>
+                            <InputText @bind-Value="Cliente.Telefono" class="form-control" />
+                            <ValidationMessage For="@(() => Cliente.Telefono)" />
+                        </div>
 
-                    @*Celular*@
-                    <div class="form-group">
-                        <label>Celular</label>
-                        <InputText @bind-Value="Cliente.Celular" class="form-control" />
-                        <ValidationMessage For="@(() => Cliente.Celular)" />
-                    </div>
+                        @*Celular*@
+                        <div class="form-group col">
+                            <label>Celular</label>
+                            <InputText @bind-Value="Cliente.Celular" class="form-control" />
+                            <ValidationMessage For="@(() => Cliente.Celular)" />
+                        </div>
+                    </div>                    
 
                     @*Dirección*@
                     <div class="form-group">
