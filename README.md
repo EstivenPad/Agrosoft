@@ -51,7 +51,7 @@ Este es el registro de cobros con el cuál podrá registrar los cobros que afect
 
 Imagen
 
-Este es el registro de productos, en este formulario es donde se registrarán los productos que podrán ser comprados. Cabe destacar, que el costo del producto no puede ser mayor que el precio. En caso que el usuario lo coloque de esta forma, no se podrá guardar.
+Este es el registro de productos, este formulario es donde se registrarán los productos que podrán ser comprados. Cabe destacar, que el costo del producto no puede ser mayor que el precio. En caso que el usuario lo coloque de esta forma, no se podrá guardar.
 
 ### Registro de marcas
 
@@ -63,7 +63,7 @@ Este es el registro de marcas las cuales se identificaran en cada producto regis
 
 Imagen
 
-Este es el registro de compra de productos, en este es donde se realizarán las compras de los productos ya registrados. Para ello se debe de seleccionar un Proveedor y un Producto, luego se ingresa la cantidad, y automáticamente se llenan los campos: Marca, Unidad de medida, Costo e Importe. Para agregar dicho producto a la compra, se le da clicc al botón 'Agregar'.
+Este es el registro de compra de productos, en este es donde se realizarán las compras de los productos ya registrados. Para ello se debe de seleccionar un Proveedor y un Producto, luego se ingresa la cantidad, y automáticamente se llenan los campos: Marca, Unidad de medida, Costo e Importe. Para agregar dicho producto a la compra, se le da clic al botón 'Agregar'.
 
 En caso de no tener algún proveedor o algún producto registrado, desde ésta ventana se puede hacer. Si es para agregar un proveedor, se procede a dar clic al botón '+' que está a su lado. En caso que desee agregar un producto, es similar, se procede a dar clic al botón '+' que está a su lado.
 
