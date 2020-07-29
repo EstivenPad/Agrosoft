@@ -95,44 +95,55 @@
 
                     @*Detalle*@
                     <div class="card border-dark">
-                        <div class="card-header-tabs text-center">
-                            <div class="mt-2">
-                                <h5 style="font-family:Georgia; font-style:unset">Productos</h5>
-                            </div>
+                        <div class="card-header-tabs text-center mt-2">
+                            <h5 style="font-family:Georgia; font-style:unset">Productos</h5>
                         </div>
 
-                        <div class="card-body form-row">
-                            @*Producto*@
-                            <div class="form-group col">
-                                <label>Producto</label>
-                                <select class="form-control" @bind="Detalle.ProductoId" @onfocusout="LlenarPrecioUnitario">
-                                    <option value="0" selected disabled>Seleccione un producto</option>
-                                    @foreach (var item in ListaProductos)
-                                    {
-                                        <option value="@item.ProductoId">@item.Nombre</option>
-                                    }
-                                </select>
+                        <div class="card-body">
+                            <div class="row">
+                                @*Producto*@
+                                <div class="form-group col">
+                                    <label>Producto</label>
+                                    <div class="input-group">
+                                        <select class="form-control" @bind="Detalle.ProductoId" @onfocusout="LlenarPrecioUnitario">
+                                            <option value="0" disabled>Seleccione una opcion</option>
+                                            @foreach (var item in ListaProductos)
+                                            {
+                                                <option value="@item.ProductoId">@(item.Nombre + " " + item.Marca + " " + repositorioUnidadesMedida.Buscar(item.UnidadMedida).Descripcion)</option>
+                                            }
+                                        </select>
+                                        <div class="input-group-append">
+                                            <NavLink type="button" class="btn btn-primary" href="RegistroProductos">
+                                                <i class="oi oi-plus" aria-hidden="true" />
+                                            </NavLink>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            @*Cantidad*@
-                            <div class="form-group col">
-                                <label>Cantidad</label>
-                                <InputNumber @bind-Value="Detalle.Cantidad" class="form-control" @onfocusout="CalcularImporte" />
-                            </div>
+                            <div class="row">
+                                @*Cantidad*@
+                                <div class="form-group col">
+                                    <label>Cantidad</label>
+                                    <InputNumber @bind-Value="Detalle.Cantidad" min="0" class="form-control" @onfocusout="CalcularImporte" />
+                                </div>
 
-                            @*Precio Unitario*@
-                            <div class="form-group col">
-                                <label>Precio Unitario</label>
-                                <InputNumber @bind-Value="Detalle.PrecioUnitario" class="form-control" disabled />
-                            </div>
+                                @*Costo*@
+                                <div class="form-group col">
+                                    <label>Costo</label>
+                                    <InputNumber @bind-Value="Detalle.PrecioUnitario" min="0" class="form-control" @onfocusout="CalcularImporte" readOnly="true" />
+                                </div>
 
-                            @*Importe*@
-                            <div class="form-group col">
-                                <label>Importe</label>
-                                <div class="input-group">
-                                    <InputNumber @bind-Value="Detalle.Importe" class="form-control" disabled />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary" @onclick="AgregarDetalle"><i class="oi oi-plus" aria-hidden="true" /></button>
+                                @*Importe*@
+                                <div class="form-group col">
+                                    <label>Importe</label>
+                                    <div class="input-group">
+                                        <InputNumber @bind-Value="Detalle.Importe" class="form-control" readOnly="true" />
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-info" @onclick="AgregarDetalle">
+                                                <i class="oi oi-plus" aria-hidden="true" /> Agregar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +169,7 @@
                                     <td>@item.Cantidad</td>
                                     <td>@item.PrecioUnitario</td>
                                     <td>@item.Importe</td>
-                                    <td><button type="button" class="btn btn-outline-danger" @onclick="(() => RemoverFila(item))">Remover fila</button></td>
+                                    <td><button type="button" class="btn btn-outline-danger" @onclick="(() => RemoverFila(item))">Remover</button></td>
                                 </tr>
                             }
                         </tbody>
@@ -212,6 +223,7 @@ else @*Si no ha iniciado sesion*@
 
     public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
     public RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
+    public RepositorioBase<UnidadesMedida> repositorioUnidadesMedida = new RepositorioBase<UnidadesMedida>();
     public VentaProductosBLL repositorioVentas = new VentaProductosBLL();
 
     public void identificarTipoFactura()
