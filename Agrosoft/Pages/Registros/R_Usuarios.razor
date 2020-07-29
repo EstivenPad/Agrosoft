@@ -152,13 +152,11 @@ else @*Si no ha iniciado sesion*@
     </div>
 }
 
-
-
 @code {
     [Parameter]
     public int UsuarioId { get; set; }
     private Usuarios Usuario = new Usuarios();
-    public RepositorioBase<Usuarios> repositorio = new RepositorioBase<Usuarios>();
+    public UsuariosBLL repositorio = new UsuariosBLL();
     private bool TipoUsuario = false;
 
     protected override void OnInitialized()

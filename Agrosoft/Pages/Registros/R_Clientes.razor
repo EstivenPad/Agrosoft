@@ -15,12 +15,12 @@
             <div class="card-body">
                 <form>
                     @*Cliente Id*@
-                    <div class="form-row align-items-center">
+                    <div class="form-row">
                         <div class="col">
                             <div class="form-group">
                                 <label>Cliente Id</label>
                                 <div class="input-group">
-                                    <InputNumber @bind-Value="Cliente.ClienteId" class="form-control col-4" />
+                                    <InputNumber @bind-Value="Cliente.ClienteId" class="form-control col" />
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">
                                             <span class="oi oi-magnifying-glass"> </span>Buscar
@@ -29,13 +29,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    @*Fecha*@
-                    <div class="form-group">
-                        <label>Fecha</label>
-                        <InputDate @bind-Value="Cliente.Fecha" class="form-control" />
-                        <ValidationMessage For="@(() => Cliente.Fecha)" />
+                        @*Fecha*@
+                        <div class="form-group col">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="Cliente.Fecha" class="form-control" />
+                            <ValidationMessage For="@(() => Cliente.Fecha)" />
+                        </div>
                     </div>
 
                     @*Nombres*@

@@ -5,21 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Agrosoft.BLL
 {
-    public class UsuariosBLL
+    public class UsuariosBLL : RepositorioBase<Usuarios>
     {
-        public static bool Guardar(Usuarios usuarios)
-        {
-            if (!Existe(usuarios.UsuarioId))
-                return Insertar(usuarios);
-            else
-                return Modificar(usuarios);
-        }
-
-        public static bool Existe(int id)
+        public override bool Existe(int id)
         {
             bool encontrado = false;
             Contexto db = new Contexto();
@@ -39,19 +32,20 @@ namespace Agrosoft.BLL
             return encontrado;
         }
 
-        public static bool Insertar(Usuarios usuarios)
+        public override bool Insertar(Usuarios usuarios)
         {
             bool paso = false;
             Contexto db = new Contexto();
 
             try
             {
+                usuarios.ClaveUsuario = Encriptar(usuarios.ClaveUsuario);
+
                 db.Usuarios.Add(usuarios);
                 paso = (db.SaveChanges() > 0);
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
@@ -61,13 +55,15 @@ namespace Agrosoft.BLL
             return paso;
         }
 
-        public static bool Modificar(Usuarios usuarios)
+        public override bool Modificar(Usuarios usuarios)
         {
             bool paso = false;
             Contexto db = new Contexto();
 
             try
             {
+                usuarios.ClaveUsuario = Encriptar(usuarios.ClaveUsuario);
+
                 db.Entry(usuarios).State = EntityState.Modified;
                 paso = (db.SaveChanges() > 0);
             }
@@ -83,7 +79,7 @@ namespace Agrosoft.BLL
             return paso;
         }
 
-        public static bool Eliminar(int id)
+        public override bool Eliminar(int id)
         {
             bool paso = false;
             Contexto db = new Contexto();
@@ -91,6 +87,7 @@ namespace Agrosoft.BLL
             try
             {
                 var usuario = db.Usuarios.Find(id);
+
                 if (usuario != null)
                 {
                     db.Usuarios.Remove(usuario);
@@ -109,7 +106,7 @@ namespace Agrosoft.BLL
             return paso;
         }
 
-        public static Usuarios Buscar(int id)
+        public override Usuarios Buscar(int id)
         {
             Usuarios usuarios = new Usuarios();
             Contexto db = new Contexto();
@@ -117,10 +114,11 @@ namespace Agrosoft.BLL
             try
             {
                 usuarios = db.Usuarios.Find(id);
+
+                usuarios.ClaveUsuario = DesEncriptar(usuarios.ClaveUsuario);
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
@@ -128,27 +126,6 @@ namespace Agrosoft.BLL
                 db.Dispose();
             }
             return usuarios;
-        }
-
-        public static List<Usuarios> GetList(Expression<Func<Usuarios, bool>> criterio)
-        {
-            List<Usuarios> listas = new List<Usuarios>();
-            Contexto db = new Contexto();
-
-            try
-            {
-                listas = db.Usuarios.Where(criterio).ToList();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            finally
-            {
-                db.Dispose();
-            }
-            return listas;
         }
 
         public static bool ExistenciaUsuario(int id)
@@ -203,6 +180,34 @@ namespace Agrosoft.BLL
                 throw;
             }
             return nivel;
+        }
+
+        public static string Encriptar(string cadenaEncriptada)
+        {
+            if (!string.IsNullOrEmpty(cadenaEncriptada))
+            {
+                string resultado = string.Empty;
+                byte[] encryted = Encoding.Unicode.GetBytes(cadenaEncriptada);
+                resultado = Convert.ToBase64String(encryted);
+
+                return resultado;
+            }
+
+            return string.Empty;
+        }
+
+        public static string DesEncriptar(string cadenaDesencriptada)
+        {
+            if (!string.IsNullOrEmpty(cadenaDesencriptada))
+            {
+                string resultado = string.Empty;
+                byte[] decryted = Convert.FromBase64String(cadenaDesencriptada);
+                resultado = System.Text.Encoding.Unicode.GetString(decryted);
+
+                return resultado;
+            }
+
+            return string.Empty;
         }
     }
 }

@@ -39,13 +39,13 @@ namespace iTextSharpBlazor.Reportes
 
             float[] anchoColumnas = new float[columnas];
 
-            anchoColumnas[0] = 100; //Esta sera la fila 1 cobroid
-            anchoColumnas[1] = 100; //Esta sera la fila 2 fecha
-            anchoColumnas[2] = 100; //Esta sera la fila 3 cliente
-            anchoColumnas[3] = 100; //Esta sera la fila 4 monto
-            anchoColumnas[4] = 100; //Esta sera la fila 3 cliente
-            anchoColumnas[5] = 100; //Esta sera la fila 4 monto
-            anchoColumnas[6] = 100; //Esta sera la fila 4 monto
+            anchoColumnas[0] = 100; //Esta sera la fila 1 
+            anchoColumnas[1] = 100; //Esta sera la fila 2 
+            anchoColumnas[2] = 100; //Esta sera la fila 3 
+            anchoColumnas[3] = 100; //Esta sera la fila 4 
+            anchoColumnas[4] = 100; //Esta sera la fila 5 
+            anchoColumnas[5] = 100; //Esta sera la fila 6 
+            anchoColumnas[6] = 100; //Esta sera la fila 7 
 
             pdfTable.SetWidths(anchoColumnas);
 
