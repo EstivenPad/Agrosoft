@@ -41,8 +41,11 @@ namespace Agrosoft.Models
         [Required(ErrorMessage = "Es obligatorio introducir el nombre de usuario")]
         public string NombreUsuario { get; set; }
 
-        [Required(ErrorMessage = "Es obligatorio introducir el telefono")]
+        [Required(ErrorMessage = "Es obligatorio introducir la clave")]
         public string ClaveUsuario { get; set; }
+
+        [Required(ErrorMessage = "Es obligatorio confirmar la clave")]
+        public string ClaveConfirmada { get; set; }
 
         [Required(ErrorMessage = "Seleccione un tipo de usuario")]
         public string TipoUsuario { get; set; }

@@ -198,7 +198,7 @@ else @*Si no ha iniciado sesion*@
 
     public void CompararClaves()
     {
-        if (Usuario.ClaveUsuario != confirmarClave)
+        if (Usuario.ClaveUsuario != Usuario.ClaveConfirmada)
         {
             ClaveVerificada = false;
         }
