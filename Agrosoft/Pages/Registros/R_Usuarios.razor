@@ -200,7 +200,7 @@ else @*Si no ha iniciado sesion*@
         }
         else
         {
-            ClaveVerificada = true;            
+            ClaveVerificada = true;
         }
     }
 
@@ -269,17 +269,25 @@ else @*Si no ha iniciado sesion*@
     public void Eliminar()
     {
         bool elimino;
-
-        elimino = repositorio.Eliminar(Usuario.UsuarioId);
-
-        if (elimino)
+        if(Usuario.UsuarioId == GetUsuarioId())
         {
-            Nuevo();
-            toast.ShowSuccess("Eliminado correctamente");
+            toast.ShowError("No se puede eliminar el usuario que esté logueado");
+            return;
         }
         else
-            toast.ShowError("No fue posible eliminar");
+        {
+            elimino = repositorio.Eliminar(Usuario.UsuarioId);
+
+            if (elimino)
+            {
+                Nuevo();
+                toast.ShowSuccess("Eliminado correctamente");
+            }
+            else
+                toast.ShowError("No fue posible eliminar");
+        }
     }
+
 
     private bool GetAuthorization()
     {
@@ -292,4 +300,13 @@ else @*Si no ha iniciado sesion*@
 
         return acceso;
     }
-}
+
+    public int GetUsuarioId()
+    {
+        int id;
+        Contexto db = new Contexto();
+        id = db.Usuarios.Where(A => A.NombreUsuario.Equals(AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.Name)).Select(A => A.UsuarioId).FirstOrDefault();
+
+        return id;
+    }
+    }
