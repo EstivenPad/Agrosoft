@@ -186,18 +186,26 @@ else @*Si no ha iniciado sesion*@
 
         if (Producto.CantidadExistente < Producto.CantidadMinima)
         {
-            toast.ShowError("¡La cantidad en existencia no puede ser menor a la cantidad minima!");
+            toast.ShowError("¡La cantidad en existencia debe ser mayor o igual a la cantidad minima!");
             return;
         }
         else
         {
-            if (paso)
+            if (Producto.Costo >= Producto.Precio)
             {
-                Nuevo();
-                toast.ShowSuccess("¡Guardado con éxito!");
+                toast.ShowError("¡Costo debe ser menor al precio!");
+                return;
             }
             else
-                toast.ShowError("¡No se pudo guardar!");
+            {
+                if (paso)
+                {
+                    Nuevo();
+                    toast.ShowSuccess("¡Guardado con éxito!");
+                }
+                else
+                    toast.ShowError("¡No se pudo guardar!");
+            }
         }
     }
 
