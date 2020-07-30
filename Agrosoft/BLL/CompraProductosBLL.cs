@@ -42,7 +42,6 @@ namespace Agrosoft.BLL
                 return Insertar(compra);
             else
             {
-                RestarCantidad(compra);
                 return Modificar(compra);
             }
         }
@@ -98,7 +97,9 @@ namespace Agrosoft.BLL
             Contexto db = new Contexto();
 
             try
-            {                
+            {
+                RestarCantidad(compra);
+
                 db.Database.ExecuteSqlRaw($"Delete FROM CompraProductosDetalle where CompraId = {compra.CompraId}");
                 
                 foreach (var item in compra.CompraProductosDetalle)
