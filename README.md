@@ -85,7 +85,7 @@ Todas las consultas funcionan de la misma manera, en estas se pueden realizar co
 
 Imagen de un reporte
 
-## 🛠️ Desarrollado con 
+## 🛠️ Herramientas 
 
 * Visual Studio (Blazor Server).
 * SQLite.
