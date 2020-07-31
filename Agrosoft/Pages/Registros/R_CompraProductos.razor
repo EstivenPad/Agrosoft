@@ -134,8 +134,8 @@
                                 <tr>
                                     <td>@metodosProducto.Buscar(item.ProductoId).Nombre</td>
                                     <td>@item.Cantidad</td>
-                                    <td>@item.Precio</td>
-                                    <td>@(item.Cantidad * item.Precio)</td>
+                                    <td>@item.Precio.ToString("N2")</td>
+                                    <td>@((item.Cantidad * item.Precio).ToString("N2"))</td>
                                     <td><button type="button" class="btn btn-outline-danger" @onclick="(() => EliminarDetalle(item))">Remover</button></td>
                                 </tr>
                             }
@@ -144,8 +144,8 @@
 
                     @*Total*@
                     <div class="card-footer">
-                        <label>Monto</label>
-                        <InputNumber @bind-Value="Compra.Total" class="form-control col-4" readOnly="true" />
+                        <label>Monto total: </label>
+                        <InputNumber @bind-Value="Compra.Total" readOnly="true" style="background-color:transparent; border:0"/>
                     </div>
                 </form>
             </div>
