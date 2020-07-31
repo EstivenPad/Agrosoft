@@ -146,6 +146,7 @@
                     <div class="card-footer">
                         <label>Monto total: </label>
                         <InputNumber @bind-Value="Compra.Total" readOnly="true" style="background-color:transparent; border:0"/>
+                        <ValidationMessage For="@(() => Compra.Total)" />
                     </div>
                 </form>
             </div>
