@@ -147,44 +147,65 @@ namespace iTextSharpBlazor.Reportes
 
             #region Table Header
             pdfCell = new PdfPCell(new Phrase("ID", fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorTop = BaseColor.Black;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase("Nombres", fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorTop = BaseColor.Black;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase("Apellidos", fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorTop = BaseColor.Black;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase("Teléfono", fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorTop = BaseColor.Black;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase("Dirección", fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorTop = BaseColor.Black;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase("Limite de crédito", fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorTop = BaseColor.Black;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase("Balance", fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorTop = BaseColor.Black;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
@@ -199,46 +220,53 @@ namespace iTextSharpBlazor.Reportes
             {
                 num++;
                 pdfCell = new PdfPCell(new Phrase(item.UsuarioId.ToString(), _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
+                pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+                pdfCell.Border = 1;
+                pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
                 pdfCell = new PdfPCell(new Phrase(item.Nombres, _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
+                pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+                pdfCell.Border = 1;
+                pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
                 pdfCell = new PdfPCell(new Phrase(item.Apellidos, _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
+                pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+                pdfCell.Border = 1;
+                pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
 
                 pdfCell = new PdfPCell(new Phrase(item.Telefono, _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
+                pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+                pdfCell.Border = 1;
+                pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
                 pdfCell = new PdfPCell(new Phrase(item.Direccion, _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
+                pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+                pdfCell.Border = 1;
+                pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
                 pdfCell = new PdfPCell(new Phrase(item.LimiteCredito.ToString(), _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
+                pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+                pdfCell.Border = 1;
+                pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
                 pdfCell = new PdfPCell(new Phrase(item.Balance.ToString(), _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
+                pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+                pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
+                pdfCell.Border = 1;
+                pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
                 totalBalance += item.Balance;
@@ -246,53 +274,58 @@ namespace iTextSharpBlazor.Reportes
                 pdfTable.CompleteRow();
             }
 
-            pdfCell = new PdfPCell(new Phrase(num++.ToString(), fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            pdfCell.BackgroundColor = BaseColor.White;
-            pdfCell.Border = 0;
+            pdfCell = new PdfPCell(new Phrase(("Total de registros: " + (num++.ToString())), fontStyle));
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.VerticalAlignment = Element.ALIGN_BOTTOM;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase(" ", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.White;
-            pdfCell.Border = 0;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase(" ", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.White;
-            pdfCell.Border = 0;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase(" ", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.White;
-            pdfCell.Border = 0;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase(" ", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.White;
-            pdfCell.Border = 0;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(new Phrase(" ", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.White;
-            pdfCell.Border = 0;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase(totalBalance.ToString(), fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            pdfCell.BackgroundColor = BaseColor.White;
-            pdfCell.Border = 0;
+            pdfCell = new PdfPCell(new Phrase(("Total: " + (totalBalance.ToString())), fontStyle));
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.VerticalAlignment = Element.ALIGN_BOTTOM;
+            pdfCell.Border = 1;
+            pdfCell.BorderColorBottom = BaseColor.Black;
             pdfTable.AddCell(pdfCell);
 
             pdfTable.CompleteRow();
