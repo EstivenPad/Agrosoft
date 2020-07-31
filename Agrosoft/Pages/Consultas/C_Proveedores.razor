@@ -33,13 +33,12 @@
                 <div class="form-group col-3">
                     <label>Filtro</label>
                     <select @bind="filtro" class="form-control">
-                        <option value="0" disabled>Elija una opción</option>
-                        <option value="1">Todo</option>
-                        <option value="2">Código proveedor</option>
-                        <option value="3">Código usuario</option>
-                        <option value="4">Nombre</option>
-                        <option value="5">Apellido</option>
-                        <option value="6">Dirección</option>
+                        <option value="0" disabled>Seleccione una opción</option>
+                        <option value="1">Código proveedor</option>
+                        <option value="2">Código usuario</option>
+                        <option value="3">Nombre</option>
+                        <option value="4">Apellido</option>
+                        <option value="5">Dirección</option>
                     </select>
                 </div>
 
@@ -49,7 +48,7 @@
                     <div class="input-group">
                         <input type="text" @bind="criterio" class="form-control" />
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                            <button type="button" class="btn btn-primary input-group-text" @onclick="@(c => Consultar(0))">
                                 <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
                             </button>
 
@@ -80,7 +79,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var proveedor in ListaProveedores)
+                    @foreach (var proveedor in Lista)
                     {
                         <tr>
                             <td>@proveedor.ProveedorId</td>
@@ -96,6 +95,63 @@
                     }
                 </tbody>
             </table>
+
+            @*Total*@
+            <div class="card-footer">
+                <div class="row">
+                    <div class="text-left col">
+                        <label>Total de proveedores: @Total</label>
+                    </div>
+
+                    <div class="text-lg-right col-3">
+                        <label>@("Página" + " "+(paginaActual+1) + " " + "de" + " " + totalPaginas)</label>
+                    </div>
+                </div>
+            </div>
+
+            @*Paginacion*@
+            <div class="card-footer bg-success">
+                <div class="form-group text-center" display: inline-block>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <button class="page-link btn btn-success" @onclick="@(e => Direccionar("Primero"))" tabindex="-1">
+                                    <span class="fa fa-backward"></span>
+                                </button>
+                            </li>
+
+                            <li class="page-item">
+                                <button class="page-link btn btn-success" @onclick="@(e => Direccionar("Anterior"))" tabindex="-1">
+                                    <span class="oi oi-caret-left" style="font-size:15px"></span>
+                                </button>
+                            </li>
+
+                            @for (int i = 0; i < totalPaginas; i++)
+                            {
+                                var pageNumber = i;
+                                <li class="page-item">
+                                    <button class="@(paginaActual == pageNumber ? "page-link btn btn-dark" : "page-link btn btn-success")"
+                                            @onclick="@(u => Consultar(pageNumber))">
+                                        @(i + 1)
+                                    </button>
+                                </li>
+                            }
+
+                            <li class="page-item">
+                                <button type="button" class="page-link btn btn-success" @onclick="@(e => Direccionar("Siguiente"))" tabindex="-1">
+                                    <span class="oi oi-caret-right" style="font-size:15px"></span>
+                                </button>
+                            </li>
+
+                            <li class="page-item">
+                                <button class="page-link btn btn-success" @onclick="@(e => Direccionar("Ultimo"))" tabindex="-1">
+                                    <span class="fa fa-forward"></span>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -116,6 +172,7 @@ else @*Si no ha iniciado sesion*@
 
 @code {
     List<Proveedores> ListaProveedores = new List<Proveedores>();
+    List<Proveedores> Lista = new List<Proveedores>();
     RepositorioBase<Proveedores> repositorioProveedores = new RepositorioBase<Proveedores>();
     RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
 
@@ -123,15 +180,63 @@ else @*Si no ha iniciado sesion*@
     private string criterio;
     private DateTime Desde = DateTime.Now;
     private DateTime Hasta = DateTime.Now;
+    private int cantidadPorPaginas = 6;
+    private int totalPaginas;
+    private int paginaActual;
+    private int Total;
 
-    private void Consultar()
+    private void ActualizarLista(int numeroPagina)
+    {
+        Lista = ListaProveedores.Skip(numeroPagina * cantidadPorPaginas).Take(cantidadPorPaginas).ToList();
+        paginaActual = numeroPagina;
+    }
+
+    private void AplicarRangoFechas()
+    {
+        ListaProveedores = ListaProveedores.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+    }
+
+    private void Direccionar(string direccion)
+    {
+        if (direccion == "Anterior" && paginaActual != 0)
+            paginaActual--;
+        if (direccion == "Siguiente" && paginaActual != totalPaginas)
+        {
+            paginaActual++;
+            if (paginaActual == totalPaginas)
+                paginaActual--;
+        }
+
+        if (direccion == "Primero")
+            paginaActual = 0;
+
+        if (direccion == "Ultimo")
+            paginaActual = totalPaginas - 1;
+
+        ActualizarLista(paginaActual);
+    }
+
+    public void calcularTotal()
+    {
+        Total = 0;
+
+        foreach (var item in ListaProveedores)
+        {
+            Total++;
+        }
+    }
+
+    private void Consultar(int pagina)
     {
         if (string.IsNullOrWhiteSpace(criterio))
         {
             ListaProveedores = repositorioProveedores.GetList(x => true);
-            ListaProveedores = ListaProveedores.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+            totalPaginas = (int)Math.Ceiling(ListaProveedores.Count() / (decimal)cantidadPorPaginas);
+            ActualizarLista(pagina);
 
-            if (ListaProveedores.Count == 0)
+            calcularTotal();
+
+            if (Lista.Count == 0)
             {
                 toast.ShowInfo("¡No hay datos para mostrar!");
             }
@@ -141,32 +246,43 @@ else @*Si no ha iniciado sesion*@
             switch (filtro)
             {
                 case 0:
-                    toast.ShowError("¡Opción incorrecta!");
-
+                    toast.ShowError("¡Opción inválida!");
                     break;
                 case 1:
-                    ListaProveedores = repositorioProveedores.GetList(x => true);
-                    break;
-                case 2:
                     int id = Convert.ToInt32(criterio);
                     ListaProveedores = repositorioProveedores.GetList(x => x.ProveedorId == id);
+                    totalPaginas = (int)Math.Ceiling(ListaProveedores.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
-                case 3:
+                case 2:
                     int usuarioId = Convert.ToInt32(criterio);
                     ListaProveedores = repositorioProveedores.GetList(x => x.UsuarioId == usuarioId);
+                    AplicarRangoFechas();
+                    totalPaginas = (int)Math.Ceiling(ListaProveedores.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
+                    break;
+                case 3:
+                    ListaProveedores = repositorioProveedores.GetList(x => x.Nombres == criterio);
+                    AplicarRangoFechas();
+                    totalPaginas = (int)Math.Ceiling(ListaProveedores.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
                 case 4:
-                    ListaProveedores = repositorioProveedores.GetList(x => x.Nombres == criterio);
+                    ListaProveedores = repositorioProveedores.GetList(x => x.Apellidos == criterio);
+                    AplicarRangoFechas();
+                    totalPaginas = (int)Math.Ceiling(ListaProveedores.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
                 case 5:
-                    ListaProveedores = repositorioProveedores.GetList(x => x.Apellidos == criterio);
-                    break;
-                case 6:
                     ListaProveedores = repositorioProveedores.GetList(x => x.Direccion == criterio);
+                    AplicarRangoFechas();
+                    totalPaginas = (int)Math.Ceiling(ListaProveedores.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
             }
-            ListaProveedores = ListaProveedores.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
-            if (ListaProveedores.Count == 0)
+            calcularTotal();
+
+            if (Lista.Count == 0)
             {
                 toast.ShowInfo("¡No hay datos para mostrar!");
             }
@@ -178,7 +294,7 @@ else @*Si no ha iniciado sesion*@
         ProveedoresReport proveedoresReport = new ProveedoresReport();
         var parametros = new ModalParameters();
 
-        if (ListaProveedores.Count == 0)
+        if (Lista.Count == 0)
         {
             toast.ShowInfo("¡No hay datos para imprimir!");
             return;

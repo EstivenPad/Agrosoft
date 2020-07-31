@@ -33,16 +33,13 @@
                 <div class="form-group col-3">
                     <label>Filtro</label>
                     <select @bind="Filtro" class="form-control">
-                        <option value="0" disabled>Elija una opcion</option>
-                        <option value="1">Todo</option>
-                        <option value="2">Código</option>
-                        <option value="3">Nombres</option>
-                        <option value="4">Apellidos</option>
-                        <option value="5">Teléfono</option>
-                        <option value="6">Celular</option>
-                        <option value="7">Cédula</option>
-                        <option value="8">Dirección</option>
-                        <option value="9">Clientes con deudas</option>
+                        <option value="0" disabled>Seleccione una opción</option>
+                        <option value="1">Código</option>
+                        <option value="2">Nombres</option>
+                        <option value="3">Apellidos</option>
+                        <option value="4">Balance</option>
+                        <option value="5">Límite de crédito</option>
+                        <option value="6">Clientes con deudas</option>
                     </select>
                 </div>
 
@@ -52,7 +49,7 @@
                     <div class="input-group">
                         <input type="text" @bind="Criterio" class="form-control" />
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                            <button type="button" class="btn btn-primary input-group-text" @onclick="@(c => Consultar(0))">
                                 <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
                             </button>
 
@@ -74,37 +71,87 @@
                         <th>Fecha</th>
                         <th>Nombres</th>
                         <th>Apellidos</th>
-                        <th>Teléfono</th>
                         <th>Celular</th>
                         <th>Cédula</th>
-                        <th>Dirección</th>
+                        <th>Crédito</th>
                         <th>Balance</th>
                         <th>Usuario</th>
                     </tr>
                 </thead>
 
-                @foreach (var item in ListaClientes)
+                @foreach (var item in Lista)
                 {
                     <tr>
                         <td>@item.ClienteId</td>
                         <td>@item.Fecha</td>
                         <td>@item.Nombres</td>
                         <td>@item.Apellidos</td>
-                        <td>@item.Telefono</td>
                         <td>@item.Celular</td>
                         <td>@item.Cedula</td>
-                        <td>@item.Direccion</td>
-                        <td>@item.Balance</td>
+                        <td>@item.LimiteCredito.ToString("N2")</td>
+                        <td>@item.Balance.ToString("N2")</td>
                         <td>@repositorioUsuarios.Buscar(item.UsuarioId).NombreUsuario</td>
                     </tr>
                 }
             </table>
 
-        </div>
-        <div class="card-footer">
-            <div class="form-group">
-                <label>Total de clientes: @Total</label>
+            @*Total*@
+            <div class="card-footer">
+                <div class="row">
+                    <div class="text-left col">
+                        <label>Total de clientes: @Total</label>
+                    </div>
+
+                    <div class="text-lg-right col-3">
+                        <label>@("Página" + " "+(paginaActual+1) + " " + "de" + " " + totalPaginas)</label>
+                    </div>
+                </div>
             </div>
+
+            @*Paginacion*@
+            <div class="card-footer bg-success">
+                <div class="form-group text-center" display: inline-block>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <button class="page-link btn btn-success" @onclick="@(e => Direccionar("Primero"))" tabindex="-1">
+                                    <span class="fa fa-backward"></span>
+                                </button>
+                            </li>
+
+                            <li class="page-item">
+                                <button class="page-link btn btn-success" @onclick="@(e => Direccionar("Anterior"))" tabindex="-1">
+                                    <span class="oi oi-caret-left" style="font-size:15px"></span>
+                                </button>
+                            </li>
+
+                            @for (int i = 0; i < totalPaginas; i++)
+                            {
+                                var pageNumber = i;
+                                <li class="page-item">
+                                    <button class="@(paginaActual == pageNumber ? "page-link btn btn-dark" : "page-link btn btn-success")"
+                                            @onclick="@(u => Consultar(pageNumber))">
+                                        @(i + 1)
+                                    </button>
+                                </li>
+                            }
+
+                            <li class="page-item">
+                                <button type="button" class="page-link btn btn-success" @onclick="@(e => Direccionar("Siguiente"))" tabindex="-1">
+                                    <span class="oi oi-caret-right" style="font-size:15px"></span>
+                                </button>
+                            </li>
+
+                            <li class="page-item">
+                                <button class="page-link btn btn-success" @onclick="@(e => Direccionar("Ultimo"))" tabindex="-1">
+                                    <span class="fa fa-forward"></span>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
         </div>
     </div>
 }
@@ -123,33 +170,71 @@ else @*Si no ha iniciado sesion*@
 }
 
 @code {
+    private List<Clientes> ListaClientes = new List<Clientes>();
+    private List<Clientes> Lista = new List<Clientes>();
+    public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
+    RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
+
     public int Total { get; set; }
     public int Filtro { get; set; }
     public string Criterio { get; set; }
     private DateTime Desde = DateTime.Now;
     private DateTime Hasta = DateTime.Now;
+    private int cantidadPorPaginas = 6;
+    private int totalPaginas;
+    private int paginaActual;
 
-    private List<Clientes> ListaClientes = new List<Clientes>();
-    public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
-    RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
+    private void ActualizarLista(int numeroPagina)
+    {
+        Lista = ListaClientes.Skip(numeroPagina * cantidadPorPaginas).Take(cantidadPorPaginas).ToList();
+        paginaActual = numeroPagina;
+    }
 
-    public void Consultar()
+    private void AplicarRangoFechas()
+    {
+        ListaClientes = ListaClientes.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+    }
+
+    private void Direccionar(string direccion)
+    {
+        if (direccion == "Anterior" && paginaActual != 0)
+            paginaActual--;
+        if (direccion == "Siguiente" && paginaActual != totalPaginas)
+        {
+            paginaActual++;
+            if (paginaActual == totalPaginas)
+                paginaActual--;
+        }
+
+        if (direccion == "Primero")
+            paginaActual = 0;
+
+        if (direccion == "Ultimo")
+            paginaActual = totalPaginas - 1;
+
+        ActualizarLista(paginaActual);
+    }
+
+    public void Consultar(int pagina)
     {
         if (string.IsNullOrWhiteSpace(Criterio))
         {
-            if (Filtro == 9)
+            if (Filtro == 6)
             {
                 ListaClientes = ClientesBLL.GetClientesConDeudas();
+                totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
+                ActualizarLista(paginaActual);
             }
             else
             {
                 ListaClientes = repositorioClientes.GetList(x => true);
-                ListaClientes = ListaClientes.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+                totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
+                ActualizarLista(pagina);
             }
 
             calcularTotal();
 
-            if (ListaClientes.Count == 0)
+            if (Lista.Count == 0)
             {
                 toast.ShowInfo("¡No hay datos para mostrar!");
             }
@@ -159,38 +244,44 @@ else @*Si no ha iniciado sesion*@
             switch (Filtro)
             {
                 case 0:
-                    toast.ShowError("¡Opcion incorrecta!");
+                    toast.ShowError("¡Opcion inválida!");
                     break;
                 case 1:
-                    ListaClientes = repositorioClientes.GetList(c => true);
-                    break;
-                case 2:
                     int id = Convert.ToInt32(Criterio);
                     ListaClientes = repositorioClientes.GetList(c => c.ClienteId == id);
+                    totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
+                    break;
+                case 2:
+                    ListaClientes = repositorioClientes.GetList(c => c.Nombres.Contains(Criterio));
+                    AplicarRangoFechas();
+                    totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
                 case 3:
-                    ListaClientes = repositorioClientes.GetList(c => c.Nombres.Contains(Criterio));
+                    ListaClientes = repositorioClientes.GetList(c => c.Apellidos.Contains(Criterio));
+                    AplicarRangoFechas();
+                    totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
                 case 4:
-                    ListaClientes = repositorioClientes.GetList(c => c.Apellidos.Contains(Criterio));
+                    decimal balance = Convert.ToDecimal(Criterio);
+                    ListaClientes = repositorioClientes.GetList(c => c.Balance == balance);
+                    AplicarRangoFechas();
+                    totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
                 case 5:
-                    ListaClientes = repositorioClientes.GetList(c => c.Telefono.Contains(Criterio));
-                    break;
-                case 6:
-                    ListaClientes = repositorioClientes.GetList(c => c.Celular.Contains(Criterio));
-                    break;
-                case 7:
-                    ListaClientes = repositorioClientes.GetList(c => c.Cedula.Contains(Criterio));
-                    break;
-                case 8:
-                    ListaClientes = repositorioClientes.GetList(c => c.Direccion.Contains(Criterio));
+                    decimal limiteCredito = Convert.ToDecimal(Criterio);
+                    ListaClientes = repositorioClientes.GetList(c => c.Balance == limiteCredito);
+                    AplicarRangoFechas();
+                    totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
             }
-            ListaClientes = ListaClientes.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
             calcularTotal();
 
-            if (ListaClientes.Count == 0)
+            if (Lista.Count == 0)
             {
                 toast.ShowInfo("¡No hay datos para mostrar!");
             }
@@ -211,6 +302,12 @@ else @*Si no ha iniciado sesion*@
     {
         ClientesReport clienteReport = new ClientesReport();
         var parametros = new ModalParameters();
+
+        if (Lista.Count == 0)
+        {
+            toast.ShowInfo("¡No hay datos para imprimir!");
+            return;
+        }
 
         parametros.Add("listaClientes", ListaClientes);
 
