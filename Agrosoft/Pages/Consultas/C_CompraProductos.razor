@@ -29,7 +29,7 @@
                 </div>
 
                 @*Filtro*@
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <label>Filtro</label>
                     <select @bind="filtro" class="form-control">
                         <option value="0" disabled>Elija una opcion</option>
@@ -37,7 +37,7 @@
                         <option value="2">Código</option>
                         <option value="3">Proveedor Id</option>
                         <option value="4">Usuario Id</option>
-                        <option value="4">Total</option>
+                        <option value="5">Total</option>
                     </select>
                 </div>
 
@@ -47,7 +47,7 @@
                     <div class="input-group">
                         <input type="text" @bind="criterio" class="form-control" />
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-primary input-group-text" @onclick="Consultar">
+                            <button type="button" class="btn btn-primary input-group-text" @onclick="@(c => Consultar(0))">
                                 <span class="oi oi-magnifying-glass" aria-hidden="true"></span>Consultar
                             </button>
 
@@ -74,7 +74,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var compra in ListaComprasProductos)
+                    @foreach (var compra in Lista)
                     {
                         <tr>
                             <td>@compra.CompraId</td>
@@ -86,6 +86,64 @@
                     }
                 </tbody>
             </table>
+
+            @*Total*@
+            <div class="card-footer">
+                <div class="row">
+                    <div class="text-left col">
+                        <label>Total de compras: @Total</label>
+                    </div>
+                    
+                    <div class="text-lg-right col-3">
+                        <label>@("Pagina" + " "+(paginaActual+1) + " " + "de" + " " + totalPaginas)</label>
+                    </div>
+                </div>
+            </div>
+
+            @*Paginacion*@
+            <div class="card-footer bg-success">
+                <div class="form-group text-center" display: inline-block>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <button class="page-link btn btn-success" @onclick="@(e => Direccionar("Primero"))" tabindex="-1">
+                                    <span class="fa fa-backward"></span>
+                                </button>
+                            </li>
+
+                            <li class="page-item">
+                                <button class="page-link btn btn-success" @onclick="@(e => Direccionar("Anterior"))" tabindex="-1">
+                                    <span class="oi oi-caret-left" style="font-size:15px"></span>
+                                </button>
+                            </li>
+
+                            @for (int i = 0; i < totalPaginas; i++)
+                            {
+                                var pageNumber = i;
+                                <li class="page-item">
+                                    <button class="@(paginaActual == pageNumber ? "page-link btn btn-dark" : "page-link btn btn-success")"
+                                            @onclick="@(u => Consultar(pageNumber))">
+                                        @(i + 1)
+                                    </button>
+                                </li>
+                            }
+
+                            <li class="page-item">
+                                <button type="button" class="page-link btn btn-success" @onclick="@(e => Direccionar("Siguiente"))" tabindex="-1">
+                                    <span class="oi oi-caret-right" style="font-size:15px"></span>
+                                </button>
+                            </li>
+
+                            <li class="page-item">
+                                <button class="page-link btn btn-success" @onclick="@(e => Direccionar("Ultimo"))" tabindex="-1">
+                                    <span class="fa fa-forward"></span>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                    
+                </div>
+            </div>
 
         </div>
     </div>
@@ -106,6 +164,7 @@ else @*Si no ha iniciado sesion*@
 
 @code {
     List<CompraProductos> ListaComprasProductos = new List<CompraProductos>();
+    List<CompraProductos> Lista = new List<CompraProductos>();
     RepositorioBase<CompraProductos> repositorioCompras = new RepositorioBase<CompraProductos>();
     RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
 
@@ -113,17 +172,73 @@ else @*Si no ha iniciado sesion*@
     private string criterio;
     private DateTime Desde = DateTime.Now;
     private DateTime Hasta = DateTime.Now;
+    private int cantidadPorPaginas;
+    private int totalPaginas;
+    private int paginaActual;
+    private int Total;
 
-    private void Consultar()
+    protected override void OnInitialized()
+    {
+        cantidadPorPaginas = 6;
+    }
+
+    private void ActualizarLista(int numeroPagina)
+    {
+        Lista = ListaComprasProductos.Skip(numeroPagina * cantidadPorPaginas).Take(cantidadPorPaginas).ToList();
+        paginaActual = numeroPagina;
+    }
+
+    private void Direccionar(string direccion)
+    {
+        if (direccion == "Anterior" && paginaActual != 0)
+            paginaActual --;
+        if (direccion == "Siguiente" && paginaActual != totalPaginas)
+        {
+            paginaActual ++;
+            if (paginaActual == totalPaginas)
+                paginaActual --;
+        }
+
+        if (direccion == "Primero")
+            paginaActual = 0;
+
+        if (direccion == "Ultimo")
+            paginaActual = totalPaginas-1;
+
+        ActualizarLista(paginaActual);
+    }
+
+    public void calcularTotal()
+    {
+        Total = 0;
+
+        foreach (var item in ListaComprasProductos)
+        {
+            Total++;
+        }
+    }
+
+    private void Consultar(int pagina)
     {
         if (string.IsNullOrWhiteSpace(criterio))
         {
-            ListaComprasProductos = repositorioCompras.GetList(x => true);
-            ListaComprasProductos = ListaComprasProductos.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+            if (filtro == 1 || filtro==0)
+            {
+                ListaComprasProductos = repositorioCompras.GetList(x => true);
+                ListaComprasProductos = ListaComprasProductos.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+                totalPaginas = (int)Math.Ceiling(ListaComprasProductos.Count() / (decimal)cantidadPorPaginas);
+                ActualizarLista(pagina);
+            }
+            calcularTotal();
 
             if (ListaComprasProductos.Count == 0)
             {
                 toast.ShowInfo("¡No hay datos para mostrar!");
+            }
+
+            if(filtro== 2 || filtro == 3 || filtro == 4 || filtro == 5)
+            {
+                toast.ShowError("El criterio no puede estar vacío");
             }
         }
         else
@@ -135,25 +250,37 @@ else @*Si no ha iniciado sesion*@
                     break;
                 case 1:
                     ListaComprasProductos = repositorioCompras.GetList(x => true);
+                    totalPaginas = (int)Math.Ceiling(ListaComprasProductos.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
                 case 2:
                     int id = Convert.ToInt32(criterio);
                     ListaComprasProductos = repositorioCompras.GetList(x => x.CompraId == id);
+                    totalPaginas = (int)Math.Ceiling(ListaComprasProductos.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
                 case 3:
                     int proveedorId = Convert.ToInt32(criterio);
                     ListaComprasProductos = repositorioCompras.GetList(x => x.ProveedorId == proveedorId);
+                    totalPaginas = (int)Math.Ceiling(ListaComprasProductos.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
                 case 4:
                     int usuarioId = Convert.ToInt32(criterio);
                     ListaComprasProductos = repositorioCompras.GetList(x => x.UsuarioId == usuarioId);
+                    totalPaginas = (int)Math.Ceiling(ListaComprasProductos.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
                 case 5:
                     decimal total = Convert.ToDecimal(criterio);
                     ListaComprasProductos = repositorioCompras.GetList(x => x.Total == total);
+                    totalPaginas = (int)Math.Ceiling(ListaComprasProductos.Count() / (decimal)cantidadPorPaginas);
+                    ActualizarLista(pagina);
                     break;
             }
             ListaComprasProductos = ListaComprasProductos.Where(c => c.Fecha.Date >= Desde.Date && c.Fecha.Date <= Hasta.Date).ToList();
+            calcularTotal();
+
             if (ListaComprasProductos.Count == 0)
             {
                 toast.ShowInfo("¡No hay datos para mostrar!");
