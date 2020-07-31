@@ -181,8 +181,8 @@
                                 <tr>
                                     <td>@repositorioProductos.Buscar(item.ProductoId).Nombre</td>
                                     <td>@item.Cantidad</td>
-                                    <td>@item.PrecioUnitario</td>
-                                    <td>@item.Importe</td>
+                                    <td>@item.PrecioUnitario.ToString("N2")</td>
+                                    <td>@item.Importe.ToString("N2")</td>
                                     <td><button type="button" class="btn btn-outline-danger" @onclick="(() => RemoverFila(item))">Remover</button></td>
                                 </tr>
                             }
@@ -190,9 +190,9 @@
                     </table>
 
                     @*Total*@
-                    <div class="form-group">
-                        <label>Total</label>
-                        <InputNumber @bind-Value="Venta.Total" class="form-control" disabled />
+                    <div class="card-footer">
+                        <label>Monto total: </label>
+                        <InputNumber @bind-Value="Venta.Total" readOnly="true" style="background-color:transparent; border:0" />
                         <ValidationMessage For="@(() => Venta.Total)" />
                     </div>
                 </form>
