@@ -299,56 +299,60 @@ else @*Si no ha iniciado sesion*@
     {
         bool guardo;
 
-        if (Venta.TipoFactura == 1)//Si la factura es a credito
+        if (!comprobarProductoEnReorden())
         {
-            if (Venta.Total > (LimiteCredito - Balance))
+            if (Venta.TipoFactura == 1)//Si la factura es a credito
             {
-                toast.ShowError("El total de la factura excede el límite de crédito del cliente");
-            }
-            else if (Venta.ClienteId == 1)
-            {
-                toast.ShowError("Este cliente no puede realizar compras a crédito");
-            }
-            else if (Venta.VentaProductosDetalle.Count == 0)
-            {
-                toast.ShowError("¡Debe agregar al menos un producto al detalle!");
-            }
-            else
-            {
-                guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
-
-                if (guardo)
+                if (Venta.Total > (LimiteCredito - Balance))
                 {
-                    Nuevo();
-                    toast.ShowSuccess("Guardado correctamente");
+                    toast.ShowError("El total de la factura excede el límite de crédito del cliente");
+                }
+                else if (Venta.ClienteId == 1)
+                {
+                    toast.ShowError("Este cliente no puede realizar compras a crédito");
+                }
+                else if (Venta.VentaProductosDetalle.Count == 0)
+                {
+                    toast.ShowError("¡Debe agregar al menos un producto al detalle!");
                 }
                 else
-                    toast.ShowError("No fue posible guardar");
-            }
-        }
-        else//Si la factura es a contado
-        {
-            if (Venta.VentaProductosDetalle.Count == 0)
-            {
-                toast.ShowError("¡Debe agregar al menos un producto al detalle!");
-            }
-            else
-            {
-                Clientes cliente = repositorioClientes.Buscar(Venta.ClienteId);
-                cliente.Balance = 0;
-
-                guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
-                repositorioClientes.Modificar(cliente);
-
-                if (guardo)
                 {
-                    Nuevo();
-                    toast.ShowSuccess("Guardado correctamente");
+                    guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
+
+                    if (guardo)
+                    {
+                        Nuevo();
+                        toast.ShowSuccess("Guardado correctamente");
+                    }
+                    else
+                        toast.ShowError("No fue posible guardar");
+                }
+            }
+            else//Si la factura es a contado
+            {
+                if (Venta.VentaProductosDetalle.Count == 0)
+                {
+                    toast.ShowError("¡Debe agregar al menos un producto al detalle!");
                 }
                 else
-                    toast.ShowError("No fue posible guardar");
+                {
+                    Clientes cliente = repositorioClientes.Buscar(Venta.ClienteId);
+                    cliente.Balance = 0;
+
+                    guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
+                    repositorioClientes.Modificar(cliente);
+
+                    if (guardo)
+                    {
+                        Nuevo();
+                        toast.ShowSuccess("Guardado correctamente");
+                    }
+                    else
+                        toast.ShowError("No fue posible guardar");
+                }
             }
         }
+
     }
 
     public void Eliminar()
@@ -421,5 +425,21 @@ else @*Si no ha iniciado sesion*@
         }
         Balance = repositorioClientes.Buscar(Venta.ClienteId).Balance;
         LimiteCredito = repositorioClientes.Buscar(Venta.ClienteId).LimiteCredito;
+    }
+
+    public bool comprobarProductoEnReorden()
+    {
+        bool paso = false;
+        foreach (var item in Venta.VentaProductosDetalle)
+        {
+            if (repositorioProductos.Buscar(item.ProductoId).CantidadExistente <= repositorioProductos.Buscar(item.ProductoId).CantidadMinima)
+            {
+                toast.ShowWarning("El producto " + repositorioProductos.Buscar(item.ProductoId).Nombre + " "
+                    + repositorioProductos.Buscar(item.ProductoId).Marca + " "
+                    + repositorioProductos.Buscar(item.ProductoId).UnidadMedida + " esta en reorden, favor pedir mas.");
+                paso = true;
+            }
+        }
+        return paso;
     }
 }
