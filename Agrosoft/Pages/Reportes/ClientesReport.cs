@@ -58,14 +58,38 @@ namespace iTextSharpBlazor.Reportes
 
             return memoryStream.ToArray();
         }
+
         private void ReportHeader()
         {
+            pdfCell = new PdfPCell(this.AddLogo());
+            pdfCell.Colspan = 1;
+            pdfCell.Border = 0;
+            pdfTable.AddCell(pdfCell);
+
             pdfCell = new PdfPCell(this.setPageTitle());
             pdfCell.Colspan = columnas;
             pdfCell.Border = 0;
             pdfTable.AddCell(pdfCell);
 
             pdfTable.CompleteRow();
+        }
+
+        private PdfPTable AddLogo()
+        {
+            PdfPTable pdfPTable = new PdfPTable(1);
+            string img = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\Imagenes\LogoReporte.png"}";
+            Image image = Image.GetInstance(img);
+
+            pdfCell = new PdfPCell(image);
+            pdfCell.Colspan = 0;
+            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.Border = 0;
+            pdfCell.ExtraParagraphSpace = 0;
+            pdfPTable.AddCell(pdfCell);
+
+            pdfPTable.CompleteRow();
+
+            return pdfPTable;
         }
 
         private PdfPTable setPageTitle()

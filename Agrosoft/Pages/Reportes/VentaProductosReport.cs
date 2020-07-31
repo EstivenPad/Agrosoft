@@ -84,7 +84,7 @@ namespace iTextSharpBlazor.Reportes
 
             pdfTable.CompleteRow();
 
-            pdfCell = new PdfPCell(new Phrase("Reporte de VentaProductos", fontStyle));
+            pdfCell = new PdfPCell(new Phrase("Reporte de Venta", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.Colspan = 2;
             pdfCell.Border = 0;
