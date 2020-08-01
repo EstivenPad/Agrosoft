@@ -62,27 +62,113 @@ namespace Agrosoft.DAL
             modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
             {
                 UnidadId = 1,
-                Descripcion= "Saco 25 Lbs"
+                Descripcion= "Cc"
             });
             modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
             {
                 UnidadId = 2,
-                Descripcion = "Saco 50 Lbs"
+                Descripcion = "Frasco 10 cc"
             });
             modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
             {
                 UnidadId = 3,
-                Descripcion = "Saco 100 Lbs"
+                Descripcion = "Frasco 25 cc"
             });
             modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
             {
                 UnidadId = 4,
-                Descripcion = "Saco 125 Lbs"
+                Descripcion = "Frasco 100 cc"
             });
             modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
             {
                 UnidadId = 5,
-                Descripcion = "Saco 200 Lbs"
+                Descripcion = "Frasco 250 cc"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 6,
+                Descripcion = "Galón 5 litros"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 7,
+                Descripcion = "Galón 10 litros"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 8,
+                Descripcion = "Galón 20 litros"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 9,
+                Descripcion = "Libra(s)"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 10,
+                Descripcion = "Litro(s)"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 11,
+                Descripcion = "Pinta(s)"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 12,
+                Descripcion = "Saco 25 libras"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 13,
+                Descripcion = "Saco 50 libras"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 14,
+                Descripcion = "Saco 55 libras"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 15,
+                Descripcion = "Saco 50 libras"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 16,
+                Descripcion = "Saco 100 libras"
+            });
+            modelBuilder.Entity<UnidadesMedida>().HasData(new UnidadesMedida
+            {
+                UnidadId = 17,
+                Descripcion = "Saco 125 libras"
+            });
+            //Marcas
+            modelBuilder.Entity<Marcas>().HasData(new Marcas
+            {
+                MarcaId = 1,
+                Descripcion = "Fersan"
+            });
+            modelBuilder.Entity<Marcas>().HasData(new Marcas
+            {
+                MarcaId = 2,
+                Descripcion = "Ferquido"
+            });
+            modelBuilder.Entity<Marcas>().HasData(new Marcas
+            {
+                MarcaId = 3,
+                Descripcion = "Jaragua"
+            });
+            modelBuilder.Entity<Marcas>().HasData(new Marcas
+            {
+                MarcaId = 4,
+                Descripcion = "Quisqueya"
+            });
+            modelBuilder.Entity<Marcas>().HasData(new Marcas
+            {
+                MarcaId = 5,
+                Descripcion = "Puita"
             });
         }
     }

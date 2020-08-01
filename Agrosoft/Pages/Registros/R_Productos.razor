@@ -72,38 +72,37 @@
                         </select>
                         <ValidationMessage For="@(()=>Producto.UnidadMedida)" />
                     </div>
-                    
-                    <div class="form-row">
-                        @*Cantidad minima*@
-                        <div class="form-group col">
-                            <label>Cantidad minima</label>
-                            <InputNumber @bind-Value="Producto.CantidadMinima" min="0" class="form-control"></InputNumber>
-                            <ValidationMessage For="@(()=>Producto.CantidadMinima)" />
-                        </div>
 
-                        @*Cantidad existente*@
-                        <div class="form-group col">
-                            <label>Cantidad existente</label>
-                            <InputNumber @bind-Value="Producto.CantidadExistente" min="0" class="form-control"></InputNumber>
-                            <ValidationMessage For="@(()=>Producto.CantidadExistente)" />
-                        </div>
+                    @*Cantidad minima*@
+                    <div class="form-group">
+                        <label>Cantidad minima</label>
+                        <InputNumber @bind-Value="Producto.CantidadMinima" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Producto.CantidadMinima)" />
                     </div>
-                    
-                    <div class="form-row">
-                        @*Precio*@
-                        <div class="form-group col">
-                            <label>Precio</label>
-                            <InputNumber @bind-Value="Producto.Precio" min="0" class="form-control"></InputNumber>
-                            <ValidationMessage For="@(()=>Producto.Precio)" />
-                        </div>
 
-                        @*Costo*@
-                        <div class="form-group col">
-                            <label>Costo</label>
-                            <InputNumber @bind-Value="Producto.Costo" min="0" class="form-control"></InputNumber>
-                            <ValidationMessage For="@(()=>Producto.Costo)" />
-                        </div>
-                    </div>                    
+                    @*Cantidad existente*@
+                    <div class="form-group">
+                        <label>Cantidad existente</label>
+                        <InputNumber @bind-Value="Producto.CantidadExistente" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Producto.CantidadExistente)" />
+                    </div>
+
+
+
+                    @*Precio*@
+                    <div class="form-group">
+                        <label>Precio</label>
+                        <InputNumber @bind-Value="Producto.Precio" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Producto.Precio)" />
+                    </div>
+
+                    @*Costo*@
+                    <div class="form-group">
+                        <label>Costo</label>
+                        <InputNumber @bind-Value="Producto.Costo" min="0" class="form-control"></InputNumber>
+                        <ValidationMessage For="@(()=>Producto.Costo)" />
+                    </div>
+
                 </form>
             </div>
 
@@ -146,6 +145,7 @@ else @*Si no ha iniciado sesion*@
         Buscar();
         CargarUnidades();
         CargarMarcas();
+        OrdenarMarcas();
     }
 
     public void Nuevo()
@@ -222,5 +222,10 @@ else @*Si no ha iniciado sesion*@
         }
         else
             toast.ShowSuccess("¡No se pudo eliminar!");
+    }
+
+    public void OrdenarMarcas()
+    {
+        ListaMarcas = ListaMarcas.OrderBy(x => x.Descripcion).ToList();
     }
 }

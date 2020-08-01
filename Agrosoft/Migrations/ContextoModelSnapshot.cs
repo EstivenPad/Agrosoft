@@ -76,7 +76,7 @@ namespace Agrosoft.Migrations
                             Celular = "0000000000",
                             Direccion = "xxxxxxxxxxxxx",
                             Email = "clienteOcasional@hotmail.com",
-                            Fecha = new DateTime(2020, 8, 1, 16, 0, 39, 843, DateTimeKind.Local).AddTicks(4047),
+                            Fecha = new DateTime(2020, 8, 1, 16, 58, 43, 193, DateTimeKind.Local).AddTicks(1024),
                             LimiteCredito = 0m,
                             Nombres = "Cliente",
                             Telefono = "0000000000",
@@ -171,6 +171,38 @@ namespace Agrosoft.Migrations
                     b.HasKey("MarcaId");
 
                     b.ToTable("Marcas");
+
+                    b.HasData(
+                        new
+                        {
+                            MarcaId = 1,
+                            Descripcion = "Fersan",
+                            UsuarioId = 0
+                        },
+                        new
+                        {
+                            MarcaId = 2,
+                            Descripcion = "Ferquido",
+                            UsuarioId = 0
+                        },
+                        new
+                        {
+                            MarcaId = 3,
+                            Descripcion = "Jaragua",
+                            UsuarioId = 0
+                        },
+                        new
+                        {
+                            MarcaId = 4,
+                            Descripcion = "Quisqueya",
+                            UsuarioId = 0
+                        },
+                        new
+                        {
+                            MarcaId = 5,
+                            Descripcion = "Puita",
+                            UsuarioId = 0
+                        });
                 });
 
             modelBuilder.Entity("Agrosoft.Models.Productos", b =>
@@ -268,27 +300,87 @@ namespace Agrosoft.Migrations
                         new
                         {
                             UnidadId = 1,
-                            Descripcion = "Saco 25 Lbs"
+                            Descripcion = "Cc"
                         },
                         new
                         {
                             UnidadId = 2,
-                            Descripcion = "Saco 50 Lbs"
+                            Descripcion = "Frasco 10 cc"
                         },
                         new
                         {
                             UnidadId = 3,
-                            Descripcion = "Saco 100 Lbs"
+                            Descripcion = "Frasco 25 cc"
                         },
                         new
                         {
                             UnidadId = 4,
-                            Descripcion = "Saco 125 Lbs"
+                            Descripcion = "Frasco 100 cc"
                         },
                         new
                         {
                             UnidadId = 5,
-                            Descripcion = "Saco 200 Lbs"
+                            Descripcion = "Frasco 250 cc"
+                        },
+                        new
+                        {
+                            UnidadId = 6,
+                            Descripcion = "Galón 5 litros"
+                        },
+                        new
+                        {
+                            UnidadId = 7,
+                            Descripcion = "Galón 10 litros"
+                        },
+                        new
+                        {
+                            UnidadId = 8,
+                            Descripcion = "Galón 20 litros"
+                        },
+                        new
+                        {
+                            UnidadId = 9,
+                            Descripcion = "Libra(s)"
+                        },
+                        new
+                        {
+                            UnidadId = 10,
+                            Descripcion = "Litro(s)"
+                        },
+                        new
+                        {
+                            UnidadId = 11,
+                            Descripcion = "Pinta(s)"
+                        },
+                        new
+                        {
+                            UnidadId = 12,
+                            Descripcion = "Saco 25 libras"
+                        },
+                        new
+                        {
+                            UnidadId = 13,
+                            Descripcion = "Saco 50 libras"
+                        },
+                        new
+                        {
+                            UnidadId = 14,
+                            Descripcion = "Saco 55 libras"
+                        },
+                        new
+                        {
+                            UnidadId = 15,
+                            Descripcion = "Saco 50 libras"
+                        },
+                        new
+                        {
+                            UnidadId = 16,
+                            Descripcion = "Saco 100 libras"
+                        },
+                        new
+                        {
+                            UnidadId = 17,
+                            Descripcion = "Saco 125 libras"
                         });
                 });
 
@@ -355,7 +447,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 8, 1, 16, 0, 39, 838, DateTimeKind.Local).AddTicks(8080),
+                            Fecha = new DateTime(2020, 8, 1, 16, 58, 43, 190, DateTimeKind.Local).AddTicks(5161),
                             NombreUsuario = "Admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Agrosoft.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class Migracion_Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -220,37 +220,122 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Clientes",
                 columns: new[] { "ClienteId", "Apellidos", "Balance", "Cedula", "Celular", "Direccion", "Email", "Fecha", "LimiteCredito", "Nombres", "Telefono", "UsuarioId" },
-                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 1, 16, 0, 39, 843, DateTimeKind.Local).AddTicks(4047), 0m, "Cliente", "0000000000", 1 });
+                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 1, 16, 58, 43, 193, DateTimeKind.Local).AddTicks(1024), 0m, "Cliente", "0000000000", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Marcas",
+                columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
+                values: new object[] { 1, "Fersan", 0 });
+
+            migrationBuilder.InsertData(
+                table: "Marcas",
+                columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
+                values: new object[] { 2, "Ferquido", 0 });
+
+            migrationBuilder.InsertData(
+                table: "Marcas",
+                columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
+                values: new object[] { 3, "Jaragua", 0 });
+
+            migrationBuilder.InsertData(
+                table: "Marcas",
+                columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
+                values: new object[] { 4, "Quisqueya", 0 });
+
+            migrationBuilder.InsertData(
+                table: "Marcas",
+                columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
+                values: new object[] { 5, "Puita", 0 });
 
             migrationBuilder.InsertData(
                 table: "UnidadesMedida",
                 columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 1, "Saco 25 Lbs" });
+                values: new object[] { 16, "Saco 100 libras" });
 
             migrationBuilder.InsertData(
                 table: "UnidadesMedida",
                 columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 2, "Saco 50 Lbs" });
+                values: new object[] { 15, "Saco 50 libras" });
 
             migrationBuilder.InsertData(
                 table: "UnidadesMedida",
                 columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 3, "Saco 100 Lbs" });
+                values: new object[] { 14, "Saco 55 libras" });
 
             migrationBuilder.InsertData(
                 table: "UnidadesMedida",
                 columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 4, "Saco 125 Lbs" });
+                values: new object[] { 13, "Saco 50 libras" });
 
             migrationBuilder.InsertData(
                 table: "UnidadesMedida",
                 columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 5, "Saco 200 Lbs" });
+                values: new object[] { 12, "Saco 25 libras" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 11, "Pinta(s)" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 10, "Litro(s)" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 9, "Libra(s)" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 6, "Galón 5 litros" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 7, "Galón 10 litros" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 17, "Saco 125 libras" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 5, "Frasco 250 cc" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 4, "Frasco 100 cc" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 3, "Frasco 25 cc" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 2, "Frasco 10 cc" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 1, "Cc" });
+
+            migrationBuilder.InsertData(
+                table: "UnidadesMedida",
+                columns: new[] { "UnidadId", "Descripcion" },
+                values: new object[] { 8, "Galón 20 litros" });
 
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveConfirmada", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 1, 16, 0, 39, 838, DateTimeKind.Local).AddTicks(8080), "Admin", "Admin", "0123456789", "Administrador" });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 1, 16, 58, 43, 190, DateTimeKind.Local).AddTicks(5161), "Admin", "Admin", "0123456789", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",
