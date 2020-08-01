@@ -10,6 +10,8 @@ namespace Agrosoft.Models
     {
         [Key]
         public int CobrosId { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; } = DateTime.Now;
         [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "Debe seleccionar un cliente")]
         [Required(ErrorMessage = "Debe seleccionar un cliente")]

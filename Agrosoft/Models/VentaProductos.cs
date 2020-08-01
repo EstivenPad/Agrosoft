@@ -26,6 +26,10 @@ namespace Agrosoft.Models
         [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "Debe seleccionar el tipo de factura")]
         public int TipoFactura { get; set; }
 
+        public decimal Subtotal { get; set; }
+
+        public decimal ITBIS { get; set; }
+
         public decimal Total { get; set; }
 
         [ForeignKey("VentaId")]

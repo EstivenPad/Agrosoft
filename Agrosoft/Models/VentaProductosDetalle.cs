@@ -20,6 +20,8 @@ namespace Agrosoft.Models
                 
         public decimal PrecioUnitario { get; set; }
 
+        public decimal ITBIS { get; set; }
+
         public decimal Importe { get; set; }
     }
 }

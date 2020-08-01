@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Agrosoft.Migrations
 {
-    public partial class Migracion_Inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -162,6 +162,8 @@ namespace Agrosoft.Migrations
                     UsuarioId = table.Column<int>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false),
                     TipoFactura = table.Column<int>(nullable: false),
+                    Subtotal = table.Column<decimal>(nullable: false),
+                    ITBIS = table.Column<decimal>(nullable: false),
                     Total = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
@@ -201,6 +203,7 @@ namespace Agrosoft.Migrations
                     ProductoId = table.Column<int>(nullable: false),
                     Cantidad = table.Column<int>(nullable: false),
                     PrecioUnitario = table.Column<decimal>(nullable: false),
+                    ITBIS = table.Column<decimal>(nullable: false),
                     Importe = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
@@ -217,7 +220,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Clientes",
                 columns: new[] { "ClienteId", "Apellidos", "Balance", "Cedula", "Celular", "Direccion", "Email", "Fecha", "LimiteCredito", "Nombres", "Telefono", "UsuarioId" },
-                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 7, 29, 20, 27, 33, 473, DateTimeKind.Local).AddTicks(3419), 0m, "Cliente", "0000000000", 1 });
+                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 1, 16, 0, 39, 843, DateTimeKind.Local).AddTicks(4047), 0m, "Cliente", "0000000000", 1 });
 
             migrationBuilder.InsertData(
                 table: "UnidadesMedida",
@@ -247,7 +250,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveConfirmada", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 7, 29, 20, 27, 33, 470, DateTimeKind.Local).AddTicks(6328), "Admin", "Admin", "0123456789", "Administrador" });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 1, 16, 0, 39, 838, DateTimeKind.Local).AddTicks(8080), "Admin", "Admin", "0123456789", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",

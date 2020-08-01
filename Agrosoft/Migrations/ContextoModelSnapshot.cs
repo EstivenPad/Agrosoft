@@ -76,7 +76,7 @@ namespace Agrosoft.Migrations
                             Celular = "0000000000",
                             Direccion = "xxxxxxxxxxxxx",
                             Email = "clienteOcasional@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 29, 20, 27, 33, 473, DateTimeKind.Local).AddTicks(3419),
+                            Fecha = new DateTime(2020, 8, 1, 16, 0, 39, 843, DateTimeKind.Local).AddTicks(4047),
                             LimiteCredito = 0m,
                             Nombres = "Cliente",
                             Telefono = "0000000000",
@@ -355,7 +355,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 7, 29, 20, 27, 33, 470, DateTimeKind.Local).AddTicks(6328),
+                            Fecha = new DateTime(2020, 8, 1, 16, 0, 39, 838, DateTimeKind.Local).AddTicks(8080),
                             NombreUsuario = "Admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",
@@ -373,6 +373,12 @@ namespace Agrosoft.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("ITBIS")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Subtotal")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("TipoFactura")
@@ -397,6 +403,9 @@ namespace Agrosoft.Migrations
 
                     b.Property<int>("Cantidad")
                         .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("ITBIS")
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("Importe")
                         .HasColumnType("TEXT");

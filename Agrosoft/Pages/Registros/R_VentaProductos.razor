@@ -3,8 +3,11 @@
 
 @using BLL
 @using Models
+@using iTextSharpBlazor.Reportes
+@using Agrosoft.Pages.Viewers
 
 @inject IToastService toast
+@inject IModalService modal
 
 @if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
 {
@@ -36,8 +39,8 @@
                             <label>Tipo de factura</label>
                             <select class="form-control" @bind="Venta.TipoFactura" @onfocusout="identificarTipoFactura">
                                 <option value="0" selected disabled>Seleccione un tipo de factura</option>
-                                <option value="1">A credito</option>
-                                <option value="2">A contado</option>
+                                <option value="1">A crédito</option>
+                                <option value="2">Al contado</option>
                             </select>
                             <ValidationMessage For="@(() => Venta.TipoFactura)" />
                         </div>
@@ -64,7 +67,7 @@
                                         <i class="oi oi-plus" aria-hidden="true" />
                                     </NavLink>
                                 </div>
-                            </div>                            
+                            </div>
                             <ValidationMessage For="@(() => Venta.ClienteId)" />
                         </div>
                     }
@@ -170,6 +173,7 @@
                                 <th>Producto</th>
                                 <th>Cantidad</th>
                                 <th>Precio Unitario</th>
+                                <th>ITBIS</th>
                                 <th>Importe</th>
                                 <th>Opción</th>
                             </tr>
@@ -182,6 +186,7 @@
                                     <td>@repositorioProductos.Buscar(item.ProductoId).Nombre</td>
                                     <td>@item.Cantidad</td>
                                     <td>@item.PrecioUnitario.ToString("N2")</td>
+                                    <td>@item.ITBIS</td>
                                     <td>@item.Importe.ToString("N2")</td>
                                     <td><button type="button" class="btn btn-outline-danger" @onclick="(() => RemoverFila(item))">Remover</button></td>
                                 </tr>
@@ -189,12 +194,28 @@
                         </tbody>
                     </table>
 
-                    @*Total*@
                     <div class="card-footer">
-                        <label>Monto total: </label>
-                        <InputNumber @bind-Value="Venta.Total" readOnly="true" style="background-color:transparent; border:0" />
-                        <ValidationMessage For="@(() => Venta.Total)" />
-                    </div>
+                        @*Sub-Total*@
+                        <div class="form-group">
+                            <label>Sub-Total: </label>
+                            <InputNumber @bind-Value="Venta.Subtotal" readOnly="true" style="background-color:transparent; border:0" />
+                            <ValidationMessage For="@(() => Venta.Total)" />
+                        </div>
+
+                        @*ITBIS*@
+                        <div class="form-group">
+                            <label>ITBIS: </label>
+                            <InputNumber @bind-Value="Venta.ITBIS" readOnly="true" style="background-color:transparent; border:0" />
+                            <ValidationMessage For="@(() => Venta.Total)" />
+                        </div>
+
+                        @*Total*@
+                        <div class="form-group">
+                            <label>Monto total: </label>
+                            <InputNumber @bind-Value="Venta.Total" readOnly="true" style="background-color:transparent; border:0" />
+                            <ValidationMessage For="@(() => Venta.Total)" />
+                        </div>
+                    </div>                    
                 </form>
             </div>
 
@@ -203,6 +224,7 @@
                     <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
                     <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
                     <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
+                    <button type="button" class="btn btn-lg btn-warning" @onclick="Imprimir"> <span class="oi oi-print"></span> Imprimir </button>
                 </div>
             </div>
         </div>
@@ -228,6 +250,7 @@ else @*Si no ha iniciado sesion*@
     bool esACredito = false;
     bool esAContado = false;
 
+    private decimal ITBIS;
     private decimal Balance;
     private decimal LimiteCredito;
     private VentaProductos Venta = new VentaProductos();
@@ -372,7 +395,10 @@ else @*Si no ha iniciado sesion*@
 
     public void CalcularImporte()
     {
-        Detalle.Importe = Detalle.Cantidad * Detalle.PrecioUnitario;
+        var producto = repositorioProductos.Buscar(Detalle.ProductoId);
+        ITBIS = (producto.Precio * Convert.ToDecimal(0.18)) * Detalle.Cantidad;
+        Detalle.Importe = (Detalle.Cantidad * Detalle.PrecioUnitario) + ITBIS;
+        Detalle.Importe = Math.Round(Detalle.Importe, 2);
     }
 
     public void LlenarPrecioUnitario()
@@ -386,9 +412,9 @@ else @*Si no ha iniciado sesion*@
 
     public void AgregarDetalle()
     {
-        if(Detalle.ProductoId > 0)
+        if (Detalle.ProductoId > 0)
         {
-            if(Detalle.Cantidad > 0)
+            if (Detalle.Cantidad > 0)
             {
                 Venta.VentaProductosDetalle.Add(new VentaProductosDetalle
                 {
@@ -396,10 +422,17 @@ else @*Si no ha iniciado sesion*@
                     ProductoId = Detalle.ProductoId,
                     Cantidad = Detalle.Cantidad,
                     PrecioUnitario = Detalle.PrecioUnitario,
+                    ITBIS = Math.Round(((Detalle.PrecioUnitario * Convert.ToDecimal(0.18)) * Detalle.Cantidad), 2),
                     Importe = Detalle.Importe
                 });
 
+                Venta.Subtotal += (Detalle.Importe - ITBIS);
+                Venta.ITBIS += ITBIS;
                 Venta.Total += Detalle.Importe;
+
+                Venta.Subtotal = Math.Round(Venta.Subtotal, 2);
+                Venta.ITBIS = Math.Round(Venta.ITBIS, 2);
+                Venta.Total = Math.Round(Venta.Total, 2);
             }
             else
             {
@@ -441,5 +474,23 @@ else @*Si no ha iniciado sesion*@
             }
         }
         return paso;
+    }
+
+    public void Imprimir()
+    {
+        if (Venta.VentaId != 0 && Venta.VentaProductosDetalle.Count() > 0)
+        {
+            FacturaVentaReport facturaVentaReport = new FacturaVentaReport();
+            var parametros = new ModalParameters();
+
+            parametros.Add("listaVentaDetalle", Venta.VentaProductosDetalle);
+            parametros.Add("venta", Venta);
+
+            modal.Show<FacturaVentaViewer>("Factura de Venta", parametros);
+        }
+        else
+        {
+            toast.ShowInfo("Debe guardar la factura para poder imprimirla");
+        }
     }
 }

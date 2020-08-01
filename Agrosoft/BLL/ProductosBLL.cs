@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Agrosoft.BLL
 {
-    public class ProductosBLL
+    public class ProductosBLL : RepositorioBase<Productos>
     {
         public static List<Productos> GetProductosEnReorden()
         {

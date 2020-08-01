@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Agrosoft.BLL
 {
-    public class ClientesBLL
+    public class ClientesBLL : RepositorioBase<Clientes>
     {
         public static List<Clientes> GetClientesConDeudas()
         {
