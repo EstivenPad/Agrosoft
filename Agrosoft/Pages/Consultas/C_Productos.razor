@@ -25,7 +25,6 @@
                         <option value="1">Código</option>
                         <option value="2">Nombre</option>
                         <option value="3">Marca</option>
-                        <option value="4">Productos en reorden</option>
                     </select>
                 </div>
 
@@ -85,11 +84,13 @@
                     <div class="text-left col-3">
                         <label>Total de productos: @Total</label>
                     </div>
+
                     <div style="margin-left:auto; margin-right:auto;">
-                        <button type="button" class="btn btn-lg btn-warning" style="font-size: 14px;"> 
-                            <span class="oi oi-print" style="font-size: 14px"></span> Imprimir reporte productos en reorden 
+                        <button type="button" class="btn btn-lg btn-warning" @onclick="GenerarReporteProductosReorden" style="font-size: 14px;"> 
+                            <span class="oi oi-print" style="font-size: 14px"></span> Imprimir reporte de productos en reorden 
                         </button>
                     </div>
+
                     <div class="text-lg-right col-3">
                         <label>@("Página" + " "+(paginaActual+1) + " " + "de" + " " + totalPaginas)</label>
                     </div>
@@ -160,6 +161,7 @@ else @*Si no ha iniciado sesion*@
 @code {
     List<Productos> ListaProductos = new List<Productos>();
     List<Productos> Lista = new List<Productos>();
+    List<Productos> ListaProductosReorden = new List<Productos>();
     RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
 
     private int filtro;
@@ -209,18 +211,9 @@ else @*Si no ha iniciado sesion*@
     {
         if (string.IsNullOrWhiteSpace(criterio))
         {
-            if (filtro == 4)
-            {
-                ListaProductos = ProductosBLL.GetProductosEnReorden();
-                totalPaginas = (int)Math.Ceiling(ListaProductos.Count() / (decimal)cantidadPorPaginas);
-                ActualizarLista(paginaActual);
-            }
-            else
-            {
-                ListaProductos = repositorioProductos.GetList(x => true);
-                totalPaginas = (int)Math.Ceiling(ListaProductos.Count() / (decimal)cantidadPorPaginas);
-                ActualizarLista(paginaActual);
-            }
+            ListaProductos = repositorioProductos.GetList(x => true);
+            totalPaginas = (int)Math.Ceiling(ListaProductos.Count() / (decimal)cantidadPorPaginas);
+            ActualizarLista(paginaActual);
 
             calcularTotal();
 
@@ -276,5 +269,22 @@ else @*Si no ha iniciado sesion*@
         parametros.Add("listaProductos", ListaProductos);
 
         modal.Show<ProductosViewer>("Reporte de Productos", parametros);
+    }
+
+    public void GenerarReporteProductosReorden()
+    {
+        ListaProductosReorden = ProductosBLL.GetProductosEnReorden();
+        ProductosReport productosReport = new ProductosReport();
+        var parametros = new ModalParameters();
+
+        if (ListaProductosReorden.Count == 0)
+        {
+            toast.ShowInfo("¡No hay datos para imprimir!");
+            return;
+        }
+
+        parametros.Add("listaProductos", ListaProductosReorden);
+
+        modal.Show<ProductosViewer>("Reporte de productos en reorden", parametros);
     }
 }

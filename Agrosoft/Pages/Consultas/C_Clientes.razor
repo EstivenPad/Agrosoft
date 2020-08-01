@@ -39,7 +39,6 @@
                         <option value="3">Apellidos</option>
                         <option value="4">Balance</option>
                         <option value="5">Límite de crédito</option>
-                        <option value="6">Clientes con deudas</option>
                     </select>
                 </div>
 
@@ -98,8 +97,14 @@
             @*Total*@
             <div class="card-footer">
                 <div class="row">
-                    <div class="text-left col">
+                    <div class="text-left col-3">
                         <label>Total de clientes: @Total</label>
+                    </div>
+
+                    <div style="margin-left:auto; margin-right:auto;">
+                        <button type="button" class="btn btn-lg btn-warning" @onclick="GenerarReporteClientesConDeudas" style="font-size: 14px;">
+                            <span class="oi oi-print" style="font-size: 14px"></span> Imprimir reporte de clientes con deudas
+                        </button>
                     </div>
 
                     <div class="text-lg-right col-3">
@@ -172,6 +177,7 @@ else @*Si no ha iniciado sesion*@
 @code {
     private List<Clientes> ListaClientes = new List<Clientes>();
     private List<Clientes> Lista = new List<Clientes>();
+    private List<Clientes> ListaClientesConDeuda = new List<Clientes>();
     public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
     RepositorioBase<Usuarios> repositorioUsuarios = new RepositorioBase<Usuarios>();
 
@@ -219,18 +225,9 @@ else @*Si no ha iniciado sesion*@
     {
         if (string.IsNullOrWhiteSpace(Criterio))
         {
-            if (Filtro == 6)
-            {
-                ListaClientes = ClientesBLL.GetClientesConDeudas();
-                totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
-                ActualizarLista(paginaActual);
-            }
-            else
-            {
-                ListaClientes = repositorioClientes.GetList(x => true);
-                totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
-                ActualizarLista(pagina);
-            }
+            ListaClientes = repositorioClientes.GetList(x => true);
+            totalPaginas = (int)Math.Ceiling(ListaClientes.Count() / (decimal)cantidadPorPaginas);
+            ActualizarLista(pagina);
 
             calcularTotal();
 
@@ -312,5 +309,22 @@ else @*Si no ha iniciado sesion*@
         parametros.Add("listaClientes", ListaClientes);
 
         modal.Show<ClientesViewer>("Reporte de Clientes", parametros);
+    }
+
+    public void GenerarReporteClientesConDeudas()
+    {
+        ListaClientesConDeuda = ClientesBLL.GetClientesConDeudas();
+        ClientesReport clienteReport = new ClientesReport();
+        var parametros = new ModalParameters();
+
+        if (ListaClientesConDeuda.Count == 0)
+        {
+            toast.ShowInfo("¡No hay datos para imprimir!");
+            return;
+        }
+
+        parametros.Add("listaClientes", ListaClientesConDeuda);
+
+        modal.Show<ClientesViewer>("Reporte de clientes con deudas", parametros);
     }
 }

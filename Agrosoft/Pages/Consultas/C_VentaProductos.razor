@@ -37,7 +37,6 @@
                         <option value="1">Código</option>
                         <option value="2">Cliente</option>
                         <option value="3">Tipo de factura</option>
-                        <option value="4">Ventas del día</option>
                     </select>
                 </div>
 
@@ -88,8 +87,14 @@
             @*Total*@
             <div class="card-footer">
                 <div class="row">
-                    <div class="text-left col">
+                    <div class="text-left col-3">
                         <label>Total de ventas: @Total</label>
+                    </div>
+
+                    <div style="margin-left:auto; margin-right:auto;">
+                        <button type="button" class="btn btn-lg btn-warning" @onclick="GenerarReporteVentasDelDia" style="font-size: 14px;">
+                            <span class="oi oi-print" style="font-size: 14px"></span> Imprimir reporte de ventas del día
+                        </button>
                     </div>
 
                     <div class="text-lg-right col-3">
@@ -162,6 +167,7 @@ else @*Si no ha iniciado sesion*@
 @code {
     private List<VentaProductos> ListaVentas = new List<VentaProductos>();
     private List<VentaProductos> Lista = new List<VentaProductos>();
+    private List<VentaProductos> ListaVentasDelDia = new List<VentaProductos>();
     public VentaProductosBLL repositorioVentas = new VentaProductosBLL();
     public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
 
@@ -212,18 +218,10 @@ else @*Si no ha iniciado sesion*@
 
         if (string.IsNullOrWhiteSpace(Criterio))
         {
-            if (Filtro == 4)
-            {
-                ListaVentas = VentaProductosBLL.GetVentasDelDia();
-                totalPaginas = (int)Math.Ceiling(ListaVentas.Count() / (decimal)cantidadPorPaginas);
-                ActualizarLista(paginaActual);
-            }
-            else
-            {
-                ListaVentas = repositorioVentas.GetList(x => true);
-                totalPaginas = (int)Math.Ceiling(ListaVentas.Count() / (decimal)cantidadPorPaginas);
-                ActualizarLista(paginaActual);
-            }
+            ListaVentas = repositorioVentas.GetList(x => true);
+            totalPaginas = (int)Math.Ceiling(ListaVentas.Count() / (decimal)cantidadPorPaginas);
+            ActualizarLista(paginaActual);
+
             CalcularTotal();
 
             if (Lista.Count == 0)
@@ -306,5 +304,22 @@ else @*Si no ha iniciado sesion*@
         parametros.Add("listaVentaProductos", ListaVentas);
 
         modal.Show<VentaProductosViewer>("Reporte de Venta de Productos", parametros);
+    }
+
+    public void GenerarReporteVentasDelDia()
+    {
+        ListaVentasDelDia = VentaProductosBLL.GetVentasDelDia();
+        VentaProductosReport ventaProductosReport = new VentaProductosReport();
+        var parametros = new ModalParameters();
+
+        if (ListaVentasDelDia.Count == 0)
+        {
+            toast.ShowInfo("¡No hay datos para imprimir!");
+            return;
+        }
+
+        parametros.Add("listaVentaProductos", ListaVentasDelDia);
+
+        modal.Show<VentaProductosViewer>("Reporte de ventas del día", parametros);
     }
 }
