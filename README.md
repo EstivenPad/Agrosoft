@@ -8,7 +8,7 @@ Agrosoft es un sistema informático desarrollado para la plataforma Web, el cuá
 
 ## 🔒 Login
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89126917-b6406a80-d4b7-11ea-956d-fe906d699878.png)
 
 Este es el Login del sistema en el cual el usuario deberá loguearse para poder acceder al sistema. Si es la primera vez que se ejecuta el sistema, existe un usuario creado por defecto con accesos de **"Administrador/a"**, cuyo **Nombre de Usuario** y **Contraseña** son: _**Admin**_ y _**admin**_ respectivamente.
 
@@ -43,7 +43,7 @@ Este es el registro de clientes, donde podrá agregar los clientes a los que se 
 
 ### Registro de cobros
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89127058-9f4e4800-d4b8-11ea-9615-8029509cbe57.png)
 
 Este es el registro de cobros con el cuál podrá registrar los cobros que afectarán el balance de los clientes que realizaron una compra a crédito.
 
