@@ -14,7 +14,7 @@ Este es el Login del sistema en el cual el usuario deberá loguearse para poder 
 
 ## 📌 Menú
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89125874-72e1fe00-d4af-11ea-9619-d11c2b1b2952.png)
 
 Este es el menú en el cual podrá desplazarse a través de los diferentes registros y consultas. También se muestra el usuario logueado.
 
@@ -22,7 +22,7 @@ Este es el menú en el cual podrá desplazarse a través de los diferentes regis
 
 ### Registro de usuarios
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89126032-8346a880-d4b0-11ea-990f-f89ca8e26a48.png)
 
 Este es el registro de usuarios, a la hora de crear un usuario se debe elegir el tipo de usurio, de entre las posibles opciones están:
 
@@ -31,13 +31,13 @@ Este es el registro de usuarios, a la hora de crear un usuario se debe elegir el
 
 ### Registro de proveedores
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89126187-c5241e80-d4b1-11ea-8850-1f2a2af9d6a6.png)
 
 Este es el registro de proveedores, en este registro se agregan los datos de los proveedores a los cuales se les encargará la compra de los productos.
 
 ### Registro de clientes
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89126375-30babb80-d4b3-11ea-8331-8b80cf32845b.png)
 
 Este es el registro de clientes, donde podrá agregar los clientes a los que se les podrán realizar ventas.
 
@@ -49,13 +49,13 @@ Este es el registro de cobros con el cuál podrá registrar los cobros que afect
 
 ### Registro de productos
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89126294-a70aee00-d4b2-11ea-8a7a-44f0d4ce6a9d.png)
 
 Este es el registro de productos, este formulario es donde se registrarán los productos que podrán ser comprados. Cabe destacar, que el costo del producto no puede ser mayor que el precio. En caso que el usuario lo coloque de esta forma, no se podrá guardar.
 
 ### Registro de marcas
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89126405-6fe90c80-d4b3-11ea-9914-58caa848fe0e.png)
 
 Este es el registro de marcas las cuales se identificaran en cada producto registrado.
 
@@ -69,11 +69,15 @@ En caso de no tener algún proveedor o algún producto registrado, desde ésta v
 
 ### Registro de venta de productos
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89126568-7deb5d00-d4b4-11ea-87a2-f975cd21cb82.png)
 
-Este es el registro de venta de productos, en este es donde se realizarán las ventas de los productos ya registrados. Para ello se debe de seleccionar un Tipo de factura y un Cliente, y automáticamente se llenarán los campos: Balance y Limite de crédito. Después debe seleccionar un producto y la cantidad que el cliente desea comprar de ese producto, y automaticamente se llenarán los campos: Precio unitario e Importe. Para agregar dicho producto a la factura, se le da clic al botón 'Agregar'.
+Este es el registro de venta de productos, en este es donde se realizarán las ventas de los productos ya registrados. Para ello se debe de seleccionar un Tipo de factura, si la factura es "Al contado" entonces el cliente será 'Cliente ocasional', por el contrario, si la factura es 'A crédito' entonces debe de seleccionar un Cliente, y automáticamente se llenarán los campos de Balance y Limite de crédito. Después debe seleccionar un producto y la cantidad que el cliente desea comprar de ese producto, y automaticamente se llenarán los campos: Precio unitario e Importe. Para agregar dicho producto a la factura, se le da clic al botón 'Agregar'.
 
 Si desea registrar un Cliente o un Producto sin dirigirse al menú, lo puede hacer a través de este mismo registro. Si es para agregar un Cliente, se procede a dar clic al botón '+' que está a su lado. En caso que desee agregar un Producto, es similar, se procede a dar clic al botón '+' que está a su lado.
+
+Si desea imprimir la factura, primero debe guardarla para que quede registrada, luego se procede a buscarla y se da clic en el botón 'Imprimir', después se mostrará un modal con una previsualización de la factura, como esta:
+
+![image](https://user-images.githubusercontent.com/54590857/89126888-7aa5a080-d4b7-11ea-9069-3a94d70b7431.png)
 
 ## 🗃 Consultas
 
