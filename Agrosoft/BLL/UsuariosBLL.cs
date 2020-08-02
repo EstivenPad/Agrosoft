@@ -39,9 +39,6 @@ namespace Agrosoft.BLL
 
             try
             {
-                usuarios.ClaveUsuario = Encriptar(usuarios.ClaveUsuario);
-                usuarios.ClaveConfirmada = Encriptar(usuarios.ClaveConfirmada);
-
                 db.Usuarios.Add(usuarios);
                 paso = (db.SaveChanges() > 0);
             }
@@ -63,9 +60,6 @@ namespace Agrosoft.BLL
 
             try
             {
-                usuarios.ClaveUsuario = Encriptar(usuarios.ClaveUsuario);
-                usuarios.ClaveConfirmada = Encriptar(usuarios.ClaveConfirmada);
-
                 db.Entry(usuarios).State = EntityState.Modified;
                 paso = (db.SaveChanges() > 0);
             }
@@ -116,6 +110,8 @@ namespace Agrosoft.BLL
             try
             {
                 usuarios = db.Usuarios.Find(id);
+                usuarios.ClaveUsuario = Encriptar(usuarios.ClaveUsuario);
+                usuarios.ClaveConfirmada = Encriptar(usuarios.ClaveConfirmada);
             }
             catch (Exception)
             {

@@ -37,7 +37,7 @@
                         @*Tipo de Factura*@
                         <div class="form-group col-3">
                             <label>Tipo de factura</label>
-                            <select class="form-control" @bind="Venta.TipoFactura" @onfocusout="identificarTipoFactura">
+                            <select class="form-control" @bind="Venta.TipoFactura" @onclick="identificarTipoFactura">
                                 <option value="0" selected disabled>Seleccione un tipo de factura</option>
                                 <option value="1">A crédito</option>
                                 <option value="2">Al contado</option>
@@ -58,7 +58,7 @@
                         <div class="form-group">
                             <label>Cliente</label>
                             <div class="input-group">
-                                <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
+                                <select class="form-control" @bind="Venta.ClienteId" @onclick="BuscarBalanceLimiteCredito">
                                     <option value="0" selected disabled>Seleccione un cliente</option>
                                     <option value="1">@(repositorioClientes.Buscar(1).Nombres + " " + repositorioClientes.Buscar(1).Apellidos)</option>
                                 </select>
@@ -78,7 +78,7 @@
                             <div class="form-group col-6">
                                 <label>Cliente</label>
                                 <div class="input-group">
-                                    <select class="form-control" @bind="Venta.ClienteId" @onfocusout="BuscarBalanceLimiteCredito">
+                                    <select class="form-control" @bind="Venta.ClienteId" @onclick="BuscarBalanceLimiteCredito">
                                         <option value="0" selected disabled>Seleccione un cliente</option>
 
                                         @foreach (var item in ListaClientes)
@@ -122,7 +122,7 @@
                                 <div class="form-group col">
                                     <label>Producto</label>
                                     <div class="input-group">
-                                        <select class="form-control" @bind="Detalle.ProductoId" @onfocusout="LlenarPrecioUnitario">
+                                        <select class="form-control" @bind="Detalle.ProductoId" @onclick="LlenarPrecioUnitario">
                                             <option value="0" disabled>Seleccione una opcion</option>
                                             @foreach (var item in ListaProductos)
                                             {
@@ -142,13 +142,13 @@
                                 @*Cantidad*@
                                 <div class="form-group col">
                                     <label>Cantidad</label>
-                                    <InputNumber @bind-Value="Detalle.Cantidad" min="0" class="form-control" @onfocusout="CalcularImporte" />
+                                    <InputNumber @bind-Value="Detalle.Cantidad" min="0" class="form-control" @onclick="CalcularImporte" @onfocusout="CalcularImporte" />
                                 </div>
 
-                                @*Costo*@
+                                @*Precio unitario*@
                                 <div class="form-group col">
-                                    <label>Costo</label>
-                                    <InputNumber @bind-Value="Detalle.PrecioUnitario" min="0" class="form-control" @onfocusout="CalcularImporte" readOnly="true" />
+                                    <label>Precio unitario</label>
+                                    <InputNumber @bind-Value="Detalle.PrecioUnitario" min="0" class="form-control" @onclick="CalcularImporte" @onfocusout="CalcularImporte" readOnly="true" />
                                 </div>
 
                                 @*Importe*@
@@ -183,10 +183,11 @@
                             @foreach (var item in Venta.VentaProductosDetalle)
                             {
                                 <tr>
-                                    <td>@repositorioProductos.Buscar(item.ProductoId).Nombre</td>
+                                    <td>@(repositorioProductos.Buscar(item.ProductoId).Nombre + " " + repositorioProductos.Buscar(item.ProductoId).Marca + " " 
+                                        + repositorioUnidadesMedida.Buscar(repositorioProductos.Buscar(item.ProductoId).UnidadMedida).Descripcion)</td>
                                     <td>@item.Cantidad</td>
                                     <td>@item.PrecioUnitario.ToString("N2")</td>
-                                    <td>@item.ITBIS</td>
+                                    <td>@item.ITBIS.ToString("N2")</td>
                                     <td>@item.Importe.ToString("N2")</td>
                                     <td><button type="button" class="btn btn-outline-danger" @onclick="(() => RemoverFila(item))">Remover</button></td>
                                 </tr>
@@ -195,25 +196,28 @@
                     </table>
 
                     <div class="card-footer">
-                        @*Sub-Total*@
-                        <div class="form-group">
-                            <label>Sub-Total: </label>
-                            <InputNumber @bind-Value="Venta.Subtotal" readOnly="true" style="background-color:transparent; border:0" />
-                            <ValidationMessage For="@(() => Venta.Total)" />
-                        </div>
+                        <div class="row">
+                            @*Sub-Total*@
+                            <div class="text-left col-4">
+                                <label>Sub-Total: </label>
+                                <InputNumber @bind-Value="Venta.Subtotal" readOnly="true" style="background-color:transparent; border:0" />
+                                <ValidationMessage For="@(() => Venta.Total)" />
+                            </div>
 
-                        @*ITBIS*@
-                        <div class="form-group">
-                            <label>ITBIS: </label>
-                            <InputNumber @bind-Value="Venta.ITBIS" readOnly="true" style="background-color:transparent; border:0" />
-                            <ValidationMessage For="@(() => Venta.Total)" />
-                        </div>
+                            @*ITBIS*@
+                            <div style="margin-left:auto; margin-right:auto;">
+                                <label>ITBIS: </label>
+                                <InputNumber @bind-Value="Venta.ITBIS" readOnly="true" style="background-color:transparent; border:0" />
+                                <ValidationMessage For="@(() => Venta.Total)" />
+                            </div>
 
-                        @*Total*@
-                        <div class="form-group">
-                            <label>Monto total: </label>
-                            <InputNumber @bind-Value="Venta.Total" readOnly="true" style="background-color:transparent; border:0" />
-                            <ValidationMessage For="@(() => Venta.Total)" />
+                            @*Total*@
+                            <div class="text-lg-right col-4">
+                                <label>Monto total: </label>
+                                <InputNumber @bind-Value="Venta.Total" readOnly="true" style="background-color:transparent; border:0" />
+                                <ValidationMessage For="@(() => Venta.Total)" />
+                            </div>
+
                         </div>
                     </div>                    
                 </form>
@@ -222,7 +226,7 @@
             <div class="card-footer">
                 <div class="form-group text-center" display: inline-block>
                     <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
-                    <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
+                    <button type="submit" class="btn btn-lg btn-light"> <span class="oi oi-cloud"></span> Guardar </button>
                     <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
                     <button type="button" class="btn btn-lg btn-warning" @onclick="Imprimir"> <span class="oi oi-print"></span> Imprimir </button>
                 </div>
@@ -232,14 +236,22 @@
 }
 else @*Si no ha iniciado sesion*@
 {
-    <div class="card border-dark text-center">
-        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
-            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+    <div class="card card-shadow text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px; width:100%">
+            <h3 style="font-family:Georgia; color:white">No inicio de sesión</h3>
         </div>
-        <div class="card-body">
-            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
-            <p>¡Debe iniciar sesión para poder tener acceso!</p>
-            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+        <div class="card-body" style="margin-top:25%">
+            <h4>
+                <span class="fa fa-exclamation-triangle" style="color:#ffcc00; font-size:25px"></span> &nbsp; Atención &nbsp;
+                <span class="fa fa-exclamation-triangle" style="color:#ffcc00; font-size:25px"></span>
+            </h4>
+            <h6>¡Debe iniciar sesión para poder tener acceso!</h6>
+            
+        </div>
+        <div class="card card-footer" style="width:100%;">
+            <a href="LogInPage" class="btn btn-outline-info" style="border-radius: 10px">
+                <span class="fa fa-sign-in-alt"></span> Ir al login
+            </a>
         </div>
     </div>
 }
@@ -326,13 +338,13 @@ else @*Si no ha iniciado sesion*@
         {
             if (Venta.TipoFactura == 1)//Si la factura es a credito
             {
-                if (Venta.Total > (LimiteCredito - Balance))
-                {
-                    toast.ShowError("El total de la factura excede el límite de crédito del cliente");
-                }
-                else if (Venta.ClienteId == 1)
+                if (Venta.ClienteId == 1)
                 {
                     toast.ShowError("Este cliente no puede realizar compras a crédito");
+                }
+                else if (Venta.Total > (LimiteCredito - Balance))
+                {
+                    toast.ShowError("El total de la factura excede el límite de crédito del cliente");
                 }
                 else if (Venta.VentaProductosDetalle.Count == 0)
                 {

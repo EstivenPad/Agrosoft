@@ -52,14 +52,22 @@
 }
 else @*Si no ha iniciado sesion*@
 {
-    <div class="card border-dark text-center">
-        <div class="card-header bg-danger text-lg-center" style="border-radius:5px;">
-            <h4 style="font-family:Georgia; color:white">No inicio de sesión</h4>
+    <div class="card card-shadow text-center">
+        <div class="card-header bg-danger text-lg-center" style="border-radius:5px; width:100%">
+            <h3 style="font-family:Georgia; color:white">No inicio de sesión</h3>
         </div>
-        <div class="card-body">
-            <h5><span class="fa fa-exclamation-triangle"></span> &nbsp; Atención</h5>
-            <p>¡Debe iniciar sesión para poder tener acceso!</p>
-            <a href="/" class="btn btn-outline-warning">Volver al inicio</a>
+        <div class="card-body" style="margin-top:25%">
+            <h4>
+                <span class="fa fa-exclamation-triangle" style="color:#ffcc00; font-size:25px"></span> &nbsp; Atención &nbsp;
+                <span class="fa fa-exclamation-triangle" style="color:#ffcc00; font-size:25px"></span>
+            </h4>
+            <h6>¡Debe iniciar sesión para poder tener acceso!</h6>
+            
+        </div>
+        <div class="card card-footer" style="width:100%;">
+            <a href="LogInPage" class="btn btn-outline-info" style="border-radius: 10px">
+                <span class="fa fa-sign-in-alt"></span> Ir al login
+            </a>
         </div>
     </div>
 }
