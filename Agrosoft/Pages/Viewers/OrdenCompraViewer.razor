@@ -7,7 +7,7 @@
 
 @code {
     [Parameter]
-    public List<CompraProductosDetalle> listaCompraProductos { get; set; } = new List<CompraProductosDetalle>();
+    public List<CompraProductosDetalle> listaCompraDetalle { get; set; } = new List<CompraProductosDetalle>();
 
     [Parameter]
     public CompraProductos compra { get; set; } = new CompraProductos();
@@ -19,7 +19,7 @@
     {
         OrdenCompraReport ordenCompraReport = new OrdenCompraReport();
 
-        data = ordenCompraReport.Reporte(listaCompraProductos, compra);
+        data = ordenCompraReport.Reporte(listaCompraDetalle, compra);
         pdfContent = "data:application/pdf;base64,";
         pdfContent += System.Convert.ToBase64String(data);
     }

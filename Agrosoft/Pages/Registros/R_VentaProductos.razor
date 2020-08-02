@@ -395,10 +395,13 @@ else @*Si no ha iniciado sesion*@
 
     public void CalcularImporte()
     {
-        var producto = repositorioProductos.Buscar(Detalle.ProductoId);
-        ITBIS = (producto.Precio * Convert.ToDecimal(0.18)) * Detalle.Cantidad;
-        Detalle.Importe = (Detalle.Cantidad * Detalle.PrecioUnitario) + ITBIS;
-        Detalle.Importe = Math.Round(Detalle.Importe, 2);
+        if(Detalle.ProductoId != 0)
+        {
+            var producto = repositorioProductos.Buscar(Detalle.ProductoId);
+            ITBIS = (producto.Precio * Convert.ToDecimal(0.18)) * Detalle.Cantidad;
+            Detalle.Importe = (Detalle.Cantidad * Detalle.PrecioUnitario) + ITBIS;
+            Detalle.Importe = Math.Round(Detalle.Importe, 2);
+        }
     }
 
     public void LlenarPrecioUnitario()
@@ -433,6 +436,8 @@ else @*Si no ha iniciado sesion*@
                 Venta.Subtotal = Math.Round(Venta.Subtotal, 2);
                 Venta.ITBIS = Math.Round(Venta.ITBIS, 2);
                 Venta.Total = Math.Round(Venta.Total, 2);
+
+                Detalle = new VentaProductosDetalle();
             }
             else
             {

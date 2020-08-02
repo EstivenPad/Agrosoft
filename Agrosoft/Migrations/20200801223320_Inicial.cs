@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Agrosoft.Migrations
 {
-    public partial class Migracion_Inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -107,7 +107,7 @@ namespace Agrosoft.Migrations
                     Apellidos = table.Column<string>(nullable: false),
                     Telefono = table.Column<string>(nullable: false),
                     Celular = table.Column<string>(nullable: false),
-                    Rnc = table.Column<int>(nullable: false),
+                    RNC = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     Direccion = table.Column<string>(nullable: false)
                 },
@@ -220,7 +220,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Clientes",
                 columns: new[] { "ClienteId", "Apellidos", "Balance", "Cedula", "Celular", "Direccion", "Email", "Fecha", "LimiteCredito", "Nombres", "Telefono", "UsuarioId" },
-                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 1, 16, 58, 43, 193, DateTimeKind.Local).AddTicks(1024), 0m, "Cliente", "0000000000", 1 });
+                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 1, 18, 33, 20, 6, DateTimeKind.Local).AddTicks(7199), 0m, "Cliente", "0000000000", 1 });
 
             migrationBuilder.InsertData(
                 table: "Marcas",
@@ -335,7 +335,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveConfirmada", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 1, 16, 58, 43, 190, DateTimeKind.Local).AddTicks(5161), "Admin", "Admin", "0123456789", "Administrador" });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 1, 18, 33, 20, 3, DateTimeKind.Local).AddTicks(5071), "Admin", "Admin", "0123456789", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",

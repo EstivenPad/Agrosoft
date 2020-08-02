@@ -26,9 +26,9 @@ namespace Agrosoft.Models
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "El formato del celular no es válido")]
         [Required(ErrorMessage = "Es obligatorio introducir la celular")]
         public string Celular { get; set; }
+        [RegularExpression(@"^\(?([0-9]{3})\)?[- ]?([0-9]{7})[- ]?([0-9]{1})$", ErrorMessage = "El formato del RNC no es válido")]
         [Required(ErrorMessage = "Es obligatorio introducir el RNC")]
-        [Range(minimum: 1, maximum: double.MaxValue, ErrorMessage = "El RNC no puede ser igual a 0")]
-        public int Rnc { get; set; }
+        public string RNC { get; set; }
         [EmailAddress (ErrorMessage ="Introduzca un email válido")]
         [Required(ErrorMessage = "Es obligatorio introducir el email")]
         public string Email { get; set; }

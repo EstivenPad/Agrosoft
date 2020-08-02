@@ -6,14 +6,14 @@
 }
 
 @code {
-        [Parameter]
-        public List<VentaProductosDetalle> listaVentaDetalle { get; set; } = new List<VentaProductosDetalle>();
+    [Parameter]
+    public List<VentaProductosDetalle> listaVentaDetalle { get; set; } = new List<VentaProductosDetalle>();
 
-        [Parameter]
-        public VentaProductos venta { get; set; } = new VentaProductos();
+    [Parameter]
+    public VentaProductos venta { get; set; } = new VentaProductos();
 
-        byte[] data;
-        string pdfContent;
+    byte[] data;
+    string pdfContent;
 
     protected override void OnInitialized()
     {

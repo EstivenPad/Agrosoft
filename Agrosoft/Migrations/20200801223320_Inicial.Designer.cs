@@ -3,14 +3,16 @@ using System;
 using Agrosoft.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Agrosoft.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20200801223320_Inicial")]
+    partial class Inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,7 +78,7 @@ namespace Agrosoft.Migrations
                             Celular = "0000000000",
                             Direccion = "xxxxxxxxxxxxx",
                             Email = "clienteOcasional@hotmail.com",
-                            Fecha = new DateTime(2020, 8, 1, 18, 38, 53, 684, DateTimeKind.Local).AddTicks(2938),
+                            Fecha = new DateTime(2020, 8, 1, 18, 33, 20, 6, DateTimeKind.Local).AddTicks(7199),
                             LimiteCredito = 0m,
                             Nombres = "Cliente",
                             Telefono = "0000000000",
@@ -448,7 +450,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 8, 1, 18, 38, 53, 682, DateTimeKind.Local).AddTicks(5406),
+                            Fecha = new DateTime(2020, 8, 1, 18, 33, 20, 3, DateTimeKind.Local).AddTicks(5071),
                             NombreUsuario = "Admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",

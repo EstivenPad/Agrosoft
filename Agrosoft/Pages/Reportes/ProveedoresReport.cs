@@ -215,7 +215,7 @@ namespace iTextSharpBlazor.Reportes
                 pdfCell.BackgroundColor = BaseColor.White;
                 pdfTable.AddCell(pdfCell);
 
-                pdfCell = new PdfPCell(new Phrase(item.Rnc.ToString(), _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(item.RNC.ToString(), _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 pdfCell.BackgroundColor = BaseColor.White;

@@ -2,8 +2,11 @@
 
 @using Models
 @using BLL
+@using iTextSharpBlazor.Reportes
+@using Agrosoft.Pages.Viewers
 
 @inject IToastService toast
+@inject IModalService modal
 
 @if (AuthenticationStateProvider.GetAuthenticationStateAsync().Result.User.Identity.IsAuthenticated)
 {
@@ -145,7 +148,7 @@
                     @*Total*@
                     <div class="card-footer">
                         <label>Monto total: </label>
-                        <InputNumber @bind-Value="Compra.Total" readOnly="true" style="background-color:transparent; border:0"/>
+                        <InputNumber @bind-Value="Compra.Total" readOnly="true" style="background-color:transparent; border:0" />
                         <ValidationMessage For="@(() => Compra.Total)" />
                     </div>
                 </form>
@@ -156,6 +159,7 @@
                     <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"> <span class="oi oi-file"></span> Nuevo </button>
                     <button type="submit" class="btn btn-lg btn-success"> <span class="oi oi-cloud"></span> Guardar </button>
                     <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"> <span class="oi oi-trash"></span> Eliminar </button>
+                    <button type="button" class="btn btn-lg btn-warning" @onclick="Imprimir"> <span class="oi oi-print"></span> Imprimir </button>
                 </div>
             </div>
         </div>
@@ -346,5 +350,23 @@ else @*Si no ha iniciado sesion*@
     private void CalcularImporte()
     {
         importe = cantidad * costo;
+    }
+
+    public void Imprimir()
+    {
+        if (Compra.CompraId != 0 && Compra.CompraProductosDetalle.Count() > 0)
+        {
+            OrdenCompraReport ordenCompraReport = new OrdenCompraReport();
+            var parametros = new ModalParameters();
+
+            parametros.Add("listaCompraDetalle", Compra.CompraProductosDetalle);
+            parametros.Add("compra", Compra);
+
+            modal.Show<OrdenCompraViewer>("Orden de Compra", parametros);
+        }
+        else
+        {
+            toast.ShowInfo("Debe guardar la orden de compra para poder imprimirla");
+        }
     }
 }

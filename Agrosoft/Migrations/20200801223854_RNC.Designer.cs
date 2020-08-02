@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Agrosoft.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200801205843_Migracion_Inicial")]
-    partial class Migracion_Inicial
+    [Migration("20200801223854_RNC")]
+    partial class RNC
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,7 +78,7 @@ namespace Agrosoft.Migrations
                             Celular = "0000000000",
                             Direccion = "xxxxxxxxxxxxx",
                             Email = "clienteOcasional@hotmail.com",
-                            Fecha = new DateTime(2020, 8, 1, 16, 58, 43, 193, DateTimeKind.Local).AddTicks(1024),
+                            Fecha = new DateTime(2020, 8, 1, 18, 38, 53, 684, DateTimeKind.Local).AddTicks(2938),
                             LimiteCredito = 0m,
                             Nombres = "Cliente",
                             Telefono = "0000000000",
@@ -270,8 +270,9 @@ namespace Agrosoft.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Rnc")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("RNC")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
@@ -449,7 +450,7 @@ namespace Agrosoft.Migrations
                             ClaveUsuario = "admin",
                             Direccion = "Admin",
                             Email = "Admin@hotmail.com",
-                            Fecha = new DateTime(2020, 8, 1, 16, 58, 43, 190, DateTimeKind.Local).AddTicks(5161),
+                            Fecha = new DateTime(2020, 8, 1, 18, 38, 53, 682, DateTimeKind.Local).AddTicks(5406),
                             NombreUsuario = "Admin",
                             Nombres = "Admin",
                             Telefono = "0123456789",
