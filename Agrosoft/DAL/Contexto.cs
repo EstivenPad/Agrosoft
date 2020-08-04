@@ -21,7 +21,7 @@ namespace Agrosoft.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data Source = DATA\Agrosoft.db");
+            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS; Database=Agrosoft.db; Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

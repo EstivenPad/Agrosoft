@@ -199,7 +199,7 @@ namespace iTextSharpBlazor.Reportes
             foreach (var item in listaCobros)
             {
                 num++;
-                pdfCell = new PdfPCell(new Phrase(item.CobrosId.ToString(), _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(item.CobroId.ToString(), _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
                 pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
                 pdfCell.Border = 1;

@@ -9,7 +9,7 @@ namespace Agrosoft.Models
     public class Cobros
     {
         [Key]
-        public int CobrosId { get; set; }
+        public int CobroId { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; } = DateTime.Now;

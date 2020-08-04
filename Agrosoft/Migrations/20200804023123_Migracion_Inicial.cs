@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Agrosoft.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class Migracion_Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     ClienteId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioId = table.Column<int>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false),
                     Nombres = table.Column<string>(nullable: false),
@@ -34,8 +34,8 @@ namespace Agrosoft.Migrations
                 name: "Cobros",
                 columns: table => new
                 {
-                    CobrosId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    CobroId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(nullable: false),
                     ClienteId = table.Column<int>(nullable: false),
                     Deposito = table.Column<decimal>(nullable: false),
@@ -43,7 +43,7 @@ namespace Agrosoft.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cobros", x => x.CobrosId);
+                    table.PrimaryKey("PK_Cobros", x => x.CobroId);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,7 +51,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     CompraId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(nullable: false),
                     ProveedorId = table.Column<int>(nullable: false),
                     UsuarioId = table.Column<int>(nullable: false),
@@ -67,7 +67,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     MarcaId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioId = table.Column<int>(nullable: false),
                     Descripcion = table.Column<string>(nullable: false)
                 },
@@ -81,7 +81,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     ProductoId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(nullable: false),
                     Marca = table.Column<string>(nullable: false),
                     UnidadMedida = table.Column<int>(nullable: false),
@@ -100,7 +100,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     ProveedorId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UsuarioId = table.Column<int>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false),
                     Nombres = table.Column<string>(nullable: false),
@@ -121,7 +121,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     UnidadId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Descripcion = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -134,7 +134,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     UsuarioId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(nullable: false),
                     Nombres = table.Column<string>(nullable: false),
                     Apellidos = table.Column<string>(nullable: false),
@@ -157,7 +157,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     VentaId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ClienteId = table.Column<int>(nullable: false),
                     UsuarioId = table.Column<int>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false),
@@ -176,7 +176,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CompraId = table.Column<int>(nullable: false),
                     ProductoId = table.Column<int>(nullable: false),
                     Cantidad = table.Column<int>(nullable: false),
@@ -198,7 +198,7 @@ namespace Agrosoft.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     VentaId = table.Column<int>(nullable: false),
                     ProductoId = table.Column<int>(nullable: false),
                     Cantidad = table.Column<int>(nullable: false),
@@ -220,122 +220,48 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Clientes",
                 columns: new[] { "ClienteId", "Apellidos", "Balance", "Cedula", "Celular", "Direccion", "Email", "Fecha", "LimiteCredito", "Nombres", "Telefono", "UsuarioId" },
-                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 1, 18, 33, 20, 6, DateTimeKind.Local).AddTicks(7199), 0m, "Cliente", "0000000000", 1 });
+                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 3, 22, 31, 22, 881, DateTimeKind.Local).AddTicks(8695), 0m, "Cliente", "0000000000", 1 });
 
             migrationBuilder.InsertData(
                 table: "Marcas",
                 columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
-                values: new object[] { 1, "Fersan", 0 });
-
-            migrationBuilder.InsertData(
-                table: "Marcas",
-                columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
-                values: new object[] { 2, "Ferquido", 0 });
-
-            migrationBuilder.InsertData(
-                table: "Marcas",
-                columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
-                values: new object[] { 3, "Jaragua", 0 });
-
-            migrationBuilder.InsertData(
-                table: "Marcas",
-                columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
-                values: new object[] { 4, "Quisqueya", 0 });
-
-            migrationBuilder.InsertData(
-                table: "Marcas",
-                columns: new[] { "MarcaId", "Descripcion", "UsuarioId" },
-                values: new object[] { 5, "Puita", 0 });
+                values: new object[,]
+                {
+                    { 1, "Fersan", 0 },
+                    { 2, "Ferquido", 0 },
+                    { 3, "Jaragua", 0 },
+                    { 4, "Quisqueya", 0 },
+                    { 5, "Puita", 0 }
+                });
 
             migrationBuilder.InsertData(
                 table: "UnidadesMedida",
                 columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 16, "Saco 100 libras" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 15, "Saco 50 libras" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 14, "Saco 55 libras" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 13, "Saco 50 libras" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 12, "Saco 25 libras" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 11, "Pinta(s)" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 10, "Litro(s)" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 9, "Libra(s)" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 6, "Galón 5 litros" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 7, "Galón 10 litros" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 17, "Saco 125 libras" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 5, "Frasco 250 cc" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 4, "Frasco 100 cc" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 3, "Frasco 25 cc" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 2, "Frasco 10 cc" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 1, "Cc" });
-
-            migrationBuilder.InsertData(
-                table: "UnidadesMedida",
-                columns: new[] { "UnidadId", "Descripcion" },
-                values: new object[] { 8, "Galón 20 litros" });
+                values: new object[,]
+                {
+                    { 16, "Saco 100 libras" },
+                    { 15, "Saco 50 libras" },
+                    { 14, "Saco 55 libras" },
+                    { 13, "Saco 50 libras" },
+                    { 12, "Saco 25 libras" },
+                    { 11, "Pinta(s)" },
+                    { 10, "Litro(s)" },
+                    { 9, "Libra(s)" },
+                    { 6, "Galón 5 litros" },
+                    { 7, "Galón 10 litros" },
+                    { 17, "Saco 125 libras" },
+                    { 5, "Frasco 250 cc" },
+                    { 4, "Frasco 100 cc" },
+                    { 3, "Frasco 25 cc" },
+                    { 2, "Frasco 10 cc" },
+                    { 1, "Cc" },
+                    { 8, "Galón 20 litros" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveConfirmada", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 1, 18, 33, 20, 3, DateTimeKind.Local).AddTicks(5071), "Admin", "Admin", "0123456789", "Administrador" });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 3, 22, 31, 22, 879, DateTimeKind.Local).AddTicks(125), "Admin", "Admin", "0123456789", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",
