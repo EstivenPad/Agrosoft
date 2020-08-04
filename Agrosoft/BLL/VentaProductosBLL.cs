@@ -60,11 +60,20 @@ namespace Agrosoft.BLL
                     repositorioProductos.Modificar(producto);
                 }
 
-                contexto.Database.ExecuteSqlRaw($"DELETE FROM VentaProductosDetalle WHERE VentaId = {venta.VentaId}");
+                foreach (var item in ventaAnterior.VentaProductosDetalle)
+                {
+                    if (!venta.VentaProductosDetalle.Any(A => A.Id == item.Id))
+                    {
+                        contexto.Entry(item).State = EntityState.Deleted;
+                    }
+                }
 
                 foreach (var item in venta.VentaProductosDetalle)
                 {
-                    contexto.Entry(item).State = EntityState.Added;
+                    if (item.Id == 0)
+                    {
+                        contexto.Entry(item).State = EntityState.Added;
+                    }
                 }
 
                 contexto.Entry(venta).State = EntityState.Modified;
@@ -75,6 +84,7 @@ namespace Agrosoft.BLL
                     producto.CantidadExistente -= item.Cantidad;
                     repositorioProductos.Modificar(producto);
                 }
+
                 ModificarBalance(venta);
                 paso = contexto.SaveChanges() > 0;
             }
