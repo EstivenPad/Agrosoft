@@ -4,23 +4,45 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Agrosoft.BLL
 {
-    public class VentaProductosBLL : RepositorioBase<VentaProductos>
+    public class VentaProductosBLL
     {
-        public override bool Guardar(VentaProductos venta, int id)
+        public static bool Guardar(VentaProductos venta)
         {
-            if (!base.Existe(id))
+            if (!Existe(venta.VentaId))
                 return Insertar(venta);
             else
                 return Modificar(venta);
         }
+        public static bool Existe(int id)
+        {
+            bool encontrado = false;
+            Contexto db = new Contexto();
 
-        public override bool Insertar(VentaProductos venta)
+            try
+            {
+                encontrado = db.VentaProductos.Any(x => x.VentaId == id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                db.Dispose();
+            }
+            return encontrado;
+        }
+
+        public static bool Insertar(VentaProductos venta)
         {
             bool paso = false;
+            Contexto db = new Contexto();
             RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
 
             try
@@ -31,8 +53,11 @@ namespace Agrosoft.BLL
                     producto.CantidadExistente -= item.Cantidad;
                     repositorioProductos.Modificar(producto);                    
                 }
-                paso = base.Insertar(venta);
-                GuardarBalance(venta);
+
+                db.VentaProductos.Add(venta);
+                //GuardarBalance(venta);
+                paso = (db.SaveChanges() > 0);
+
             }
             catch (Exception)
             {
@@ -42,28 +67,25 @@ namespace Agrosoft.BLL
             return paso;
         }
 
-        public override bool Modificar(VentaProductos venta)
+        public static bool Modificar(VentaProductos venta)
         {
             bool paso = false;
             Contexto contexto = new Contexto();
             VentaProductosBLL repositorioVentas = new VentaProductosBLL();
             RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
+            
+            var ventaAnterior = Buscar(venta.VentaId);
 
             try
             {
-                var ventaAnterior = repositorioVentas.Buscar(venta.VentaId);
 
                 foreach (var item in ventaAnterior.VentaProductosDetalle)
                 {
-                    var producto = repositorioProductos.Buscar(item.ProductoId);
-                    producto.CantidadExistente += item.Cantidad;
-                    repositorioProductos.Modificar(producto);
-                }
-
-                foreach (var item in venta.VentaProductosDetalle)
-                {
-                    if (!venta.VentaProductosDetalle.Exists(a => a.Id == item.Id))
+                    if(!venta.VentaProductosDetalle.Exists(x => x.Id == item.Id))
                     {
+                        var producto = repositorioProductos.Buscar(item.ProductoId);
+                        producto.CantidadExistente += item.Cantidad;
+                        repositorioProductos.Modificar(producto);
                         contexto.Entry(item).State = EntityState.Deleted;
                     }
                 }
@@ -73,20 +95,18 @@ namespace Agrosoft.BLL
                     if (item.Id == 0)
                     {
                         contexto.Entry(item).State = EntityState.Added;
+                        var producto = repositorioProductos.Buscar(item.ProductoId);
+                        producto.CantidadExistente -= item.Cantidad;
+                        repositorioProductos.Modificar(producto);
+                    }
+                    else
+                    {
+                        contexto.Entry(venta).State = EntityState.Modified;
                     }
                 }
 
-
                 contexto.Entry(venta).State = EntityState.Modified;
-
-                foreach (var item in venta.VentaProductosDetalle)
-                {
-                    var producto = repositorioProductos.Buscar(item.ProductoId);
-                    producto.CantidadExistente -= item.Cantidad;
-                    repositorioProductos.Modificar(producto);
-                }
-
-                ModificarBalance(venta);
+                //ModificarBalance(venta);
                 paso = contexto.SaveChanges() > 0;
             }
             catch (Exception)
@@ -97,24 +117,24 @@ namespace Agrosoft.BLL
             return paso;
         }
 
-        public override bool Eliminar(int id)
+        public static bool Eliminar(int id)
         {
             bool paso = false;
-            VentaProductosBLL repositorioVentas = new VentaProductosBLL();
             RepositorioBase<Productos> repositorio = new RepositorioBase<Productos>();
+            var venta = Buscar(id);
+            Contexto db = new Contexto();
 
             try
             {
-                var venta = repositorioVentas.Buscar(id);
-
                 foreach (var item in venta.VentaProductosDetalle)
                 {
                     var producto = repositorio.Buscar(item.ProductoId);
                     producto.CantidadExistente += item.Cantidad;
                     repositorio.Modificar(producto);
                 }
-                EliminarBalance(venta);
-                paso = base.Eliminar(id);
+
+                db.VentaProductos.Remove(venta);
+                paso = db.SaveChanges() > 0;
             }
             catch (Exception)
             {
@@ -124,7 +144,7 @@ namespace Agrosoft.BLL
             return paso;
         }
 
-        public override VentaProductos Buscar(int id)
+        public static VentaProductos Buscar(int id)
         {
             VentaProductos venta = new VentaProductos();
             Contexto contexto = new Contexto();
@@ -185,6 +205,26 @@ namespace Agrosoft.BLL
             cliente.Balance -= venta.Total;
 
             repositorioClientes.Modificar(cliente);
+        }
+
+        public static List<VentaProductos> GetList(Expression<Func<VentaProductos, bool>> criterio)
+        {
+            List<VentaProductos> lista = new List<VentaProductos>();
+            Contexto contexto = new Contexto();
+
+            try
+            {
+                lista = contexto.VentaProductos.Where(criterio).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+            return lista;
         }
 
         public static List<VentaProductos> GetVentasDelDia()

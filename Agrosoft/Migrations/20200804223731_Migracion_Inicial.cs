@@ -220,7 +220,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Clientes",
                 columns: new[] { "ClienteId", "Apellidos", "Balance", "Cedula", "Celular", "Direccion", "Email", "Fecha", "LimiteCredito", "Nombres", "Telefono", "UsuarioId" },
-                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 4, 1, 20, 3, 839, DateTimeKind.Local).AddTicks(2508), 0m, "Cliente", "0000000000", 1 });
+                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 4, 18, 37, 30, 537, DateTimeKind.Local).AddTicks(9881), 0m, "Cliente", "0000000000", 1 });
 
             migrationBuilder.InsertData(
                 table: "Marcas",
@@ -261,7 +261,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveConfirmada", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 4, 1, 20, 3, 835, DateTimeKind.Local).AddTicks(7962), "Admin", "Admin", "0123456789", "Administrador" });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 4, 18, 37, 30, 535, DateTimeKind.Local).AddTicks(5499), "Admin", "Admin", "0123456789", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",

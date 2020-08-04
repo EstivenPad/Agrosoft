@@ -176,7 +176,6 @@ else @*Si no ha iniciado sesion*@
     private List<VentaProductos> ListaVentas = new List<VentaProductos>();
     private List<VentaProductos> Lista = new List<VentaProductos>();
     private List<VentaProductos> ListaVentasDelDia = new List<VentaProductos>();
-    public VentaProductosBLL repositorioVentas = new VentaProductosBLL();
     public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
 
     public int Total { get; set; }
@@ -226,7 +225,7 @@ else @*Si no ha iniciado sesion*@
 
         if (string.IsNullOrWhiteSpace(Criterio))
         {
-            ListaVentas = repositorioVentas.GetList(x => true);
+            ListaVentas = VentaProductosBLL.GetList(x => true);
             totalPaginas = (int)Math.Ceiling(ListaVentas.Count() / (decimal)cantidadPorPaginas);
             ActualizarLista(paginaActual);
 
@@ -246,7 +245,7 @@ else @*Si no ha iniciado sesion*@
                     break;
                 case 1:
                     id = Convert.ToInt32(Criterio);
-                    ListaVentas = repositorioVentas.GetList(p => p.VentaId == id);
+                    ListaVentas = VentaProductosBLL.GetList(p => p.VentaId == id);
                     totalPaginas = (int)Math.Ceiling(ListaVentas.Count() / (decimal)cantidadPorPaginas);
                     ActualizarLista(pagina);
                     break;
@@ -261,7 +260,7 @@ else @*Si no ha iniciado sesion*@
                         else if (Criterio.Contains(item.Apellidos))
                             id = item.ClienteId;
                     }
-                    ListaVentas = repositorioVentas.GetList(p => p.ClienteId == id);
+                    ListaVentas = VentaProductosBLL.GetList(p => p.ClienteId == id);
                     AplicarRangoFechas();
                     totalPaginas = (int)Math.Ceiling(ListaVentas.Count() / (decimal)cantidadPorPaginas);
                     ActualizarLista(pagina);
@@ -274,7 +273,7 @@ else @*Si no ha iniciado sesion*@
                     else if (Criterio.Contains("A contado"))
                         auxiliar = 2;
 
-                    ListaVentas = repositorioVentas.GetList(p => p.TipoFactura == auxiliar);
+                    ListaVentas = VentaProductosBLL.GetList(p => p.TipoFactura == auxiliar);
                     AplicarRangoFechas();
                     totalPaginas = (int)Math.Ceiling(ListaVentas.Count() / (decimal)cantidadPorPaginas);
                     ActualizarLista(pagina);

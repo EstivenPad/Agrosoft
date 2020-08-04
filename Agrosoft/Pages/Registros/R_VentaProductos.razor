@@ -273,7 +273,6 @@ else @*Si no ha iniciado sesion*@
     public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
     public RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
     public RepositorioBase<UnidadesMedida> repositorioUnidadesMedida = new RepositorioBase<UnidadesMedida>();
-    public VentaProductosBLL repositorioVentas = new VentaProductosBLL();
 
     public void identificarTipoFactura()
     {
@@ -321,7 +320,7 @@ else @*Si no ha iniciado sesion*@
     {
         if (Venta.VentaId > 0)
         {
-            var encontrado = repositorioVentas.Buscar(Venta.VentaId);
+            var encontrado = VentaProductosBLL.Buscar(Venta.VentaId);
 
             if (encontrado != null)
                 this.Venta = encontrado;
@@ -352,7 +351,7 @@ else @*Si no ha iniciado sesion*@
                 }
                 else
                 {
-                    guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
+                    guardo = VentaProductosBLL.Guardar(Venta);
 
                     if (guardo)
                     {
@@ -374,7 +373,7 @@ else @*Si no ha iniciado sesion*@
                     Clientes cliente = repositorioClientes.Buscar(Venta.ClienteId);
                     cliente.Balance = 0;
 
-                    guardo = repositorioVentas.Guardar(Venta, Venta.VentaId);
+                    guardo = VentaProductosBLL.Guardar(Venta);
                     repositorioClientes.Modificar(cliente);
 
                     if (guardo)
@@ -394,7 +393,7 @@ else @*Si no ha iniciado sesion*@
     {
         bool elimino;
 
-        elimino = repositorioVentas.Eliminar(Venta.VentaId);
+        elimino = VentaProductosBLL.Eliminar(Venta.VentaId);
 
         if (elimino)
         {
