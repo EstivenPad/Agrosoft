@@ -60,9 +60,9 @@ namespace Agrosoft.BLL
                     repositorioProductos.Modificar(producto);
                 }
 
-                foreach (var item in ventaAnterior.VentaProductosDetalle)
+                foreach (var item in venta.VentaProductosDetalle)
                 {
-                    if (!venta.VentaProductosDetalle.Any(A => A.Id == item.Id))
+                    if (!venta.VentaProductosDetalle.Exists(a => a.Id == item.Id))
                     {
                         contexto.Entry(item).State = EntityState.Deleted;
                     }
@@ -75,6 +75,7 @@ namespace Agrosoft.BLL
                         contexto.Entry(item).State = EntityState.Added;
                     }
                 }
+
 
                 contexto.Entry(venta).State = EntityState.Modified;
 
