@@ -44,7 +44,7 @@
                     <div class="form-group">
                         <label>Cliente</label>
                         <div class="input-group">
-                            <select class="form-control" @bind="Cobro.ClienteId" @onclick="LLenarBalance">
+                            <select class="form-control" @bind="Cobro.ClienteId" @onclick="LLenarBalance" disabled="@enable">
                                 <option value="0" disabled>Seleccione una opcion</option>
                                 @foreach (var item in ListaClientes)
                                 {
@@ -123,6 +123,7 @@ else @*Si no ha iniciado sesion*@
     decimal Balance;
     decimal LimiteCredito;
     bool noSePuedeDepositar;
+    bool enable;
 
     protected override void OnInitialized()
     {
@@ -134,10 +135,14 @@ else @*Si no ha iniciado sesion*@
 
     public void LLenarBalance()
     {
+        Clientes cliente = new Clientes();
+        Contexto db = new Contexto();
+        cliente = db.Clientes.Find(Cobro.ClienteId);
+
         if (Cobro.ClienteId == 0)
             return;
 
-        Balance = repositorioClientes.Buscar(Cobro.ClienteId).Balance;
+        Balance = cliente.Balance;
 
         if (Balance > 0)
         {
@@ -165,6 +170,7 @@ else @*Si no ha iniciado sesion*@
         Cobro.UsuarioId = GetUsuarioId();
         LimiteCredito = 0;
         Balance = 0;
+        enable = false;
     }
 
     public int GetUsuarioId()
@@ -184,8 +190,13 @@ else @*Si no ha iniciado sesion*@
 
             if (encontrado != null)
             {
+                Clientes cliente = new Clientes();
+                Contexto db = new Contexto();
+                cliente = db.Clientes.Find(repositorioCobros.Buscar(Cobro.CobroId).ClienteId);
+
                 this.Cobro = encontrado;
-                Balance = repositorioClientes.Buscar(repositorioCobros.Buscar(Cobro.CobroId).ClienteId).Balance;
+                enable = true;
+                Balance = cliente.Balance;
                 LimiteCredito = repositorioClientes.Buscar(repositorioCobros.Buscar(Cobro.CobroId).ClienteId).LimiteCredito;
                 if (Balance > 0)
                 {
@@ -239,6 +250,24 @@ else @*Si no ha iniciado sesion*@
 
     private void CalcularBalance()
     {
-        Balance = repositorioClientes.Buscar(Cobro.ClienteId).Balance - Cobro.Deposito;
+        Clientes cliente = new Clientes();
+        Contexto db = new Contexto();
+        cliente = db.Clientes.Find(Cobro.ClienteId);
+
+
+        if (Cobro.CobroId == 0)
+        {
+            if (Balance == 0)
+            {
+                return;
+            }
+            else 
+                Balance = cliente.Balance - Cobro.Deposito;
+        }
+        else
+        {
+            var depositoAnterior = db.Cobros.Find(Cobro.CobroId).Deposito;
+            Balance = (cliente.Balance - Cobro.Deposito) + depositoAnterior;
+        }
     }
 }
