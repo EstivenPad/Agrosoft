@@ -7,19 +7,16 @@
 
 @code {
     [Parameter]
-    public List<CompraProductosDetalle> listaCompraProductos { get; set; } = new List<CompraProductosDetalle>();
-
-    [Parameter]
-    public CompraProductos compra { get; set; } = new CompraProductos();
+    public List<CompraProductos> listaCompraProductos { get; set; } = new List<CompraProductos>();
 
     byte[] data;
     string pdfContent;
 
     protected override void OnInitialized()
     {
-        OrdenCompraReport ordenCompraReport = new OrdenCompraReport();
+        CompraProductosReport compraProductoReport = new CompraProductosReport();
 
-        data = ordenCompraReport.Reporte(listaCompraProductos, compra);
+        data = compraProductoReport.Reporte(listaCompraProductos);
         pdfContent = "data:application/pdf;base64,";
         pdfContent += System.Convert.ToBase64String(data);
     }

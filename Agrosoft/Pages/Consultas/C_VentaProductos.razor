@@ -68,6 +68,7 @@
                         <th>Fecha</th>
                         <th>Cliente</th>
                         <th>Tipo de factura</th>
+                        <th>Usuario</th>
                         <th>Total</th>
                     </tr>
                 </thead>
@@ -76,9 +77,10 @@
                 {
                     <tr>
                         <td>@item.VentaId</td>
-                        <td>@item.Fecha</td>
+                        <td>@item.Fecha.ToString("dd/MM/yyyy")</td>
                         <td>@(repositorioClientes.Buscar(item.ClienteId).Nombres + " " + repositorioClientes.Buscar(item.ClienteId).Apellidos)</td>
-                        <td>@item.TipoFactura</td>
+                        <td>@(item.TipoFactura == 1 ? "A crédito" : "Al contado")</td>
+                        <td>@(repositorioUsuarios.Buscar(item.UsuarioId).NombreUsuario)</td>
                         <td>@item.Total.ToString("N2")</td>
                     </tr>
                 }
@@ -177,6 +179,7 @@ else @*Si no ha iniciado sesion*@
     private List<VentaProductos> Lista = new List<VentaProductos>();
     private List<VentaProductos> ListaVentasDelDia = new List<VentaProductos>();
     public RepositorioBase<Clientes> repositorioClientes = new RepositorioBase<Clientes>();
+    public UsuariosBLL repositorioUsuarios = new UsuariosBLL();
 
     public int Total { get; set; }
     public int Filtro { get; set; }
