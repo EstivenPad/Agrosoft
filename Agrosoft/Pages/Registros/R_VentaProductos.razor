@@ -257,10 +257,10 @@ else @*Si no ha iniciado sesion*@
 }
 
 @code {
-        [Parameter]
-        public int VentaId { get; set; }
-        bool esACredito = false;
-        bool esAContado = false;
+    [Parameter]
+    public int VentaId { get; set; }
+    bool esACredito = false;
+    bool esAContado = false;
 
     private decimal ITBIS;
     private decimal Balance;
@@ -325,7 +325,18 @@ else @*Si no ha iniciado sesion*@
             if (encontrado != null)
             {
                 this.Venta = encontrado;
-                identificarTipoFactura();
+                if (Venta.TipoFactura == 1)//Factura a credito
+                {
+                    esACredito = true;
+                    esAContado = false;
+                    Balance = repositorioClientes.Buscar(VentaProductosBLL.Buscar(Venta.VentaId).ClienteId).Balance;
+                    LimiteCredito = repositorioClientes.Buscar(VentaProductosBLL.Buscar(Venta.VentaId).ClienteId).LimiteCredito;
+                }
+                else if (Venta.TipoFactura == 2)//Factura a contado
+                {
+                    esAContado = true;
+                    esACredito = false;
+                }
             }
             else
                 toast.ShowWarning("No encontrado");
