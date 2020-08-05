@@ -78,7 +78,7 @@
                     {
                         <tr>
                             <td>@cobro.CobroId</td>
-                            <td>@cobro.Fecha</td>
+                            <td>@cobro.Fecha.ToString("dd/MM/yyyy")</td>
                             <td>@repositorioClientes.Buscar(cobro.ClienteId).Nombres</td>
                             <td>@cobro.Deposito.ToString("N2")</td>
                             <td>@repositorioUsuarios.Buscar(cobro.UsuarioId).NombreUsuario</td>

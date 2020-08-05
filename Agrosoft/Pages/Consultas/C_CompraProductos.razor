@@ -77,7 +77,7 @@
                     {
                         <tr>
                             <td>@compra.CompraId</td>
-                            <td>@compra.Fecha</td>
+                            <td>@compra.Fecha.ToString("dd/MM/yyyy")</td>
                             <td>@repositorioProveedores.Buscar(compra.ProveedorId).Nombres</td>
                             <td>@compra.Total.ToString("N2")</td>
                             <td>@repositorioUsuarios.Buscar(compra.UsuarioId).NombreUsuario</td>

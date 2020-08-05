@@ -55,10 +55,12 @@
                         <th>Código</th>
                         <th>Nombre</th>
                         <th>Marca</th>
+                        <th>Unidad de Medida</th>
                         <th>Cantidad minima</th>
                         <th>Cantidad existente</th>
-                        <th>Precio</th>
                         <th>Costo</th>
+                        <th>Precio</th>
+                        <th>Total de inventario</th>
                     </tr>
                 </thead>
 
@@ -69,10 +71,12 @@
                             <td>@articulo.ProductoId</td>
                             <td>@articulo.Nombre</td>
                             <td>@articulo.Marca</td>
+                            <td>@articulo.UnidadMedida</td>
                             <td>@articulo.CantidadMinima</td>
                             <td>@articulo.CantidadExistente</td>
-                            <td>@articulo.Precio.ToString("N2")</td>
                             <td>@articulo.Costo.ToString("N2")</td>
+                            <td>@articulo.Precio.ToString("N2")</td>
+                            <td>@((articulo.Costo * articulo.CantidadExistente).ToString("N2"))</td>
                         </tr>
                     }
                 </tbody>

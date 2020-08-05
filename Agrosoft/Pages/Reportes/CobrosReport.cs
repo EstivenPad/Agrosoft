@@ -1,4 +1,5 @@
-﻿using Agrosoft.Models;
+﻿using Agrosoft.BLL;
+using Agrosoft.Models;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -21,6 +22,8 @@ namespace iTextSharpBlazor.Reportes
         MemoryStream memoryStream = new MemoryStream();
 
         List<Cobros> listaCobros = new List<Cobros>();
+        UsuariosBLL repositorioUsuarios = new UsuariosBLL();
+        ClientesBLL repositorioClientes = new ClientesBLL();
 
         public byte[] Reporte(List<Cobros> cobros)
         {
@@ -39,9 +42,9 @@ namespace iTextSharpBlazor.Reportes
 
             float[] anchoColumnas = new float[columnas];
 
-            anchoColumnas[0] = 100; //Esta sera la fila 1 
-            anchoColumnas[1] = 100; //Esta sera la fila 2 
-            anchoColumnas[2] = 100; //Esta sera la fila 3 
+            anchoColumnas[0] = 70; //Esta sera la fila 1 
+            anchoColumnas[1] = 90; //Esta sera la fila 2 
+            anchoColumnas[2] = 200; //Esta sera la fila 3 
             anchoColumnas[3] = 100; //Esta sera la fila 4 
             anchoColumnas[4] = 100; //Esta sera la fila 3 
 
@@ -83,7 +86,7 @@ namespace iTextSharpBlazor.Reportes
             pdfTable.AddCell(pdfCell);
 
             pdfCell = new PdfPCell(image);
-            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.HorizontalAlignment = Element.ALIGN_RIGHT;
             pdfCell.Colspan = 2;
             pdfCell.Border = 0;
             pdfCell.ExtraParagraphSpace = 0;
@@ -187,7 +190,7 @@ namespace iTextSharpBlazor.Reportes
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("Deposito", fontStyle));
+            pdfCell = new PdfPCell(new Phrase("Usuario", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
             pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
             pdfCell.Border = 1;
@@ -196,7 +199,7 @@ namespace iTextSharpBlazor.Reportes
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("Usuario", fontStyle));
+            pdfCell = new PdfPCell(new Phrase("Deposito", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
             pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
             pdfCell.Border = 1;
@@ -222,28 +225,28 @@ namespace iTextSharpBlazor.Reportes
                 pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
-                pdfCell = new PdfPCell(new Phrase(item.Fecha.ToString(), _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(item.Fecha.ToString("dd/MM/yyyy"), _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
                 pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
                 pdfCell.Border = 1;
                 pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
-                pdfCell = new PdfPCell(new Phrase(item.ClienteId.ToString(), _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(repositorioClientes.Buscar(item.ClienteId).Nombres + " " + repositorioClientes.Buscar(item.ClienteId).Apellidos, _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
                 pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
                 pdfCell.Border = 1;
                 pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
-                pdfCell = new PdfPCell(new Phrase(item.UsuarioId.ToString(), _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(repositorioUsuarios.Buscar(item.UsuarioId).NombreUsuario, _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
                 pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
                 pdfCell.Border = 1;
                 pdfCell.BorderColorBottom = BaseColor.Black;
                 pdfTable.AddCell(pdfCell);
 
-                pdfCell = new PdfPCell(new Phrase(item.Deposito.ToString(), _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(item.Deposito.ToString("N2"), _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
                 pdfCell.VerticalAlignment = Element.ALIGN_LEFT;
                 pdfCell.Border = 1;
