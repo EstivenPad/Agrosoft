@@ -58,7 +58,7 @@
                         <div class="form-group">
                             <label>Cliente</label>
                             <div class="input-group">
-                                <select class="form-control" @bind="Venta.ClienteId" @onclick="BuscarBalanceLimiteCredito">
+                                <select class="form-control" @bind="Venta.ClienteId" @onclick="LlenarBalanceYLimiteCredito">
                                     <option value="0" selected disabled>Seleccione un cliente</option>
                                     <option value="1">@(repositorioClientes.Buscar(1).Nombres + " " + repositorioClientes.Buscar(1).Apellidos)</option>
                                 </select>
@@ -78,7 +78,7 @@
                             <div class="form-group col-6">
                                 <label>Cliente</label>
                                 <div class="input-group">
-                                    <select class="form-control" @bind="Venta.ClienteId" @onclick="BuscarBalanceLimiteCredito">
+                                    <select class="form-control" @bind="Venta.ClienteId" @onclick="LlenarBalanceYLimiteCredito">
                                         <option value="0" selected disabled>Seleccione un cliente</option>
 
                                         @foreach (var item in ListaClientes)
@@ -280,11 +280,15 @@ else @*Si no ha iniciado sesion*@
         {
             esACredito = true;
             esAContado = false;
+            Venta.ClienteId = 0;
+            Balance = 0;
+            LimiteCredito = 0;
         }
         else if (Venta.TipoFactura == 2)//Factura a contado
         {
             esAContado = true;
             esACredito = false;
+            Venta.ClienteId = 1;
         }
     }
 
@@ -327,9 +331,13 @@ else @*Si no ha iniciado sesion*@
                 this.Venta = encontrado;
                 if (Venta.TipoFactura == 1)//Factura a credito
                 {
+                    Clientes cliente = new Clientes();
+                    Contexto db = new Contexto();
+                    cliente = db.Clientes.Find(VentaProductosBLL.Buscar(Venta.VentaId).ClienteId);
+
                     esACredito = true;
                     esAContado = false;
-                    Balance = repositorioClientes.Buscar(VentaProductosBLL.Buscar(Venta.VentaId).ClienteId).Balance;
+                    Balance = cliente.Balance;
                     LimiteCredito = repositorioClientes.Buscar(VentaProductosBLL.Buscar(Venta.VentaId).ClienteId).LimiteCredito;
                 }
                 else if (Venta.TipoFactura == 2)//Factura a contado
@@ -480,13 +488,19 @@ else @*Si no ha iniciado sesion*@
         Venta.VentaProductosDetalle.Remove(filaRemovida);
     }
 
-    public void BuscarBalanceLimiteCredito()
+    public void LlenarBalanceYLimiteCredito()
     {
+        Clientes cliente = new Clientes();
+        Contexto db = new Contexto();
+        cliente = db.Clientes.Find(Venta.ClienteId);
+
         if (Venta.ClienteId == 0)
             return;
-
-        Balance = repositorioClientes.Buscar(Venta.ClienteId).Balance;
-        LimiteCredito = repositorioClientes.Buscar(Venta.ClienteId).LimiteCredito;
+        else
+        {
+            Balance = cliente.Balance;
+            LimiteCredito = repositorioClientes.Buscar(Venta.ClienteId).LimiteCredito;
+        }
     }
 
     public bool comprobarProductoEnReorden()
