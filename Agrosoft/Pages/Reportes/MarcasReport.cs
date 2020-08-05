@@ -11,7 +11,7 @@ namespace iTextSharpBlazor.Reportes
 {
     public class MarcasReport
     {
-        int columnas = 7;
+        int columnas = 2;
 
         Document document = new Document();
         PdfPTable pdfTable;
@@ -39,7 +39,7 @@ namespace iTextSharpBlazor.Reportes
 
             float[] anchoColumnas = new float[columnas];
 
-            anchoColumnas[0] = 100; //Esta sera la fila 1 
+            anchoColumnas[0] = 20; //Esta sera la fila 1 
             anchoColumnas[1] = 100; //Esta sera la fila 2 
 
             pdfTable.SetWidths(anchoColumnas);
@@ -55,10 +55,7 @@ namespace iTextSharpBlazor.Reportes
         }
         private void ReportHeader()
         {
-            pdfCell = new PdfPCell(this.AddLogo());
-            pdfCell.Colspan = 1;
-            pdfCell.Border = 0;
-            pdfTable.AddCell(pdfCell);
+            this.AddLogo();
 
             pdfCell = new PdfPCell(this.setPageTitle());
             pdfCell.Colspan = columnas;
@@ -75,11 +72,11 @@ namespace iTextSharpBlazor.Reportes
             Image image = Image.GetInstance(img);
 
             pdfCell = new PdfPCell(image);
-            pdfCell.Colspan = 0;
-            pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            pdfCell.Colspan = 2;
             pdfCell.Border = 0;
             pdfCell.ExtraParagraphSpace = 0;
-            pdfPTable.AddCell(pdfCell);
+            pdfTable.AddCell(pdfCell);
 
             pdfPTable.CompleteRow();
 
@@ -161,7 +158,7 @@ namespace iTextSharpBlazor.Reportes
             foreach (var item in listaMarcas)
             {
                 num++;
-                pdfCell = new PdfPCell(new Phrase(item.UsuarioId.ToString(), _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(item.MarcaId.ToString(), _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 pdfCell.BackgroundColor = BaseColor.White;
