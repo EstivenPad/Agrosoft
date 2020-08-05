@@ -63,7 +63,7 @@ Este es el registro de marcas las cuales se identificaran en cada producto regis
 
 ### Registro de compra de productos
 
-Imagen
+![image](https://user-images.githubusercontent.com/54590857/89468456-7b536680-d745-11ea-8d74-6d1b23fc90b4.png)
 
 Este es el registro de compra de productos, en este es donde se realizarán las compras de los productos ya registrados. Para ello se debe de seleccionar un Proveedor y un Producto, luego se ingresa la cantidad, y automáticamente se llenan los campos: Marca, Unidad de medida, Costo e Importe. Para agregar dicho producto a la compra, se le da clic al botón 'Agregar'.
 
