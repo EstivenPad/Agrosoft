@@ -55,7 +55,7 @@ namespace Agrosoft.BLL
                 }
 
                 db.VentaProductos.Add(venta);
-                //GuardarBalance(venta);
+                GuardarBalance(venta);
                 paso = (db.SaveChanges() > 0);
 
             }
@@ -87,17 +87,18 @@ namespace Agrosoft.BLL
 
                 foreach (var item in venta.VentaProductosDetalle)
                 {
-                    if (item.VentaId == venta.VentaId)
+                    if (item.Id == 0)
+                        contexto.Entry(item).State = EntityState.Added;
+                }
+
+                foreach (var item in ventaAnterior.VentaProductosDetalle)
+                {
+                    if (!venta.VentaProductosDetalle.Any(A => A.Id == item.Id))
                         contexto.Entry(item).State = EntityState.Deleted;
                 }
-
-                foreach (var item in venta.VentaProductosDetalle)
-                {
-                    contexto.Entry(item).State = EntityState.Added;   
-                }
-
+                
                 contexto.Entry(venta).State = EntityState.Modified;
-                //ModificarBalance(venta);
+                ModificarBalance(venta);
                 
                 paso = contexto.SaveChanges() > 0;
 
