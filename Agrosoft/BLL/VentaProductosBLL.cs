@@ -78,7 +78,6 @@ namespace Agrosoft.BLL
 
             try
             {
-
                 foreach (var item in ventaAnterior.VentaProductosDetalle)
                 {
                     var producto = repositorioProductos.Buscar(item.ProductoId);
