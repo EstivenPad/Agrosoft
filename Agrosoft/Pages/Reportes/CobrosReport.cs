@@ -59,10 +59,7 @@ namespace iTextSharpBlazor.Reportes
 
         private void ReportHeader()
         {
-            pdfCell = new PdfPCell(this.AddLogo());
-            pdfCell.Colspan = 1;
-            pdfCell.Border = 0;
-            pdfTable.AddCell(pdfCell);
+            this.AddLogo();
 
             pdfCell = new PdfPCell(this.setPageTitle());
             pdfCell.Colspan = columnas;
@@ -78,14 +75,33 @@ namespace iTextSharpBlazor.Reportes
             string img = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\Imagenes\LogoReporte.png"}";
             Image image = Image.GetInstance(img);
 
+            pdfCell = new PdfPCell(new Phrase(" ", fontStyle));
+            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.BackgroundColor = BaseColor.White;
+            pdfCell.Border = 0;
+            pdfTable.AddCell(pdfCell);
+
             pdfCell = new PdfPCell(image);
-            pdfCell.Colspan = 0;
             pdfCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            pdfCell.Colspan = 2;
             pdfCell.Border = 0;
             pdfCell.ExtraParagraphSpace = 0;
-            pdfPTable.AddCell(pdfCell);
+            pdfTable.AddCell(pdfCell);
 
-            pdfPTable.CompleteRow();
+            pdfCell = new PdfPCell(new Phrase(" ", fontStyle));
+            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.BackgroundColor = BaseColor.White;
+            pdfCell.Border = 0;
+            pdfTable.AddCell(pdfCell);
+
+            pdfCell = new PdfPCell(new Phrase(" ", fontStyle));
+            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.BackgroundColor = BaseColor.White;
+            pdfCell.Border = 0;
+            pdfTable.AddCell(pdfCell);
 
             return pdfPTable;
         }

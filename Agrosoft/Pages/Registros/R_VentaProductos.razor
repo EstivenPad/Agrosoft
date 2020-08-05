@@ -483,9 +483,8 @@ else @*Si no ha iniciado sesion*@
     public void BuscarBalanceLimiteCredito()
     {
         if (Venta.ClienteId == 0)
-        {
             return;
-        }
+
         Balance = repositorioClientes.Buscar(Venta.ClienteId).Balance;
         LimiteCredito = repositorioClientes.Buscar(Venta.ClienteId).LimiteCredito;
     }
