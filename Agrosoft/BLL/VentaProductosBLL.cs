@@ -78,7 +78,6 @@ namespace Agrosoft.BLL
 
             try
             {
-
                 foreach (var item in ventaAnterior.VentaProductosDetalle)
                 {
                     if(!venta.VentaProductosDetalle.Exists(x => x.Id == item.Id))

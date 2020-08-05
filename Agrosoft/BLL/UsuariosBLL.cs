@@ -110,8 +110,12 @@ namespace Agrosoft.BLL
             try
             {
                 usuarios = db.Usuarios.Find(id);
-                usuarios.ClaveUsuario = Encriptar(usuarios.ClaveUsuario);
-                usuarios.ClaveConfirmada = Encriptar(usuarios.ClaveConfirmada);
+
+                if(usuarios != null)
+                {
+                    usuarios.ClaveUsuario = Encriptar(usuarios.ClaveUsuario);
+                    usuarios.ClaveConfirmada = Encriptar(usuarios.ClaveConfirmada);
+                }                
             }
             catch (Exception)
             {
