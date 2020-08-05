@@ -81,33 +81,34 @@ namespace Agrosoft.BLL
 
                 foreach (var item in ventaAnterior.VentaProductosDetalle)
                 {
-                    if(!venta.VentaProductosDetalle.Exists(x => x.Id == item.Id))
-                    {
-                        var producto = repositorioProductos.Buscar(item.ProductoId);
-                        producto.CantidadExistente += item.Cantidad;
-                        repositorioProductos.Modificar(producto);
-                        contexto.Entry(item).State = EntityState.Deleted;
-                    }
+                    var producto = repositorioProductos.Buscar(item.ProductoId);
+                    producto.CantidadExistente += item.Cantidad;
+                    repositorioProductos.Modificar(producto);
                 }
 
                 foreach (var item in venta.VentaProductosDetalle)
                 {
-                    if (item.Id == 0)
-                    {
-                        contexto.Entry(item).State = EntityState.Added;
-                        var producto = repositorioProductos.Buscar(item.ProductoId);
-                        producto.CantidadExistente -= item.Cantidad;
-                        repositorioProductos.Modificar(producto);
-                    }
-                    else
-                    {
-                        contexto.Entry(venta).State = EntityState.Modified;
-                    }
+                    if (item.VentaId == venta.VentaId)
+                        contexto.Entry(item).State = EntityState.Deleted;
+                }
+
+                foreach (var item in venta.VentaProductosDetalle)
+                {
+                    contexto.Entry(item).State = EntityState.Added;   
                 }
 
                 contexto.Entry(venta).State = EntityState.Modified;
                 //ModificarBalance(venta);
+                
                 paso = contexto.SaveChanges() > 0;
+
+                foreach (var item in venta.VentaProductosDetalle)
+                {
+                    var producto = repositorioProductos.Buscar(item.ProductoId);
+                    producto.CantidadExistente -= item.Cantidad;
+                    repositorioProductos.Modificar(producto);
+                }
+
             }
             catch (Exception)
             {
