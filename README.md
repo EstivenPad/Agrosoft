@@ -89,7 +89,7 @@ Cada registro antes mencionado tiene una consulta. Las consultas pueden ser acce
 
 Todas las consultas funcionan de la misma manera, en estas se pueden realizar consultas específicas de los registros que se tengan guardados, también se permite filtrar por diversos campos así como también por un rango de fecha. Además de incluir un botón llamado "Imprimir" con el que podremos visualizar los registros consultados con anterioridad en un reporte como el siguiente:
 
-Imagen de un reporte
+![image](https://user-images.githubusercontent.com/54590857/89468127-d042ad00-d744-11ea-8824-538976643a5e.png)
 
 ## 🛠️ Herramientas 
 
