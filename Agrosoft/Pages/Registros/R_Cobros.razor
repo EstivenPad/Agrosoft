@@ -202,16 +202,24 @@ else @*Si no ha iniciado sesion*@
     private void Guardar()
     {
         bool guardo;
-
-        guardo = repositorioCobros.Guardar(Cobro, Cobro.CobroId);
-
-        if (guardo)
+        if(repositorioClientes.Buscar(Cobro.ClienteId).Balance < Cobro.Deposito)
         {
-            Nuevo();
-            toast.ShowSuccess("¡Guardado!");
+            toast.ShowError("¡La cantidad a depositar no puede ser mayor al balance!");
+            Balance = repositorioClientes.Buscar(Cobro.ClienteId).Balance;
+            Cobro.Deposito = 0;
         }
         else
-            toast.ShowError("¡No Guardado!");
+        {
+            guardo = repositorioCobros.Guardar(Cobro, Cobro.CobroId);
+
+            if (guardo)
+            {
+                Nuevo();
+                toast.ShowSuccess("¡Guardado!");
+            }
+            else
+                toast.ShowError("¡No Guardado!");
+        }
     }
 
     private void Eliminar()
