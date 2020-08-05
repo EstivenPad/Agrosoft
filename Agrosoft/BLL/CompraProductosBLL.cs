@@ -95,21 +95,40 @@ namespace Agrosoft.BLL
         {
             bool paso = false;
             Contexto db = new Contexto();
+            RepositorioBase<Productos> repositorioProductos = new RepositorioBase<Productos>();
+
+            var compraAnterior = Buscar(compra.CompraId);
 
             try
             {
-                RestarCantidad(compra);
+                foreach (var item in compraAnterior.CompraProductosDetalle)
+                {
+                    var producto = repositorioProductos.Buscar(item.ProductoId);
+                    producto.CantidadExistente -= item.Cantidad;
+                    repositorioProductos.Modificar(producto);
+                }
 
-                db.Database.ExecuteSqlRaw($"Delete FROM CompraProductosDetalle where CompraId = {compra.CompraId}");
-                
                 foreach (var item in compra.CompraProductosDetalle)
                 {
-                    db.Entry(item).State = EntityState.Added;
+                    if (item.Id == 0)
+                        db.Entry(item).State = EntityState.Added;
                 }
-                db.Entry(compra).State = EntityState.Modified;
 
-                AgregarCantidad(compra);
-                paso = (db.SaveChanges() > 0);
+                foreach (var item in compraAnterior.CompraProductosDetalle)
+                {
+                    if (!compra.CompraProductosDetalle.Any(A => A.Id == item.Id))
+                        db.Entry(item).State = EntityState.Deleted;
+                }
+
+                db.Entry(compra).State = EntityState.Modified;
+                paso = db.SaveChanges() > 0;
+
+                foreach (var item in compra.CompraProductosDetalle)
+                {
+                    var producto = repositorioProductos.Buscar(item.ProductoId);
+                    producto.CantidadExistente += item.Cantidad;
+                    repositorioProductos.Modificar(producto);
+                }
             }
             catch (Exception)
             {
