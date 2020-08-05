@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Agrosoft.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class Migracion_Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -220,7 +220,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Clientes",
                 columns: new[] { "ClienteId", "Apellidos", "Balance", "Cedula", "Celular", "Direccion", "Email", "Fecha", "LimiteCredito", "Nombres", "Telefono", "UsuarioId" },
-                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 5, 1, 8, 55, 593, DateTimeKind.Local).AddTicks(8462), 0m, "Cliente", "0000000000", 1 });
+                values: new object[] { 1, "ocasional", 0m, "00000000000", "0000000000", "xxxxxxxxxxxxx", "clienteOcasional@hotmail.com", new DateTime(2020, 8, 5, 17, 38, 7, 63, DateTimeKind.Local).AddTicks(841), 1m, "Cliente", "0000000000", 1 });
 
             migrationBuilder.InsertData(
                 table: "Marcas",
@@ -261,7 +261,7 @@ namespace Agrosoft.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "Celular", "ClaveConfirmada", "ClaveUsuario", "Direccion", "Email", "Fecha", "NombreUsuario", "Nombres", "Telefono", "TipoUsuario" },
-                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 5, 1, 8, 55, 590, DateTimeKind.Local).AddTicks(9985), "Admin", "Admin", "0123456789", "Administrador" });
+                values: new object[] { 1, "Admin", "0123456789", "admin", "admin", "Admin", "Admin@hotmail.com", new DateTime(2020, 8, 5, 17, 38, 7, 59, DateTimeKind.Local).AddTicks(7659), "Admin", "Admin", "0123456789", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CompraProductosDetalle_CompraId",

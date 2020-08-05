@@ -21,7 +21,8 @@ namespace Agrosoft.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS; Database=Agrosoft; Trusted_Connection=True;");
+            //optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS; Database=Agrosoft; Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=tcp:agrosoftdbserver.database.windows.net,1433;Initial Catalog=Agrosoft_db;Persist Security Info=False;User ID=Jose;Password=Ja28012001;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -55,7 +56,7 @@ namespace Agrosoft.DAL
                 Celular = "0000000000",
                 Email = "clienteOcasional@hotmail.com",
                 Direccion = "xxxxxxxxxxxxx",
-                LimiteCredito = 0,
+                LimiteCredito = 1,
                 Balance = 0,
             });
             //Unidades de medida
