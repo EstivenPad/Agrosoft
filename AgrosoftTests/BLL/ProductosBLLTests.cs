@@ -3,6 +3,7 @@ using Agrosoft.BLL;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Agrosoft.Models;
 
 namespace Agrosoft.BLL.Tests
 {
@@ -12,7 +13,11 @@ namespace Agrosoft.BLL.Tests
         [TestMethod()]
         public void GetProductosEnReordenTest()
         {
-            Assert.Fail();
+            List<Productos> lista;
+            
+            lista = ProductosBLL.GetProductosEnReorden();
+
+            Assert.IsNotNull(lista);
         }
     }
 }

@@ -3,6 +3,7 @@ using Agrosoft.BLL;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Agrosoft.Models;
 
 namespace Agrosoft.BLL.Tests
 {
@@ -12,7 +13,11 @@ namespace Agrosoft.BLL.Tests
         [TestMethod()]
         public void GetClientesConDeudasTest()
         {
-            Assert.Fail();
+            List<Clientes> lista;
+
+            lista = ClientesBLL.GetClientesConDeudas();
+
+            Assert.IsNotNull(lista);
         }
     }
 }

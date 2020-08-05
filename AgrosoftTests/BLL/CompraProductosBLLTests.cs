@@ -11,18 +11,6 @@ namespace Agrosoft.BLL.Tests
     public class CompraProductosBLLTests
     {
         [TestMethod()]
-        public void AgregarCantidadTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void RestarCantidadTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
         public void GuardarTest()
         {
             bool guardo = false;
@@ -92,14 +80,6 @@ namespace Agrosoft.BLL.Tests
             compra.UsuarioId = 1;
             compra.Fecha = DateTime.Now;
             compra.ProveedorId = 1;
-            compra.CompraProductosDetalle.Add(new CompraProductosDetalle()
-            {
-                Id = 0,
-                CompraId = 1,
-                ProductoId = 1,
-                Cantidad = 1,
-                Precio = 100
-            });
             compra.Total = 200;
 
             modifico = CompraProductosBLL.Modificar(compra);
@@ -135,6 +115,42 @@ namespace Agrosoft.BLL.Tests
             lista = CompraProductosBLL.GetList(p => true);
 
             Assert.IsNotNull(lista);
+        }
+
+        [TestMethod()]
+        public void AgregarCantidadTest()
+        {
+            CompraProductos compra = new CompraProductos();
+
+            compra.CompraId = 0;
+            compra.UsuarioId = 1;
+            compra.Fecha = DateTime.Now;
+            compra.ProveedorId = 1;
+            compra.CompraProductosDetalle.Add(new CompraProductosDetalle()
+            {
+                Id = 1,
+                CompraId = 1,
+                ProductoId = 1,
+                Cantidad = 1,
+                Precio = 100
+            });
+            compra.Total = 100;
+
+            CompraProductosBLL.AgregarCantidad(compra);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod()]
+        public void RestarCantidadTest()
+        {
+            CompraProductos compra = new CompraProductos();
+
+            compra.CompraId = 1;
+
+            CompraProductosBLL.RestarCantidad(compra);
+
+            Assert.IsTrue(true);
         }
     }
 }

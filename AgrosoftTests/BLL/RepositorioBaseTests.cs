@@ -21,7 +21,7 @@ namespace Agrosoft.BLL.Tests
             marca.UsuarioId = 1;
             marca.Descripcion = "Prueba";
 
-            guardo = repositorio.Guardar(marca, 1);
+            guardo = repositorio.Guardar(marca, 0);
 
             Assert.AreEqual(true, guardo);
         }

@@ -21,46 +21,73 @@ namespace Agrosoft.BLL.Tests
             venta.Fecha = DateTime.Now;
             venta.TipoFactura = 1;
             venta.ClienteId = 2;
-            venta.VentaProductosDetalle.Add(new VentaProductosDetalle()
-            {
-                Id = 0,
-                VentaId = 1,
-                ProductoId = 1,
-                Cantidad = 1,
-                PrecioUnitario = 100,
-                ITBIS = 18,
-                Importe = 118
-            });
             venta.Subtotal = 100;
             venta.ITBIS = 18;
             venta.Total = 118;
 
-            
+            guardo = VentaProductosBLL.Guardar(venta);
 
+            Assert.AreEqual(true, guardo);
         }
 
         [TestMethod()]
         public void InsertarTest()
         {
-            Assert.Fail();
+            bool inserto = false;
+            VentaProductos venta = new VentaProductos();
+
+            venta.VentaId = 0;
+            venta.UsuarioId = 1;
+            venta.Fecha = DateTime.Now;
+            venta.TipoFactura = 1;
+            venta.ClienteId = 2;
+            venta.Subtotal = 100;
+            venta.ITBIS = 18;
+            venta.Total = 118;
+
+            inserto = VentaProductosBLL.Insertar(venta);
+
+            Assert.AreEqual(true, inserto);
         }
 
         [TestMethod()]
         public void ModificarTest()
         {
-            Assert.Fail();
+            bool modifico = true;
+            VentaProductos venta = new VentaProductos();
+
+            venta.VentaId = 1;
+            venta.UsuarioId = 1;
+            venta.Fecha = DateTime.Now;
+            venta.TipoFactura = 1;
+            venta.ClienteId = 2;
+            venta.Subtotal = 100;
+            venta.ITBIS = 18;
+            venta.Total = 118;
+
+            modifico = VentaProductosBLL.Modificar(venta);
+
+            Assert.AreEqual(true, modifico);
         }
 
         [TestMethod()]
         public void EliminarTest()
         {
-            Assert.Fail();
+            bool elimino = true;
+
+            elimino = VentaProductosBLL.Eliminar(1);
+
+            Assert.AreEqual(true, elimino);
         }
 
         [TestMethod()]
         public void BuscarTest()
         {
-            Assert.Fail();
+            VentaProductos venta = new VentaProductos();
+
+            venta = VentaProductosBLL.Buscar(1);
+
+            Assert.IsNotNull(venta);
         }
 
         [TestMethod()]
@@ -68,53 +95,15 @@ namespace Agrosoft.BLL.Tests
         {
             VentaProductos venta = new VentaProductos();
 
-            venta.VentaId = 0;
-            venta.UsuarioId = 1;
-            venta.Fecha = DateTime.Now;
-            venta.TipoFactura = 1;
-            venta.ClienteId = 2;
-            venta.VentaProductosDetalle.Add(new VentaProductosDetalle()
-            {
-                Id = 0,
-                VentaId = 1,
-                ProductoId = 1,
-                Cantidad = 1,
-                PrecioUnitario = 100,
-                ITBIS = 18,
-                Importe = 118
-            });
-            venta.Subtotal = 100;
-            venta.ITBIS = 18;
-            venta.Total = 118;
-
             VentaProductosBLL.GuardarBalance(venta);
 
-            Assert.IsTrue(true);
+            Assert.IsNotNull(venta);
         }
 
         [TestMethod()]
         public void ModificarBalanceTest()
         {
             VentaProductos venta = new VentaProductos();
-
-            venta.VentaId = 0;
-            venta.UsuarioId = 1;
-            venta.Fecha = DateTime.Now;
-            venta.TipoFactura = 1;
-            venta.ClienteId = 2;
-            venta.VentaProductosDetalle.Add(new VentaProductosDetalle()
-            {
-                Id = 0,
-                VentaId = 1,
-                ProductoId = 1,
-                Cantidad = 1,
-                PrecioUnitario = 100,
-                ITBIS = 18,
-                Importe = 118
-            });
-            venta.Subtotal = 100;
-            venta.ITBIS = 18;
-            venta.Total = 118;
 
             VentaProductosBLL.ModificarBalance(venta);
 
@@ -126,28 +115,9 @@ namespace Agrosoft.BLL.Tests
         {
             VentaProductos venta = new VentaProductos();
 
-            venta.VentaId = 0;
-            venta.UsuarioId = 1;
-            venta.Fecha = DateTime.Now;
-            venta.TipoFactura = 1;
-            venta.ClienteId = 2;
-            venta.VentaProductosDetalle.Add(new VentaProductosDetalle()
-            {
-                Id = 0,
-                VentaId = 1,
-                ProductoId = 1,
-                Cantidad = 1,
-                PrecioUnitario = 100,
-                ITBIS = 18,
-                Importe = 118
-            });
-            venta.Subtotal = 100;
-            venta.ITBIS = 18;
-            venta.Total = 118;
-
             VentaProductosBLL.EliminarBalance(venta);
 
-            Assert.IsTrue(true);
+            Assert.IsNotNull(venta);
         }
 
         [TestMethod()]
