@@ -6,6 +6,8 @@ Hoy en día se ve como cada vez más los sistemas manuales son desplazados, dand
 
 Agrosoft es un sistema informático desarrollado para la plataforma Web, el cuál tiene como objetivo optimizar y automatizar el proceso de compra y venta de productos agricolas en conjunto con otros modulos caracteristicos de un sistema informático de compra y venta como son: Usuarios, Clientes, Productos, Cobros, etc.
 
+**Link de Agrosoft:** _https://agrosoft20200805171159.azurewebsites.net_
+
 ## 🔒 Login
 
 ![image](https://user-images.githubusercontent.com/54590857/89126917-b6406a80-d4b7-11ea-956d-fe906d699878.png)
