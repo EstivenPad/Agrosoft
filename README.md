@@ -83,7 +83,7 @@ Si desea imprimir la factura, primero debe guardarla para que quede registrada, 
 
 Cada registro antes mencionado tiene una consulta. Las consultas pueden ser accesibles por todos los tipos de usuarios, excepto la consulta de usuarios, a quien sólo tiene permitido acceder el adminitrador/a.
 
-Imagen de cualquier consulta
+![image](https://user-images.githubusercontent.com/54590857/89429797-0283e880-d70c-11ea-97c6-91449b7e587d.png)
 
 Todas las consultas funcionan de la misma manera, en estas se pueden realizar consultas específicas de los registros que se tengan guardados, también se permite filtrar por diversos campos así como también por un rango de fecha. Además de incluir un botón llamado "Imprimir" con el que podremos visualizar los registros consultados con anterioridad en un reporte como el siguiente:
 
